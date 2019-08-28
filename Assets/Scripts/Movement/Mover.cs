@@ -12,8 +12,6 @@ public class Mover : MonoBehaviour
     private Animator _animator;
     private NavMeshAgent _navMeshAgent;
 
-    private Camera _camera;
-
     private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
 
     // Start is called before the first frame update
@@ -21,32 +19,18 @@ public class Mover : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
-
-        _camera = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Click to move
-        if (Input.GetMouseButton(0))
-        {
-            MoveToCursor();
-        }
-
         UpdateAnimator();
     }
 
-    private void MoveToCursor()
+    public void MoveTo(Vector3 destination)
     {
-        // Send raycast from camera through screen to terrain
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
-        {
-            // Move navmesh agent to raycast hit point
-            _navMeshAgent.destination = hit.point;
-        }
+        // Move navmesh agent to destination (raycast hit point)
+        _navMeshAgent.destination = destination;
     }
 
     private void UpdateAnimator()
