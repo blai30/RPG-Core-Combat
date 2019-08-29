@@ -32,8 +32,6 @@ namespace RPG.Control
             {
                 return;
             }
-
-            print("Nothing to do");
         }
 
         private bool InteractWithCombat()
@@ -42,7 +40,7 @@ namespace RPG.Control
             foreach (RaycastHit hit in hits)
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if (target == null)
+                if (!_fighter.CanAttack(target))
                 {
                     continue;
                 }
