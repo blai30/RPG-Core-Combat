@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace RPG.Core
 {
-
     public class FollowCamera : MonoBehaviour
     {
-
         [SerializeField] private Transform target;
 
         // Update is called once per frame
@@ -15,7 +13,5 @@ namespace RPG.Core
         {
             transform.position = target.position;
         }
-
     }
-
 }

@@ -6,10 +6,8 @@ using UnityEngine;
 
 namespace RPG.Control
 {
-
     public class PlayerController : MonoBehaviour
     {
-
         private Camera _camera;
         private Mover _mover;
         private Fighter _fighter;
@@ -25,11 +23,20 @@ namespace RPG.Control
         // Update is called once per frame
         void Update()
         {
-            InteractWithCombat();
-            InteractWithMovement();
+            if (InteractWithCombat())
+            {
+                return;
+            }
+
+            if (InteractWithMovement())
+            {
+                return;
+            }
+
+            print("Nothing to do");
         }
 
-        private void InteractWithCombat()
+        private bool InteractWithCombat()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
             foreach (RaycastHit hit in hits)
@@ -44,26 +51,29 @@ namespace RPG.Control
                 {
                     _fighter.Attack(target);
                 }
+
+                return true;
             }
+
+            return false;
         }
 
-        private void InteractWithMovement()
-        {
-            // Click to move
-            if (Input.GetMouseButton(0))
-            {
-                MoveToCursor();
-            }
-        }
-
-        private void MoveToCursor()
+        private bool InteractWithMovement()
         {
             // Send raycast from camera through screen to terrain
             RaycastHit hit;
             if (Physics.Raycast(GetMouseRay(), out hit))
             {
-                _mover.MoveTo(hit.point);
+                // Click to move
+                if (Input.GetMouseButton(0))
+                {
+                    _mover.StartMoveAction(hit.point);
+                }
+
+                return true;
             }
+
+            return false;
         }
 
         private Ray GetMouseRay()
@@ -71,5 +81,4 @@ namespace RPG.Control
             return _camera.ScreenPointToRay(Input.mousePosition);
         }
     }
-
 }
