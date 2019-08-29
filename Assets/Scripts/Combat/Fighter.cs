@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour
+    public class Fighter : MonoBehaviour, IAction
     {
         [SerializeField] private float weaponRange = 2;
 
@@ -35,8 +35,13 @@ namespace RPG.Combat
             }
             else
             {
-                _mover.Stop();
+                _mover.Cancel();
             }
+        }
+
+        public void Cancel()
+        {
+            target = null;
         }
 
         private bool GetIsInRange()
@@ -48,11 +53,6 @@ namespace RPG.Combat
         {
             _actionScheduler.StartAction(this);
             target = combatTarget.transform;
-        }
-
-        public void Cancel()
-        {
-            target = null;
         }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using RPG.Combat;
 using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace RPG.Movement
 {
-    public class Mover : MonoBehaviour
+    public class Mover : MonoBehaviour, IAction
     {
         /// <summary>
         /// GameObject Components
@@ -15,7 +14,6 @@ namespace RPG.Movement
         private ActionScheduler _actionScheduler;
         private Animator _animator;
         private NavMeshAgent _navMeshAgent;
-        private Fighter _fighter;
 
         private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
 
@@ -25,7 +23,6 @@ namespace RPG.Movement
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
-            _fighter = GetComponent<Fighter>();
         }
 
         // Update is called once per frame
@@ -34,10 +31,14 @@ namespace RPG.Movement
             UpdateAnimator();
         }
 
+        public void Cancel()
+        {
+            _navMeshAgent.isStopped = true;
+        }
+
         public void StartMoveAction(Vector3 destination)
         {
             _actionScheduler.StartAction(this);
-            _fighter.Cancel();
             MoveTo(destination);
         }
 
@@ -46,11 +47,6 @@ namespace RPG.Movement
             // Move navmesh agent to destination (raycast hit point)
             _navMeshAgent.destination = destination;
             _navMeshAgent.isStopped = false;
-        }
-
-        public void Stop()
-        {
-            _navMeshAgent.isStopped = true;
         }
 
         private void UpdateAnimator()
