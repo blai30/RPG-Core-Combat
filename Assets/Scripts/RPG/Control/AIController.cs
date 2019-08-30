@@ -12,6 +12,9 @@ namespace RPG.Control
     {
         [SerializeField] private float chaseDistance = 5f;
         [SerializeField] private float suspicionTime = 5f;
+        [SerializeField] private PatrolPath patrolPath;
+        [SerializeField] private float waypointTolerance = 1f;
+        [SerializeField] private float waypointDwellTime = 3f;
 
         // Target player to chase
         private GameObject _targetPlayer;
@@ -23,9 +26,13 @@ namespace RPG.Control
         private Health _health;
         private Mover _mover;
 
-        // Initial position
+        /// <summary>
+        /// Internal properties
+        /// </summary>
         private Vector3 _guardPosition;
-        private float timeSinceLastSawPlayer = Mathf.Infinity;
+        private float _timeSinceLastSawPlayer = Mathf.Infinity;
+        private float _timeSinceArrivedAtWaypoint = Mathf.Infinity;
+        private int _currentWaypointIndex = 0;
 
         private void Start()
         {
@@ -49,19 +56,28 @@ namespace RPG.Control
             {
                 // Attack target player when in range
                 AttackBehavior();
-                timeSinceLastSawPlayer = 0;
             }
-            else if (timeSinceLastSawPlayer <= suspicionTime)
+            else if (_timeSinceLastSawPlayer <= suspicionTime)
             {
+                // Wait around after target player exits chase distance
                 SuspicionBehavior();
             }
             else
             {
-                // Go back to initial guarding position
-                GuardBehavior();
+                // Go back to patrol path
+                PatrolBehavior();
             }
 
-            timeSinceLastSawPlayer += Time.deltaTime;
+            UpdateTimers();
+        }
+
+        /// <summary>
+        /// Updates the timers for waiting events
+        /// </summary>
+        private void UpdateTimers()
+        {
+            _timeSinceLastSawPlayer += Time.deltaTime;
+            _timeSinceArrivedAtWaypoint += Time.deltaTime;
         }
 
         /// <summary>
@@ -69,6 +85,7 @@ namespace RPG.Control
         /// </summary>
         private void AttackBehavior()
         {
+            _timeSinceLastSawPlayer = 0;
             _fighter.Attack(_targetPlayer);
         }
 
@@ -83,9 +100,41 @@ namespace RPG.Control
         /// <summary>
         /// Behavior for guarding their guard position
         /// </summary>
-        private void GuardBehavior()
+        private void PatrolBehavior()
         {
-            _mover.StartMoveAction(_guardPosition);
+            Vector3 nextPosition = _guardPosition;
+
+            if (patrolPath != null)
+            {
+                if (AtWaypoint())
+                {
+                    _timeSinceArrivedAtWaypoint = 0;
+                    CycleWaypoint();
+                }
+
+                nextPosition = GetCurrentWaypoint();
+            }
+
+            if (_timeSinceArrivedAtWaypoint > waypointDwellTime)
+            {
+                _mover.StartMoveAction(nextPosition);
+            }
+        }
+
+        private bool AtWaypoint()
+        {
+            float distanceToWaypoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
+            return distanceToWaypoint <= waypointTolerance;
+        }
+
+        private void CycleWaypoint()
+        {
+            _currentWaypointIndex = patrolPath.GetNextIndex(_currentWaypointIndex);
+        }
+
+        private Vector3 GetCurrentWaypoint()
+        {
+            return patrolPath.GetWaypointPosition(_currentWaypointIndex);
         }
 
         // Called by Unity

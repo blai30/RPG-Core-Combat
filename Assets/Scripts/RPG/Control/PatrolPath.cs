@@ -9,6 +9,17 @@ namespace RPG.Control
     {
         private const float WaypointGizmoRadius = 0.3f;
 
+        public int GetNextIndex(int index)
+        {
+            // Returns next index, 0 if next index is out of bounds
+            return (index + 1) % transform.childCount;
+        }
+
+        public Vector3 GetWaypointPosition(int index)
+        {
+            return transform.GetChild(index).position;
+        }
+
         private void OnDrawGizmos()
         {
             for (int i = 0; i < transform.childCount; i++)
@@ -17,17 +28,6 @@ namespace RPG.Control
                 Gizmos.DrawSphere(GetWaypointPosition(i), WaypointGizmoRadius);
                 Gizmos.DrawLine(GetWaypointPosition(i), GetWaypointPosition(j));
             }
-        }
-
-        private int GetNextIndex(int index)
-        {
-            // Returns next index, 0 if next index is out of bounds
-            return (index + 1) % transform.childCount;
-        }
-
-        private Vector3 GetWaypointPosition(int index)
-        {
-            return transform.GetChild(index).position;
         }
     }
 }
