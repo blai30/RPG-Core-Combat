@@ -15,6 +15,9 @@ namespace RPG.Movement
         private Animator _animator;
         private NavMeshAgent _navMeshAgent;
 
+        /// <summary>
+        /// Animator parameters
+        /// </summary>
         private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
 
         // Start is called before the first frame update
@@ -31,17 +34,20 @@ namespace RPG.Movement
             UpdateAnimator();
         }
 
-        public void Cancel()
-        {
-            _navMeshAgent.isStopped = true;
-        }
-
+        /// <summary>
+        /// Start moving
+        /// </summary>
+        /// <param name="destination">Destination for navmesh agent to move to</param>
         public void StartMoveAction(Vector3 destination)
         {
             _actionScheduler.StartAction(this);
             MoveTo(destination);
         }
 
+        /// <summary>
+        /// Move navmesh agent to destination
+        /// </summary>
+        /// <param name="destination">Destination for navmesh agent to move to</param>
         public void MoveTo(Vector3 destination)
         {
             // Move navmesh agent to destination (raycast hit point)
@@ -49,6 +55,17 @@ namespace RPG.Movement
             _navMeshAgent.isStopped = false;
         }
 
+        /// <summary>
+        /// Stop moving
+        /// </summary>
+        public void Cancel()
+        {
+            _navMeshAgent.isStopped = true;
+        }
+
+        /// <summary>
+        /// Update animator based on velocity
+        /// </summary>
         private void UpdateAnimator()
         {
             // Convert global velocity to local space

@@ -6,9 +6,11 @@ namespace RPG.Core
 {
     public class FollowCamera : MonoBehaviour
     {
+        /// <summary>
+        /// Transform of the target object to follow
+        /// </summary>
         [SerializeField] private Transform target;
 
-        // Update is called once per frame
         void LateUpdate()
         {
             transform.position = target.position;
