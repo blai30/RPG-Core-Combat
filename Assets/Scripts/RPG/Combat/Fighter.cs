@@ -20,11 +20,11 @@ namespace RPG.Combat
         /// GameObject components
         /// </summary>
         private ActionScheduler _actionScheduler;
-        private Mover _mover;
         private Animator _animator;
+        private Mover _mover;
 
         private Health _target;
-        private float _timeSinceLastAttack = 0;
+        private float _timeSinceLastAttack = Mathf.Infinity;
 
         /// <summary>
         /// Animator parameters
@@ -35,8 +35,8 @@ namespace RPG.Combat
         private void Start()
         {
             _actionScheduler = GetComponent<ActionScheduler>();
-            _mover = GetComponent<Mover>();
             _animator = GetComponent<Animator>();
+            _mover = GetComponent<Mover>();
         }
 
         private void Update()

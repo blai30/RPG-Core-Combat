@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using RPG.Combat;
+using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
 
@@ -8,24 +9,33 @@ namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
+        private Camera _camera;
+
         /// <summary>
         /// GameObject components
         /// </summary>
-        private Camera _camera;
-        private Mover _mover;
         private Fighter _fighter;
+        private Health _health;
+        private Mover _mover;
 
         // Start is called before the first frame update
         void Start()
         {
             _camera = Camera.main;
-            _mover = GetComponent<Mover>();
             _fighter = GetComponent<Fighter>();
+            _health = GetComponent<Health>();
+            _mover = GetComponent<Mover>();
         }
 
         // Update is called once per frame
         void Update()
         {
+            // No behavior when dead
+            if (_health.IsDead)
+            {
+                return;
+            }
+
             // Do combat
             if (InteractWithCombat())
             {
