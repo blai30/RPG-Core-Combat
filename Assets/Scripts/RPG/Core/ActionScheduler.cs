@@ -7,25 +7,22 @@ namespace RPG.Core
     public class ActionScheduler : MonoBehaviour
     {
         // The currently scheduled action
-        private IAction currentAction = null;
+        private IAction _currentAction;    // = null
 
         // Start new action and cancel old action
         public void StartAction(IAction action)
         {
             // New action is the same action as old
-            if (currentAction == action)
+            if (_currentAction == action)
             {
                 return;
             }
 
             // Cancel old action if there is one
-            if (currentAction != null)
-            {
-                currentAction.Cancel();
-            }
+            _currentAction?.Cancel();    // if (currentAction != null)
 
             // Schedule new action
-            currentAction = action;
+            _currentAction = action;
         }
     }
 }
