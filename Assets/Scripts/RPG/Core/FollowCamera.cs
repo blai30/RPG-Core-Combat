@@ -15,7 +15,7 @@ namespace RPG.Core
 
         private void Start()
         {
-            target = FindObjectOfType<PlayerController>().transform;
+            target = GameObject.FindWithTag("Player").transform;
         }
 
         void LateUpdate()

@@ -56,7 +56,7 @@ namespace RPG.Combat
             }
 
             // Get in range of the target
-            if (_target != null && !GetIsInRange())
+            if (_target != null && !GetIsInRange(_target.transform, weaponRange))
             {
                 _mover.MoveTo(_target.transform.position);
             }
@@ -83,6 +83,15 @@ namespace RPG.Combat
         }
 
         /// <summary>
+        /// Checks if this object is in range of the target
+        /// </summary>
+        /// <returns>If the target is in range for attack</returns>
+        public bool GetIsInRange(Transform target, float range)
+        {
+            return Vector3.Distance(transform.position, target.position) < range;
+        }
+
+        /// <summary>
         /// Cancel the attack state
         /// </summary>
         public void Cancel()
@@ -96,7 +105,7 @@ namespace RPG.Combat
         /// </summary>
         /// <param name="combatTarget">The target to be attacked</param>
         /// <returns>If the target can be attacked</returns>
-        public bool CanAttack(CombatTarget combatTarget)
+        public bool CanAttack(GameObject combatTarget)
         {
             // No target exists
             if (combatTarget == null)
@@ -115,7 +124,7 @@ namespace RPG.Combat
         /// Schedule attack action to target
         /// </summary>
         /// <param name="combatTarget">The target to be attacked</param>
-        public void Attack(CombatTarget combatTarget)
+        public void Attack(GameObject combatTarget)
         {
             _actionScheduler.StartAction(this);
             _target = combatTarget.GetComponent<Health>();
@@ -154,15 +163,6 @@ namespace RPG.Combat
         {
             _animator.ResetTrigger(AttackTrigger);
             _animator.SetTrigger(StopAttackTrigger);
-        }
-
-        /// <summary>
-        /// Checks if this object is in range of the target
-        /// </summary>
-        /// <returns>If the target is in range for attack</returns>
-        private bool GetIsInRange()
-        {
-            return Vector3.Distance(transform.position, _target.transform.position) < weaponRange;
         }
     }
 }

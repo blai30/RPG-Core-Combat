@@ -60,8 +60,14 @@ namespace RPG.Control
             {
                 // Find combat target from all raycast hits
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
+
+                if (target == null)
+                {
+                    continue;
+                }
+
                 // Continue if cannot attack target
-                if (!_fighter.CanAttack(target))
+                if (!_fighter.CanAttack(target.gameObject))
                 {
                     continue;
                 }
@@ -69,7 +75,7 @@ namespace RPG.Control
                 // Attack the target
                 if (Input.GetMouseButtonDown(0))
                 {
-                    _fighter.Attack(target);
+                    _fighter.Attack(target.gameObject);
                 }
 
                 return true;
