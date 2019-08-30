@@ -121,17 +121,28 @@ namespace RPG.Control
             }
         }
 
+        /// <summary>
+        /// Check if arrived at waypoint within tolerance
+        /// </summary>
+        /// <returns>If within tolerance range of waypoint</returns>
         private bool AtWaypoint()
         {
             float distanceToWaypoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
             return distanceToWaypoint <= waypointTolerance;
         }
 
+        /// <summary>
+        /// Set the next waypoint to move to
+        /// </summary>
         private void CycleWaypoint()
         {
             _currentWaypointIndex = patrolPath.GetNextIndex(_currentWaypointIndex);
         }
 
+        /// <summary>
+        /// Get the position of the current waypoint
+        /// </summary>
+        /// <returns>Position of current waypoint</returns>
         private Vector3 GetCurrentWaypoint()
         {
             return patrolPath.GetWaypointPosition(_currentWaypointIndex);
