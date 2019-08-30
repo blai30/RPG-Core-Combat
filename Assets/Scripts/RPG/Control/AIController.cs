@@ -40,5 +40,12 @@ namespace RPG.Control
                 _fighter.Cancel();
             }
         }
+
+        // Called by Unity
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, chaseDistance);
+        }
     }
 }
