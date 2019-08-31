@@ -9,6 +9,8 @@ namespace RPG.Movement
 {
     public class Mover : MonoBehaviour, IAction
     {
+        [SerializeField] private float maxMoveSpeed = 5.66f;
+
         /// <summary>
         /// GameObject Components
         /// </summary>
@@ -43,20 +45,21 @@ namespace RPG.Movement
         /// Start moving
         /// </summary>
         /// <param name="destination">Destination for navmesh agent to move to</param>
-        public void StartMoveAction(Vector3 destination)
+        public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             _actionScheduler.StartAction(this);
-            MoveTo(destination);
+            MoveTo(destination, speedFraction);
         }
 
         /// <summary>
         /// Move navmesh agent to destination
         /// </summary>
         /// <param name="destination">Destination for navmesh agent to move to</param>
-        public void MoveTo(Vector3 destination)
+        public void MoveTo(Vector3 destination, float speedFraction)
         {
             // Move navmesh agent to destination (raycast hit point)
             _navMeshAgent.destination = destination;
+            _navMeshAgent.speed = maxMoveSpeed * Mathf.Clamp01(speedFraction);
             _navMeshAgent.isStopped = false;
         }
 

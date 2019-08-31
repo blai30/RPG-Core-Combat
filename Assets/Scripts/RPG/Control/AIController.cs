@@ -15,6 +15,7 @@ namespace RPG.Control
         [SerializeField] private PatrolPath patrolPath;
         [SerializeField] private float waypointTolerance = 1f;
         [SerializeField] private float waypointDwellTime = 3f;
+        [SerializeField, Range(0, 1)] private float patrolSpeedFraction = 0.2f;
 
         // Target player to chase
         private GameObject _targetPlayer;
@@ -117,7 +118,7 @@ namespace RPG.Control
 
             if (_timeSinceArrivedAtWaypoint > waypointDwellTime)
             {
-                _mover.StartMoveAction(nextPosition);
+                _mover.StartMoveAction(nextPosition, patrolSpeedFraction);
             }
         }
 

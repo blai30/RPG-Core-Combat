@@ -58,7 +58,7 @@ namespace RPG.Combat
             // Get in range of the target
             if (_target != null && !GetIsInRange(_target.transform, weaponRange))
             {
-                _mover.MoveTo(_target.transform.position);
+                _mover.MoveTo(_target.transform.position, 1f);
             }
             else
             {

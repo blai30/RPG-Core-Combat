@@ -1,19 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!136 &5043256751506388238
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7301893713767047112}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &1511952976968806151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,6 +29,7 @@ MonoBehaviour:
   patrolPath: {fileID: 0}
   waypointTolerance: 1
   waypointDwellTime: 3
+  patrolSpeedFraction: 0.2
 --- !u!1001 &2841841705656080608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50,6 +37,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2900094539101713322}
     m_Modifications:
+    - target: {fileID: 133518, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+      propertyPath: m_Name
+      value: Character_Knights_Soldier_01
+      objectReference: {fileID: 0}
     - target: {fileID: 417656, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -93,10 +84,6 @@ PrefabInstance:
     - target: {fileID: 417656, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 133518, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
-      propertyPath: m_Name
-      value: Character_Knights_Soldier_01
       objectReference: {fileID: 0}
     - target: {fileID: 13787996, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -171,6 +158,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 861261098911724184, guid: 649e6b74cb03cdd49b218179172bef05,
+        type: 3}
+      propertyPath: maxMoveSpeed
+      value: 4.8
+      objectReference: {fileID: 0}
     - target: {fileID: -8822163331786360780, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
       propertyPath: health
@@ -179,12 +171,19 @@ PrefabInstance:
     - target: {fileID: -8822163331786360780, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
       propertyPath: healthPoints
-      value: 10
+      value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 2805498737338649485, guid: 649e6b74cb03cdd49b218179172bef05,
-        type: 3}
-      propertyPath: m_Speed
-      value: 3
+    - target: {fileID: 1856932113, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
+      propertyPath: weaponRange
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856932113, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
+      propertyPath: weaponDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856932113, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
+      propertyPath: timeBetweenAttacks
+      value: 1.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
