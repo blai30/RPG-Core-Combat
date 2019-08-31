@@ -87,9 +87,9 @@ MonoBehaviour:
   m_LookaheadTime: 0.25
   m_LookaheadSmoothing: 20
   m_LookaheadIgnoreY: 0
-  m_XDamping: 2
-  m_YDamping: 2
-  m_ZDamping: 2
+  m_XDamping: 3
+  m_YDamping: 3
+  m_ZDamping: 3
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_CameraDistance: 18
