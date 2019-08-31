@@ -37,10 +37,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2900094539101713322}
     m_Modifications:
-    - target: {fileID: 133518, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
-      propertyPath: m_Name
-      value: Character_Knights_Soldier_01
-      objectReference: {fileID: 0}
     - target: {fileID: 417656, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -84,6 +80,10 @@ PrefabInstance:
     - target: {fileID: 417656, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 133518, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+      propertyPath: m_Name
+      value: Character_Knights_Soldier_01
       objectReference: {fileID: 0}
     - target: {fileID: 13787996, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -98,15 +98,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3069673256749984035, guid: 649e6b74cb03cdd49b218179172bef05,
-        type: 3}
-      propertyPath: m_Name
-      value: Enemy
-      objectReference: {fileID: 0}
     - target: {fileID: 7490355530478798145, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -31.67
       objectReference: {fileID: 0}
     - target: {fileID: 7490355530478798145, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
@@ -116,22 +111,22 @@ PrefabInstance:
     - target: {fileID: 7490355530478798145, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -17.35
       objectReference: {fileID: 0}
     - target: {fileID: 7490355530478798145, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7490355530478798145, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7490355530478798145, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7490355530478798145, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
@@ -158,15 +153,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3069673256749984035, guid: 649e6b74cb03cdd49b218179172bef05,
+        type: 3}
+      propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 861261098911724184, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
       propertyPath: maxMoveSpeed
       value: 4.8
-      objectReference: {fileID: 0}
-    - target: {fileID: -8822163331786360780, guid: 649e6b74cb03cdd49b218179172bef05,
-        type: 3}
-      propertyPath: health
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: -8822163331786360780, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
@@ -178,12 +173,12 @@ PrefabInstance:
       value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 1856932113, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
-      propertyPath: weaponDamage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1856932113, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
       propertyPath: timeBetweenAttacks
       value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856932113, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
+      propertyPath: weaponDamage
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
