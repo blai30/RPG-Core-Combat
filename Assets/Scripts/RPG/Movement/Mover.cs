@@ -82,5 +82,16 @@ namespace RPG.Movement
             float speed = localVelocity.z;
             _animator.SetFloat(ForwardSpeed, speed);
         }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.magenta;
+            // Draw destination gizmos only when destination is not within range of player
+            if (_navMeshAgent != null && Vector3.Distance(transform.position, _navMeshAgent.destination) >= 0.2f)
+            {
+                Gizmos.DrawLine(transform.position, _navMeshAgent.destination);
+                Gizmos.DrawSphere(_navMeshAgent.destination, 0.2f);
+            }
+        }
     }
 }

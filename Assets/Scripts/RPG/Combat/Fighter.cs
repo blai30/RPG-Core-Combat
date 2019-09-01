@@ -165,5 +165,11 @@ namespace RPG.Combat
             _animator.ResetTrigger(AttackTrigger);
             _animator.SetTrigger(StopAttackTrigger);
         }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, weaponRange);
+        }
     }
 }
