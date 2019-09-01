@@ -14,7 +14,7 @@ namespace RPG.Cinematics
         private void OnTriggerEnter(Collider other)
         {
             // Play cinematic only once when player enters trigger collider
-            if (!_triggered && other.gameObject.tag.Equals("Player"))
+            if (!_triggered && other.CompareTag("Player"))
             {
                 _triggered = true;
                 GetComponent<PlayableDirector>().Play();

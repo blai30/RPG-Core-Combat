@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7490355530478798145}
+  - component: {fileID: 6347645413306693747}
   - component: {fileID: 2805498737338649485}
   - component: {fileID: 260003221}
   - component: {fileID: 7347735021885322602}
   - component: {fileID: 861261098911724184}
   - component: {fileID: 1856932113}
   - component: {fileID: -8822163331786360780}
-  - component: {fileID: 6347645413306693747}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -37,6 +37,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &6347645413306693747
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3069673256749984035}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &2805498737338649485
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -132,17 +146,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 10
   isDead: 0
---- !u!136 &6347645413306693747
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3069673256749984035}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
