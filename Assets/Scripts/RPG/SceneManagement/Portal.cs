@@ -44,7 +44,15 @@ namespace RPG.SceneManagement
             Fader fader = FindObjectOfType<Fader>();
 
             yield return fader.FadeOut(fadeOutTime);
+
+            // Save current level
+            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
+            savingWrapper.Save();
+
             yield return SceneManager.LoadSceneAsync(sceneToLoadIndex);
+
+            // Load current level
+            savingWrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
@@ -79,8 +87,11 @@ namespace RPG.SceneManagement
         private void UpdatePlayer(Portal otherPortal)
         {
             GameObject player = GameObject.FindWithTag("Player");
-            player.GetComponent<NavMeshAgent>().Warp(otherPortal.spawnPoint.position);
+            NavMeshAgent playerNavMeshAgent = player.GetComponent<NavMeshAgent>();
+            playerNavMeshAgent.enabled = false;
+            playerNavMeshAgent.Warp(otherPortal.spawnPoint.position);
             player.transform.rotation = otherPortal.spawnPoint.rotation;
+            playerNavMeshAgent.enabled = true;
         }
     }
 }

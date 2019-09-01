@@ -7,7 +7,7 @@ namespace RPG.SceneManagement
 {
     public class SavingWrapper : MonoBehaviour
     {
-        private const string defaultSaveFile = "save";
+        private const string DefaultSaveFile = "save";
 
         void Update()
         {
@@ -22,16 +22,16 @@ namespace RPG.SceneManagement
             }
         }
 
-        void Save()
+        public void Save()
         {
             // Call to the saving system save
-            GetComponent<SavingSystem>().Save(defaultSaveFile);
+            GetComponent<SavingSystem>().Save(DefaultSaveFile);
         }
 
-        private void Load()
+        public void Load()
         {
             // Call to the saving system load
-            GetComponent<SavingSystem>().Load(defaultSaveFile);
+            GetComponent<SavingSystem>().Load(DefaultSaveFile);
         }
     }
 }

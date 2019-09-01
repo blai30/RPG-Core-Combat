@@ -123,7 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5236378788911347155}
   - component: {fileID: 1923716127490644998}
-  - component: {fileID: 1924712144526107834}
+  - component: {fileID: 1460123271818756904}
   m_Layer: 0
   m_Name: Follow Camera
   m_TagString: Untagged
@@ -181,7 +181,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 9064771584076189481}
---- !u!114 &1924712144526107834
+--- !u!114 &1460123271818756904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
