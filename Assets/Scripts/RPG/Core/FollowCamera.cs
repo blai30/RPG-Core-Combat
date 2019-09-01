@@ -1,29 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using RPG.Control;
+using Cinemachine;
 using UnityEngine;
 
 namespace RPG.Core
 {
     public class FollowCamera : MonoBehaviour
     {
-        /// <summary>
-        /// Transform of the target object to follow
-        /// </summary>
-        [SerializeField] private Transform target;
-
         private void Start()
         {
-            target = GameObject.FindWithTag("Player").transform;
-        }
-
-        void LateUpdate()
-        {
-            if (target != null)
-            {
-                transform.position = target.position;
-            }
+            GetComponent<CinemachineVirtualCamera>().m_Follow = GameObject.FindWithTag("Player").transform;
         }
     }
 }

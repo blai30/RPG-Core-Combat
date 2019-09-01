@@ -123,6 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5236378788911347155}
   - component: {fileID: 1923716127490644998}
+  - component: {fileID: 1924712144526107834}
   m_Layer: 0
   m_Name: Follow Camera
   m_TagString: Untagged
@@ -137,8 +138,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5318957551100899520}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.275233, y: 23.084244, z: -12.182564}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 0, y: 40, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9064771584076189481}
@@ -180,3 +181,15 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 9064771584076189481}
+--- !u!114 &1924712144526107834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5318957551100899520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0589d9d7e56d4894a1a3e4903cc34c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
