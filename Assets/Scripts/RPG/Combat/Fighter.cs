@@ -12,9 +12,9 @@ namespace RPG.Combat
         /// <summary>
         /// Fighter stats
         /// </summary>
-        [SerializeField] private float weaponRange = 2f;
         [SerializeField] private float timeBetweenAttacks = 1f;
-        [SerializeField] private float weaponDamage = 5f;
+        [SerializeField] private Transform handTransform = null;
+        [SerializeField] private Weapon defaultWeapon = null;
 
         /// <summary>
         /// GameObject components
@@ -25,6 +25,7 @@ namespace RPG.Combat
 
         private Health _target;
         private float _timeSinceLastAttack = Mathf.Infinity;
+        private Weapon _currentWeapon;
 
         /// <summary>
         /// Animator parameters
@@ -37,6 +38,8 @@ namespace RPG.Combat
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
             _mover = GetComponent<Mover>();
+
+            EquipWeapon(defaultWeapon);
         }
 
         private void Update()
@@ -56,7 +59,7 @@ namespace RPG.Combat
             }
 
             // Get in range of the target
-            if (_target != null && !GetIsInRange(_target.transform, weaponRange))
+            if (_target != null && !GetIsInRange(_target.transform, defaultWeapon.WeaponRange))
             {
                 _mover.MoveTo(_target.transform.position, 1f);
             }
@@ -79,7 +82,7 @@ namespace RPG.Combat
             }
 
             // Take damage at point of impact
-            _target.TakeDamage(weaponDamage);
+            _target.TakeDamage(_currentWeapon.WeaponDamage);
         }
 
         /// <summary>
@@ -131,6 +134,12 @@ namespace RPG.Combat
             _target = combatTarget.GetComponent<Health>();
         }
 
+        public void EquipWeapon(Weapon weapon)
+        {
+            _currentWeapon = weapon;
+            weapon.Spawn(handTransform, _animator);
+        }
+
         /// <summary>
         /// The state of attacking the target
         /// </summary>
@@ -169,7 +178,7 @@ namespace RPG.Combat
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, weaponRange);
+            Gizmos.DrawWireSphere(transform.position, defaultWeapon.WeaponRange);
         }
     }
 }
