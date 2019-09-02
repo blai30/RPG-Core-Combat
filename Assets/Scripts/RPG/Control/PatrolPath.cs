@@ -15,11 +15,19 @@ namespace RPG.Control
             return (index + 1) % transform.childCount;
         }
 
+        /// <summary>
+        /// Get position of a waypoint by index
+        /// </summary>
+        /// <param name="index">Index of the waypoint</param>
+        /// <returns>Vector3 position of the waypoint</returns>
         public Vector3 GetWaypointPosition(int index)
         {
             return transform.GetChild(index).position;
         }
 
+        /// <summary>
+        /// Draw lines and points to visualize patrol path
+        /// </summary>
         private void OnDrawGizmos()
         {
             for (int i = 0; i < transform.childCount; i++)

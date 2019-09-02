@@ -14,11 +14,19 @@ namespace RPG.SceneManagement
             _canvasGroup = GetComponent<CanvasGroup>();
         }
 
+        /// <summary>
+        /// Instantly fade out
+        /// </summary>
         public void FadeOutImmediate()
         {
             _canvasGroup.alpha = 1;
         }
 
+        /// <summary>
+        /// Fade out of the scene
+        /// </summary>
+        /// <param name="duration">Duration of the fade</param>
+        /// <returns></returns>
         public IEnumerator FadeOut(float duration)
         {
             while (_canvasGroup.alpha < 1)
@@ -28,6 +36,11 @@ namespace RPG.SceneManagement
             }
         }
 
+        /// <summary>
+        /// Fade into the scene
+        /// </summary>
+        /// <param name="duration">Duration of the fade</param>
+        /// <returns></returns>
         public IEnumerator FadeIn(float duration)
         {
             while (_canvasGroup.alpha > 0)

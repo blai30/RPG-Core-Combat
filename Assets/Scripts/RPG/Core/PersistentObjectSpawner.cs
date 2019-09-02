@@ -18,10 +18,14 @@ namespace RPG.Core
                 return;
             }
 
+            // Spawn objects and prevent any new calls
             SpawnPersistentObjects();
             _hasSpawned = true;
         }
 
+        /// <summary>
+        /// Spawn the persistent object prefab with all of its nested prefabs
+        /// </summary>
         private void SpawnPersistentObjects()
         {
             GameObject persistentObject = Instantiate(persistentObjectPrefab);

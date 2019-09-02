@@ -14,6 +14,7 @@ namespace RPG.SceneManagement
 
         private IEnumerator Start()
         {
+            // Fade into the scene when game starts
             Fader fader = FindObjectOfType<Fader>();
             fader.FadeOutImmediate();
             yield return GetComponent<SavingSystem>().LoadLastScene(DefaultSaveFile);
@@ -22,23 +23,31 @@ namespace RPG.SceneManagement
 
         void Update()
         {
+            // Save the game state
             if (Input.GetKeyDown(KeyCode.S))
             {
                 Save();
             }
 
+            // Load the game state
             if (Input.GetKeyDown(KeyCode.L))
             {
                 Load();
             }
         }
 
+        /// <summary>
+        /// Saves the state of all saveable entities
+        /// </summary>
         public void Save()
         {
             // Call to the saving system save
             GetComponent<SavingSystem>().Save(DefaultSaveFile);
         }
 
+        /// <summary>
+        /// Loads the state of all saveable entities
+        /// </summary>
         public void Load()
         {
             // Call to the saving system load
