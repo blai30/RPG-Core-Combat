@@ -13,8 +13,10 @@ namespace RPG.Combat
         /// Fighter stats
         /// </summary>
         [SerializeField] private float timeBetweenAttacks = 1f;
-        [SerializeField] private Transform handTransform = null;
+        [SerializeField] private Transform leftHandTransform = null;
+        [SerializeField] private Transform rightHandTransform = null;
         [SerializeField] private Weapon defaultWeapon = null;
+        [SerializeField] private Weapon currentWeapon = null;
 
         /// <summary>
         /// GameObject components
@@ -25,7 +27,6 @@ namespace RPG.Combat
 
         private Health _target;
         private float _timeSinceLastAttack = Mathf.Infinity;
-        private Weapon _currentWeapon;
 
         /// <summary>
         /// Animator parameters
@@ -82,7 +83,7 @@ namespace RPG.Combat
             }
 
             // Take damage at point of impact
-            _target.TakeDamage(_currentWeapon.WeaponDamage);
+            _target.TakeDamage(currentWeapon.WeaponDamage);
         }
 
         /// <summary>
@@ -136,8 +137,8 @@ namespace RPG.Combat
 
         public void EquipWeapon(Weapon weapon)
         {
-            _currentWeapon = weapon;
-            weapon.Spawn(handTransform, _animator);
+            currentWeapon = weapon;
+            weapon.Spawn(leftHandTransform, rightHandTransform, _animator);
         }
 
         /// <summary>
