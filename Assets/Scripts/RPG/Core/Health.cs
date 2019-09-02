@@ -75,7 +75,8 @@ namespace RPG.Core
         private void Die()
         {
             isDead = true;
-            _animator.SetTrigger(DieTrigger);
+            // Get new animator component because Start is not called when loading
+            GetComponent<Animator>().SetTrigger(DieTrigger);
             GetComponent<ActionScheduler>().CancelCurrentAction();
         }
     }
