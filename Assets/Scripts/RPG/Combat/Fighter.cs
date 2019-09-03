@@ -60,7 +60,7 @@ namespace RPG.Combat
             }
 
             // Get in range of the target
-            if (_target != null && !GetIsInRange(_target.transform, defaultWeapon.WeaponRange))
+            if (_target != null && !GetIsInRange(_target.transform, currentWeapon.WeaponRange))
             {
                 _mover.MoveTo(_target.transform.position, 1f);
             }
@@ -82,8 +82,24 @@ namespace RPG.Combat
                 return;
             }
 
-            // Take damage at point of impact
-            _target.TakeDamage(currentWeapon.WeaponDamage);
+            if (currentWeapon.HasProjectile)
+            {
+                // Fire projectile
+                currentWeapon.LaunchProjectile(leftHandTransform, rightHandTransform, _target);
+            }
+            else
+            {
+                // Take damage at point of impact
+                _target.TakeDamage(currentWeapon.WeaponDamage);
+            }
+        }
+
+        /// <summary>
+        /// Animation Event called from the animation
+        /// </summary>
+        void Shoot()
+        {
+            Hit();
         }
 
         /// <summary>

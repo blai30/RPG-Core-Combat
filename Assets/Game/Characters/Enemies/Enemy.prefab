@@ -88,7 +88,7 @@ PrefabInstance:
     - target: {fileID: 13787996, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: bfbe2e8b331e2cc42be1591f949c0e41, type: 2}
+      objectReference: {fileID: 2100000, guid: 78be5954566d2d848918e51832341fa3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
 --- !u!4 &2841841705655865324 stripped
@@ -178,7 +178,7 @@ PrefabInstance:
     - target: {fileID: -8822163331786360780, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
       propertyPath: healthPoints
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1856932113, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
       propertyPath: weaponRange

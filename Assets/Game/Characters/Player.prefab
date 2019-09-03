@@ -165,7 +165,7 @@ PrefabInstance:
     - target: {fileID: -8822163331786360780, guid: 649e6b74cb03cdd49b218179172bef05,
         type: 3}
       propertyPath: healthPoints
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 1856932113, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
       propertyPath: weaponDamage
