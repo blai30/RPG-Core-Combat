@@ -37,7 +37,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 489998, guid: 13af847dfa6dbe844ba4b7c902f98f67, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 489998, guid: 13af847dfa6dbe844ba4b7c902f98f67, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -80,11 +80,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4383773358877687774, guid: ea28b4537822e9942b7ac7866923fba2,
-        type: 3}
-      propertyPath: m_Name
-      value: Sword Pickup
-      objectReference: {fileID: 0}
     - target: {fileID: 4383773358877687775, guid: ea28b4537822e9942b7ac7866923fba2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -140,12 +135,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4383773358877687774, guid: ea28b4537822e9942b7ac7866923fba2,
+        type: 3}
+      propertyPath: m_Name
+      value: Sword Pickup
+      objectReference: {fileID: 0}
     - target: {fileID: 4383773358877687747, guid: ea28b4537822e9942b7ac7866923fba2,
         type: 3}
       propertyPath: weapon
       value: 
       objectReference: {fileID: 11400000, guid: 88279a1eb868842498b66c7f45ce4296,
         type: 2}
+    - target: {fileID: 4373843341134697893, guid: ea28b4537822e9942b7ac7866923fba2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea28b4537822e9942b7ac7866923fba2, type: 3}
 --- !u!4 &8033813575323466619 stripped

@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using RPG.Core;
 using RPG.Movement;
+using RPG.Saving;
 using UnityEngine;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour, IAction
+    public class Fighter : MonoBehaviour, IAction, ISaveable
     {
         /// <summary>
         /// Fighter stats
@@ -40,7 +41,10 @@ namespace RPG.Combat
             _animator = GetComponent<Animator>();
             _mover = GetComponent<Mover>();
 
-            EquipWeapon(defaultWeapon);
+            if (currentWeapon == null)
+            {
+                EquipWeapon(defaultWeapon);
+            }
         }
 
         private void Update()
@@ -155,6 +159,17 @@ namespace RPG.Combat
         {
             currentWeapon = weapon;
             weapon.Spawn(leftHandTransform, rightHandTransform, _animator);
+        }
+
+        public object CaptureState()
+        {
+            return currentWeapon.name;
+        }
+
+        public void RestoreState(object state)
+        {
+            string weaponName = (string) state;
+            Weapon weapon = Resources.Load<Weapon>(weaponName);
         }
 
         /// <summary>
