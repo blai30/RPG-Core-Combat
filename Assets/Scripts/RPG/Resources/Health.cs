@@ -29,7 +29,7 @@ namespace RPG.Resources
         {
             _animator = GetComponent<Animator>();
 
-            healthPoints = GetComponent<BaseStats>().GetHealth();
+            healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace RPG.Resources
 
         public float GetPercentage()
         {
-            return 100 * (healthPoints / GetComponent<BaseStats>().GetHealth());
+            return 100 * (healthPoints / GetComponent<BaseStats>().GetStat(Stat.Health));
         }
 
         public object CaptureState()
@@ -95,7 +95,7 @@ namespace RPG.Resources
                 return;
             }
 
-            experience.GainExperience(GetComponent<BaseStats>().GetExperienceReward());
+            experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
         }
     }
 }
