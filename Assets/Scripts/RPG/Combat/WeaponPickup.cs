@@ -9,6 +9,13 @@ namespace RPG.Combat
     {
         [SerializeField] private Weapon weapon = null;
         [SerializeField] private float respawnTime = 5f;
+        [SerializeField] private GameObject cube;
+
+        private void Update()
+        {
+            Vector3 rotationDirection = new Vector3(0, 20, 0);
+            cube.transform.Rotate(rotationDirection * Time.deltaTime);
+        }
 
         private void OnTriggerEnter(Collider other)
         {

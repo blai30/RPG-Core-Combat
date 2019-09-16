@@ -139,3 +139,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 11400000, guid: ebfba93674d10d642b27d6180c19f4c6, type: 2}
   respawnTime: 5
+  cube: {fileID: 3230712776805258854}

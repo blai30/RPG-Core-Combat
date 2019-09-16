@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using RPG.Core;
 using RPG.Movement;
+using RPG.Resources;
 using RPG.Saving;
 using UnityEngine;
 
@@ -28,6 +29,8 @@ namespace RPG.Combat
 
         private Health _target;
         private float _timeSinceLastAttack = Mathf.Infinity;
+
+        public Health Target => _target;
 
         /// <summary>
         /// Animator parameters
@@ -89,12 +92,12 @@ namespace RPG.Combat
             if (currentWeapon.HasProjectile)
             {
                 // Fire projectile
-                currentWeapon.LaunchProjectile(leftHandTransform, rightHandTransform, _target);
+                currentWeapon.LaunchProjectile(leftHandTransform, rightHandTransform, _target, gameObject);
             }
             else
             {
                 // Take damage at point of impact
-                _target.TakeDamage(currentWeapon.WeaponDamage);
+                _target.TakeDamage(gameObject, currentWeapon.WeaponDamage);
             }
         }
 
@@ -169,7 +172,7 @@ namespace RPG.Combat
         public void RestoreState(object state)
         {
             string weaponName = (string) state;
-            Weapon weapon = Resources.Load<Weapon>(weaponName);
+            Weapon weapon = UnityEngine.Resources.Load<Weapon>(weaponName);
         }
 
         /// <summary>
@@ -210,7 +213,10 @@ namespace RPG.Combat
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, defaultWeapon.WeaponRange);
+            if (currentWeapon != null)
+            {
+                Gizmos.DrawWireSphere(transform.position, currentWeapon.WeaponRange);
+            }
         }
     }
 }

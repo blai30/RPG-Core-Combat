@@ -1,5 +1,5 @@
 using System;
-using RPG.Core;
+using RPG.Resources;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -14,6 +14,7 @@ namespace RPG.Combat
         [SerializeField] private GameObject[] destroyOnHit = null;
 
         private Health _target = null;
+        private GameObject _instigator;
         private float _damage = 0f;
 
         private void Start()
@@ -36,10 +37,11 @@ namespace RPG.Combat
             transform.Translate(Time.deltaTime * travelSpeed * Vector3.forward);
         }
 
-        public void SetTarget(Health target, float damage)
+        public void SetTarget(Health target, GameObject instigator, float damage)
         {
             _target = target;
             _damage = damage;
+            _instigator = instigator;
 
             Destroy(gameObject, maxLifetime);
         }
@@ -55,7 +57,7 @@ namespace RPG.Combat
             {
                 return _target.transform.position;
             }
-            return _target.transform.position + (Vector3.up * targetCapsule.height / 2);
+            return _target.transform.position + (Vector3.up * (targetCapsule.height / 2));
         }
 
         private void OnTriggerEnter(Collider other)
@@ -70,7 +72,7 @@ namespace RPG.Combat
                 return;
             }
 
-            _target.TakeDamage(_damage);
+            _target.TakeDamage(_instigator, _damage);
 
             travelSpeed = 0;
 
