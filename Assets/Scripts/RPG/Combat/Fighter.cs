@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using RPG.Core;
+﻿using RPG.Core;
 using RPG.Movement;
 using RPG.Resources;
 using RPG.Saving;
