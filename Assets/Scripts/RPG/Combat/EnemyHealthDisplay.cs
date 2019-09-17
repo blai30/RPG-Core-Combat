@@ -1,5 +1,4 @@
-﻿using System;
-using RPG.Resources;
+﻿using RPG.Resources;
 using TMPro;
 using UnityEngine;
 
@@ -28,8 +27,9 @@ namespace RPG.Combat
                 return;
             }
 
+            // Display health percentage and automatically update
             Health health = _fighter.Target;
-            _text.text = String.Format("{0:0.0}%", health.GetPercentage());
+            _text.text = string.Format("{0:0.0}%", health.GetPercentage());
         }
     }
 }

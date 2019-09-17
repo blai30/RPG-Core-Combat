@@ -1,5 +1,4 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace RPG.Resources
@@ -21,7 +20,8 @@ namespace RPG.Resources
 
         private void Update()
         {
-            _text.text = String.Format("{0:0.0}%", _health.GetPercentage());
+            // Display health percentage and automatically update
+            _text.text = string.Format("{0:0.0}%", _health.GetPercentage());
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace RPG.Stats
@@ -21,7 +20,8 @@ namespace RPG.Stats
 
         private void Update()
         {
-            _text.text = String.Format("{0:0}", _experience.GetPoints());
+            // Display experience points and automatically update
+            _text.text = string.Format("{0:0}", _experience.GetPoints());
         }
     }
 }

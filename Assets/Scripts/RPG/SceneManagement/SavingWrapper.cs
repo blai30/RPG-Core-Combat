@@ -12,13 +12,9 @@ namespace RPG.SceneManagement
 
         private const string DefaultSaveFile = "save";
 
-        private IEnumerator Start()
+        private void Awake()
         {
-            // Fade into the scene when game starts
-            Fader fader = FindObjectOfType<Fader>();
-            fader.FadeOutImmediate();
-            yield return GetComponent<SavingSystem>().LoadLastScene(DefaultSaveFile);
-            yield return fader.FadeIn(fadeInTime);
+            StartCoroutine(LoadLastScene());
         }
 
         void Update()
@@ -34,6 +30,21 @@ namespace RPG.SceneManagement
             {
                 Load();
             }
+
+            // Delete the game state
+            if (Input.GetKeyDown(KeyCode.Delete))
+            {
+                Delete();
+            }
+        }
+
+        private IEnumerator LoadLastScene()
+        {
+            // Fade into the scene when game starts
+            Fader fader = FindObjectOfType<Fader>();
+            fader.FadeOutImmediate();
+            yield return GetComponent<SavingSystem>().LoadLastScene(DefaultSaveFile);
+            yield return fader.FadeIn(fadeInTime);
         }
 
         /// <summary>
@@ -52,6 +63,14 @@ namespace RPG.SceneManagement
         {
             // Call to the saving system load
             GetComponent<SavingSystem>().Load(DefaultSaveFile);
+        }
+
+        /// <summary>
+        /// Deletes the save file from the local storage
+        /// </summary>
+        public void Delete()
+        {
+            GetComponent<SavingSystem>().Delete(DefaultSaveFile);
         }
     }
 }

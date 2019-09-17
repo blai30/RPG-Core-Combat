@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using RPG.Core;
+﻿using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
 using UnityEngine;
@@ -12,7 +10,7 @@ namespace RPG.Resources
         /// <summary>
         /// Properties of Health class
         /// </summary>
-        [SerializeField] private float healthPoints = 100f;
+        [SerializeField] private float healthPoints = -1f;
         [SerializeField] private bool isDead = false;
 
         /// <summary>
@@ -29,7 +27,10 @@ namespace RPG.Resources
         {
             _animator = GetComponent<Animator>();
 
-            healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+            if (healthPoints < 0)
+            {
+                healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+            }
         }
 
         /// <summary>
@@ -55,6 +56,10 @@ namespace RPG.Resources
             }
         }
 
+        /// <summary>
+        /// Fetch the percentage of current health over max health
+        /// </summary>
+        /// <returns>Current health over max health</returns>
         public float GetPercentage()
         {
             return 100 * (healthPoints / GetComponent<BaseStats>().GetStat(Stat.Health));
@@ -86,6 +91,10 @@ namespace RPG.Resources
             GetComponent<ActionScheduler>().CancelCurrentAction();
         }
 
+        /// <summary>
+        /// Give experience points to instigator
+        /// </summary>
+        /// <param name="instigator">GameObject that kills this GameObject (the Player)</param>
         private void AwardExperience(GameObject instigator)
         {
             Experience experience = instigator.GetComponent<Experience>();

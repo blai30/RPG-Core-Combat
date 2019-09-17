@@ -155,6 +155,10 @@ namespace RPG.Combat
             _target = combatTarget.GetComponent<Health>();
         }
 
+        /// <summary>
+        /// Equip the weapon that is passed in
+        /// </summary>
+        /// <param name="weapon">Weapon to be equipped</param>
         public void EquipWeapon(Weapon weapon)
         {
             currentWeapon = weapon;
