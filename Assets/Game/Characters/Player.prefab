@@ -1,5 +1,17 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &4550518813783923098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6141503304224941856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99088a5938b0fda458f338e832117aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9137145062960186716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,18 +25,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   experiencePoints: 0
---- !u!114 &4550518813783923098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6141503304224941856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99088a5938b0fda458f338e832117aad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8837642432018129253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -180,6 +180,11 @@ PrefabInstance:
       propertyPath: healthPoints
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: -8822163331786360780, guid: 649e6b74cb03cdd49b218179172bef05,
+        type: 3}
+      propertyPath: regenerationPercentage
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 1856932113, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
       propertyPath: weaponDamage
       value: 1
@@ -221,6 +226,12 @@ PrefabInstance:
       propertyPath: characterClass
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2972298621101924364, guid: 649e6b74cb03cdd49b218179172bef05,
+        type: 3}
+      propertyPath: levelUpEffect
+      value: 
+      objectReference: {fileID: 5115317439104767635, guid: 165adb71cd243c044a44cbfc1f1e43c9,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
 --- !u!1 &6141503304224941856 stripped

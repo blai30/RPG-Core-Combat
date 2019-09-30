@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace RPG.Stats
 {
@@ -7,6 +8,9 @@ namespace RPG.Stats
         [SerializeField, Range(1, 99)] private int startingLevel = 1;
         [SerializeField] private CharacterClass characterClass;
         [SerializeField] private Progression progression = null;
+        [SerializeField] private GameObject levelUpEffect = null;
+
+        public event Action onLevelUp;
 
         /// <summary>
         /// GameObject components
@@ -26,19 +30,6 @@ namespace RPG.Stats
             if (_experience != null)
             {
                 _experience.onExperienceGained += UpdateLevel;
-            }
-        }
-
-        /// <summary>
-        /// Called when experience changes, update level depending on experience parameters
-        /// </summary>
-        private void UpdateLevel()
-        {
-            int newLevel = CalculateLevel();
-            if (newLevel > _currentLevel)
-            {
-                _currentLevel = newLevel;
-                print("Levelled up to level " + newLevel + "!");
             }
         }
 
@@ -91,6 +82,29 @@ namespace RPG.Stats
 
             // Level starts at 1 so level will be 1 greater than the array of levels
             return penultimateLevel + 1;
+        }
+
+        /// <summary>
+        /// Called when experience changes, update level depending on experience parameters
+        /// </summary>
+        private void UpdateLevel()
+        {
+            int newLevel = CalculateLevel();
+            if (newLevel > _currentLevel)
+            {
+                _currentLevel = newLevel;
+                LevelUpEffect();
+                onLevelUp();
+                print("Levelled up to level " + newLevel + "!");
+            }
+        }
+
+        /// <summary>
+        /// Spawn visual effects upon level up
+        /// </summary>
+        private void LevelUpEffect()
+        {
+            Instantiate(levelUpEffect, transform);
         }
     }
 }

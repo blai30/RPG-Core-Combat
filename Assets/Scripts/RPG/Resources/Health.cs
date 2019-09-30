@@ -12,11 +12,13 @@ namespace RPG.Resources
         /// </summary>
         [SerializeField] private float healthPoints = -1f;
         [SerializeField] private bool isDead = false;
+        [SerializeField, Range(0, 1)] private float regenerationPercentage = 0.7f;
 
         /// <summary>
         /// GameObject components
         /// </summary>
         private Animator _animator;
+        private BaseStats _baseStats;
 
         /// <summary>
         /// Animator parameters
@@ -26,6 +28,9 @@ namespace RPG.Resources
         private void Start()
         {
             _animator = GetComponent<Animator>();
+            _baseStats = GetComponent<BaseStats>();
+
+            _baseStats.onLevelUp += RegenerateHealth;
 
             if (healthPoints < 0)
             {
@@ -105,6 +110,12 @@ namespace RPG.Resources
             }
 
             experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
+        }
+
+        private void RegenerateHealth()
+        {
+            float regenHealthPoints = _baseStats.GetStat(Stat.Health) * regenerationPercentage;
+            healthPoints = Mathf.Max(healthPoints, regenHealthPoints);
         }
     }
 }
