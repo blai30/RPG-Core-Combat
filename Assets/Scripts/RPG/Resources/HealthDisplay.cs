@@ -5,23 +5,23 @@ namespace RPG.Resources
 {
     public class HealthDisplay : MonoBehaviour
     {
-        private Health _health;
-        private TextMeshProUGUI _text;
+        private Health m_health;
+        private TextMeshProUGUI m_text;
 
         private void Awake()
         {
-            _health = GameObject.FindWithTag("Player").GetComponent<Health>();
+            m_health = GameObject.FindWithTag("Player").GetComponent<Health>();
         }
 
         private void Start()
         {
-            _text = GetComponent<TextMeshProUGUI>();
+            m_text = GetComponent<TextMeshProUGUI>();
         }
 
         private void Update()
         {
             // Display health percentage and automatically update
-            _text.text = string.Format("{0:0.0}%", _health.GetPercentage());
+            m_text.text = string.Format("{0:0.0}%", m_health.GetPercentage());
         }
     }
 }

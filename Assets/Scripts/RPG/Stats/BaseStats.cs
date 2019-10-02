@@ -10,26 +10,26 @@ namespace RPG.Stats
         [SerializeField] private Progression progression = null;
         [SerializeField] private GameObject levelUpEffect = null;
 
-        public event Action onLevelUp;
+        public event Action OnLevelUp;
 
         /// <summary>
         /// GameObject components
         /// </summary>
-        private Experience _experience;
+        private Experience m_experience;
 
-        private int _currentLevel = 0;
+        private int m_currentLevel = 0;
 
         private void Start()
         {
-            _experience = GetComponent<Experience>();
+            m_experience = GetComponent<Experience>();
 
             // Set level
-            _currentLevel = CalculateLevel();
+            m_currentLevel = CalculateLevel();
 
             // Add event to listen for experience changes
-            if (_experience != null)
+            if (m_experience != null)
             {
-                _experience.onExperienceGained += UpdateLevel;
+                m_experience.OnExperienceGained += UpdateLevel;
             }
         }
 
@@ -49,11 +49,11 @@ namespace RPG.Stats
         /// <returns>Current level value</returns>
         public int GetLevel()
         {
-            if (_currentLevel < 1)
+            if (m_currentLevel < 1)
             {
-                _currentLevel = CalculateLevel();
+                m_currentLevel = CalculateLevel();
             }
-            return _currentLevel;
+            return m_currentLevel;
         }
 
         /// <summary>
@@ -63,12 +63,12 @@ namespace RPG.Stats
         public int CalculateLevel()
         {
             // Enemies do not level up
-            if (_experience == null)
+            if (m_experience == null)
             {
                 return startingLevel;
             }
 
-            float currentExp = _experience.GetPoints();
+            float currentExp = m_experience.GetPoints();
             // Calculate level based on how many experience milestones have been reached
             int penultimateLevel = progression.GetLevels(Stat.ExperienceToLevelUp, characterClass);
             for (int level = 1; level <= penultimateLevel; level++)
@@ -90,11 +90,11 @@ namespace RPG.Stats
         private void UpdateLevel()
         {
             int newLevel = CalculateLevel();
-            if (newLevel > _currentLevel)
+            if (newLevel > m_currentLevel)
             {
-                _currentLevel = newLevel;
+                m_currentLevel = newLevel;
                 LevelUpEffect();
-                onLevelUp();
+                OnLevelUp();
                 print("Levelled up to level " + newLevel + "!");
             }
         }

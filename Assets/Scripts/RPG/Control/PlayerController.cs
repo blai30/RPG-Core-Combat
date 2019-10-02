@@ -9,29 +9,29 @@ namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
-        private Camera _camera;
+        private Camera m_camera;
 
         /// <summary>
         /// GameObject components
         /// </summary>
-        private Fighter _fighter;
-        private Health _health;
-        private Mover _mover;
+        private Fighter m_fighter;
+        private Health m_health;
+        private Mover m_mover;
 
         // Start is called before the first frame update
         void Start()
         {
-            _camera = Camera.main;
-            _fighter = GetComponent<Fighter>();
-            _health = GetComponent<Health>();
-            _mover = GetComponent<Mover>();
+            m_camera = Camera.main;
+            m_fighter = GetComponent<Fighter>();
+            m_health = GetComponent<Health>();
+            m_mover = GetComponent<Mover>();
         }
 
         // Update is called once per frame
         void Update()
         {
             // No behavior when dead
-            if (_health.IsDead)
+            if (m_health.IsDead)
             {
                 return;
             }
@@ -55,7 +55,7 @@ namespace RPG.Control
         /// <returns>Ray of the mouse click</returns>
         private Ray GetMouseRay()
         {
-            return _camera.ScreenPointToRay(Input.mousePosition);
+            return m_camera.ScreenPointToRay(Input.mousePosition);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace RPG.Control
                 }
 
                 // Continue if cannot attack target
-                if (!_fighter.CanAttack(target.gameObject))
+                if (!m_fighter.CanAttack(target.gameObject))
                 {
                     continue;
                 }
@@ -85,7 +85,7 @@ namespace RPG.Control
                 // Attack the target
                 if (Input.GetMouseButton(0))
                 {
-                    _fighter.Attack(target.gameObject);
+                    m_fighter.Attack(target.gameObject);
                 }
 
                 return true;
@@ -108,7 +108,7 @@ namespace RPG.Control
                 // Click to move
                 if (Input.GetMouseButton(0))
                 {
-                    _mover.StartMoveAction(hit.point, 1f);
+                    m_mover.StartMoveAction(hit.point, 1f);
                 }
 
                 return true;

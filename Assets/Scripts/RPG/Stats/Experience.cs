@@ -11,7 +11,7 @@ namespace RPG.Stats
         /// <summary>
         /// Action for when experience is gained
         /// </summary>
-        public event Action onExperienceGained;
+        public event Action OnExperienceGained;
 
         /// <summary>
         /// Gain experience from value that is passed in, trigger action
@@ -20,7 +20,7 @@ namespace RPG.Stats
         public void GainExperience(float experience)
         {
             experiencePoints += experience;
-            onExperienceGained();
+            OnExperienceGained();
         }
 
         /// <summary>

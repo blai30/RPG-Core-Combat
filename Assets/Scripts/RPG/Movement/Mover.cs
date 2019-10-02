@@ -16,10 +16,10 @@ namespace RPG.Movement
         /// <summary>
         /// GameObject Components
         /// </summary>
-        private ActionScheduler _actionScheduler;
-        private Animator _animator;
-        private Health _health;
-        private NavMeshAgent _navMeshAgent;
+        private ActionScheduler m_actionScheduler;
+        private Animator m_animator;
+        private Health m_health;
+        private NavMeshAgent m_navMeshAgent;
 
         /// <summary>
         /// Animator parameters
@@ -29,16 +29,16 @@ namespace RPG.Movement
         // Start is called before the first frame update
         void Start()
         {
-            _actionScheduler = GetComponent<ActionScheduler>();
-            _animator = GetComponent<Animator>();
-            _health = GetComponent<Health>();
-            _navMeshAgent = GetComponent<NavMeshAgent>();
+            m_actionScheduler = GetComponent<ActionScheduler>();
+            m_animator = GetComponent<Animator>();
+            m_health = GetComponent<Health>();
+            m_navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            _navMeshAgent.enabled = !_health.IsDead;
+            m_navMeshAgent.enabled = !m_health.IsDead;
 
             UpdateAnimator();
         }
@@ -49,7 +49,7 @@ namespace RPG.Movement
         /// <param name="destination">Destination for navmesh agent to move to</param>
         public void StartMoveAction(Vector3 destination, float speedFraction)
         {
-            _actionScheduler.StartAction(this);
+            m_actionScheduler.StartAction(this);
             MoveTo(destination, speedFraction);
         }
 
@@ -60,9 +60,9 @@ namespace RPG.Movement
         public void MoveTo(Vector3 destination, float speedFraction)
         {
             // Move navmesh agent to destination (raycast hit point)
-            _navMeshAgent.destination = destination;
-            _navMeshAgent.speed = maxMoveSpeed * Mathf.Clamp01(speedFraction);
-            _navMeshAgent.isStopped = false;
+            m_navMeshAgent.destination = destination;
+            m_navMeshAgent.speed = maxMoveSpeed * Mathf.Clamp01(speedFraction);
+            m_navMeshAgent.isStopped = false;
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace RPG.Movement
         /// </summary>
         public void Cancel()
         {
-            _navMeshAgent.isStopped = true;
+            m_navMeshAgent.isStopped = true;
         }
 
         public object CaptureState()
@@ -92,20 +92,20 @@ namespace RPG.Movement
         private void UpdateAnimator()
         {
             // Convert global velocity to local space
-            Vector3 velocity = _navMeshAgent.velocity;
+            Vector3 velocity = m_navMeshAgent.velocity;
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);
             float speed = localVelocity.z;
-            _animator.SetFloat(ForwardSpeed, speed);
+            m_animator.SetFloat(ForwardSpeed, speed);
         }
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.magenta;
             // Draw destination gizmos only when destination is not within range of player
-            if (_navMeshAgent != null && Vector3.Distance(transform.position, _navMeshAgent.destination) >= 0.2f)
+            if (m_navMeshAgent != null && Vector3.Distance(transform.position, m_navMeshAgent.destination) >= 0.2f)
             {
-                Gizmos.DrawLine(transform.position, _navMeshAgent.destination);
-                Gizmos.DrawSphere(_navMeshAgent.destination, 0.2f);
+                Gizmos.DrawLine(transform.position, m_navMeshAgent.destination);
+                Gizmos.DrawSphere(m_navMeshAgent.destination, 0.2f);
             }
         }
     }

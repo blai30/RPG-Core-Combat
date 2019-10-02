@@ -9,14 +9,14 @@ namespace RPG.Cinematics
     [RequireComponent(typeof(PlayableDirector))]
     public class CinematicTrigger : MonoBehaviour
     {
-        private bool _triggered = false;
+        private bool m_triggered = false;
 
         private void OnTriggerEnter(Collider other)
         {
             // Play cinematic only once when player enters trigger collider
-            if (!_triggered && other.CompareTag("Player"))
+            if (!m_triggered && other.CompareTag("Player"))
             {
-                _triggered = true;
+                m_triggered = true;
                 GetComponent<PlayableDirector>().Play();
             }
         }

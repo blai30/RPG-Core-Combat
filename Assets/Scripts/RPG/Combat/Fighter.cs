@@ -20,14 +20,14 @@ namespace RPG.Combat
         /// <summary>
         /// GameObject components
         /// </summary>
-        private ActionScheduler _actionScheduler;
-        private Animator _animator;
-        private Mover _mover;
+        private ActionScheduler m_actionScheduler;
+        private Animator m_animator;
+        private Mover m_mover;
 
-        private Health _target;
-        private float _timeSinceLastAttack = Mathf.Infinity;
+        private Health m_target;
+        private float m_timeSinceLastAttack = Mathf.Infinity;
 
-        public Health Target => _target;
+        public Health Target => m_target;
 
         /// <summary>
         /// Animator parameters
@@ -37,9 +37,9 @@ namespace RPG.Combat
 
         private void Start()
         {
-            _actionScheduler = GetComponent<ActionScheduler>();
-            _animator = GetComponent<Animator>();
-            _mover = GetComponent<Mover>();
+            m_actionScheduler = GetComponent<ActionScheduler>();
+            m_animator = GetComponent<Animator>();
+            m_mover = GetComponent<Mover>();
 
             if (currentWeapon == null)
             {
@@ -49,29 +49,29 @@ namespace RPG.Combat
 
         private void Update()
         {
-            _timeSinceLastAttack += Time.deltaTime;
+            m_timeSinceLastAttack += Time.deltaTime;
 
             // No target exists
-            if (_target == null)
+            if (m_target == null)
             {
                 return;
             }
 
             // Target is already dead
-            if (_target.IsDead)
+            if (m_target.IsDead)
             {
                 return;
             }
 
             // Get in range of the target
-            if (_target != null && !GetIsInRange(_target.transform, currentWeapon.WeaponRange))
+            if (m_target != null && !GetIsInRange(m_target.transform, currentWeapon.WeaponRange))
             {
-                _mover.MoveTo(_target.transform.position, 1f);
+                m_mover.MoveTo(m_target.transform.position, 1f);
             }
             else
             {
                 // Attack the target when in range
-                _mover.Cancel();
+                m_mover.Cancel();
                 AttackBehavior();
             }
         }
@@ -81,7 +81,7 @@ namespace RPG.Combat
         /// </summary>
         void Hit()
         {
-            if (_target == null)
+            if (m_target == null)
             {
                 return;
             }
@@ -89,12 +89,12 @@ namespace RPG.Combat
             if (currentWeapon.HasProjectile)
             {
                 // Fire projectile
-                currentWeapon.LaunchProjectile(leftHandTransform, rightHandTransform, _target, gameObject);
+                currentWeapon.LaunchProjectile(leftHandTransform, rightHandTransform, m_target, gameObject);
             }
             else
             {
                 // Take damage at point of impact
-                _target.TakeDamage(gameObject, currentWeapon.WeaponDamage);
+                m_target.TakeDamage(gameObject, currentWeapon.WeaponDamage);
             }
         }
 
@@ -121,8 +121,8 @@ namespace RPG.Combat
         public void Cancel()
         {
             StopAttack();
-            _mover.Cancel();
-            _target = null;
+            m_mover.Cancel();
+            m_target = null;
         }
 
         /// <summary>
@@ -151,8 +151,8 @@ namespace RPG.Combat
         /// <param name="combatTarget">The target to be attacked</param>
         public void Attack(GameObject combatTarget)
         {
-            _actionScheduler.StartAction(this);
-            _target = combatTarget.GetComponent<Health>();
+            m_actionScheduler.StartAction(this);
+            m_target = combatTarget.GetComponent<Health>();
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace RPG.Combat
         public void EquipWeapon(Weapon weapon)
         {
             currentWeapon = weapon;
-            weapon.Spawn(leftHandTransform, rightHandTransform, _animator);
+            weapon.Spawn(leftHandTransform, rightHandTransform, m_animator);
         }
 
         public object CaptureState()
@@ -182,14 +182,14 @@ namespace RPG.Combat
         private void AttackBehavior()
         {
             // Rotate to face the target
-            transform.LookAt(_target.transform);
+            transform.LookAt(m_target.transform);
 
             // Constantly attack over set interval
-            if (_timeSinceLastAttack >= timeBetweenAttacks)
+            if (m_timeSinceLastAttack >= timeBetweenAttacks)
             {
                 // This will trigger the Hit() event
                 TriggerAttack();
-                _timeSinceLastAttack = 0;
+                m_timeSinceLastAttack = 0;
             }
         }
 
@@ -198,8 +198,8 @@ namespace RPG.Combat
         /// </summary>
         private void TriggerAttack()
         {
-            _animator.ResetTrigger(StopAttackTrigger);
-            _animator.SetTrigger(AttackTrigger);
+            m_animator.ResetTrigger(StopAttackTrigger);
+            m_animator.SetTrigger(AttackTrigger);
         }
 
         /// <summary>
@@ -207,8 +207,8 @@ namespace RPG.Combat
         /// </summary>
         private void StopAttack()
         {
-            _animator.ResetTrigger(AttackTrigger);
-            _animator.SetTrigger(StopAttackTrigger);
+            m_animator.ResetTrigger(AttackTrigger);
+            m_animator.SetTrigger(StopAttackTrigger);
         }
 
         private void OnDrawGizmosSelected()

@@ -19,47 +19,47 @@ namespace RPG.Control
         [SerializeField, Range(0, 1)] private float patrolSpeedFraction = 0.2f;
 
         // Target player to chase
-        private GameObject _targetPlayer;
+        private GameObject m_targetPlayer;
 
         /// <summary>
         /// GameObject components
         /// </summary>
-        private Fighter _fighter;
-        private Health _health;
-        private Mover _mover;
+        private Fighter m_fighter;
+        private Health m_health;
+        private Mover m_mover;
 
         /// <summary>
         /// Internal properties
         /// </summary>
-        private Vector3 _guardPosition;
-        private float _timeSinceLastSawPlayer = Mathf.Infinity;
-        private float _timeSinceArrivedAtWaypoint = Mathf.Infinity;
-        private int _currentWaypointIndex = 0;
+        private Vector3 m_guardPosition;
+        private float m_timeSinceLastSawPlayer = Mathf.Infinity;
+        private float m_timeSinceArrivedAtWaypoint = Mathf.Infinity;
+        private int m_currentWaypointIndex = 0;
 
         private void Start()
         {
-            _targetPlayer = GameObject.FindWithTag("Player");
-            _fighter = GetComponent<Fighter>();
-            _health = GetComponent<Health>();
-            _mover = GetComponent<Mover>();
+            m_targetPlayer = GameObject.FindWithTag("Player");
+            m_fighter = GetComponent<Fighter>();
+            m_health = GetComponent<Health>();
+            m_mover = GetComponent<Mover>();
 
-            _guardPosition = transform.position;
+            m_guardPosition = transform.position;
         }
 
         private void Update()
         {
             // No behavior when dead
-            if (_health.IsDead)
+            if (m_health.IsDead)
             {
                 return;
             }
 
-            if (_fighter.GetIsInRange(_targetPlayer.transform, chaseDistance) && _fighter.CanAttack(_targetPlayer))
+            if (m_fighter.GetIsInRange(m_targetPlayer.transform, chaseDistance) && m_fighter.CanAttack(m_targetPlayer))
             {
                 // Attack target player when in range
                 AttackBehavior();
             }
-            else if (_timeSinceLastSawPlayer <= suspicionTime)
+            else if (m_timeSinceLastSawPlayer <= suspicionTime)
             {
                 // Wait around after target player exits chase distance
                 SuspicionBehavior();
@@ -78,8 +78,8 @@ namespace RPG.Control
         /// </summary>
         private void UpdateTimers()
         {
-            _timeSinceLastSawPlayer += Time.deltaTime;
-            _timeSinceArrivedAtWaypoint += Time.deltaTime;
+            m_timeSinceLastSawPlayer += Time.deltaTime;
+            m_timeSinceArrivedAtWaypoint += Time.deltaTime;
         }
 
         /// <summary>
@@ -87,8 +87,8 @@ namespace RPG.Control
         /// </summary>
         private void AttackBehavior()
         {
-            _timeSinceLastSawPlayer = 0;
-            _fighter.Attack(_targetPlayer);
+            m_timeSinceLastSawPlayer = 0;
+            m_fighter.Attack(m_targetPlayer);
         }
 
         /// <summary>
@@ -104,22 +104,22 @@ namespace RPG.Control
         /// </summary>
         private void PatrolBehavior()
         {
-            Vector3 nextPosition = _guardPosition;
+            Vector3 nextPosition = m_guardPosition;
 
             if (patrolPath != null)
             {
                 if (AtWaypoint())
                 {
-                    _timeSinceArrivedAtWaypoint = 0;
+                    m_timeSinceArrivedAtWaypoint = 0;
                     CycleWaypoint();
                 }
 
                 nextPosition = GetCurrentWaypoint();
             }
 
-            if (_timeSinceArrivedAtWaypoint > waypointDwellTime)
+            if (m_timeSinceArrivedAtWaypoint > waypointDwellTime)
             {
-                _mover.StartMoveAction(nextPosition, patrolSpeedFraction);
+                m_mover.StartMoveAction(nextPosition, patrolSpeedFraction);
             }
         }
 
@@ -138,7 +138,7 @@ namespace RPG.Control
         /// </summary>
         private void CycleWaypoint()
         {
-            _currentWaypointIndex = patrolPath.GetNextIndex(_currentWaypointIndex);
+            m_currentWaypointIndex = patrolPath.GetNextIndex(m_currentWaypointIndex);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace RPG.Control
         /// <returns>Position of current waypoint</returns>
         private Vector3 GetCurrentWaypoint()
         {
-            return patrolPath.GetWaypointPosition(_currentWaypointIndex);
+            return patrolPath.GetWaypointPosition(m_currentWaypointIndex);
         }
 
         // Called by Unity

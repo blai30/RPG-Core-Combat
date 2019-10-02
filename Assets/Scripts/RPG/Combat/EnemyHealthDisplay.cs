@@ -6,30 +6,30 @@ namespace RPG.Combat
 {
     public class EnemyHealthDisplay : MonoBehaviour
     {
-        private Fighter _fighter;
-        private TextMeshProUGUI _text;
+        private Fighter m_fighter;
+        private TextMeshProUGUI m_text;
 
         private void Awake()
         {
-            _fighter = GameObject.FindWithTag("Player").GetComponent<Fighter>();
+            m_fighter = GameObject.FindWithTag("Player").GetComponent<Fighter>();
         }
 
         private void Start()
         {
-            _text = GetComponent<TextMeshProUGUI>();
+            m_text = GetComponent<TextMeshProUGUI>();
         }
 
         private void Update()
         {
-            if (_fighter.Target == null)
+            if (m_fighter.Target == null)
             {
-                _text.text = "N/A";
+                m_text.text = "N/A";
                 return;
             }
 
             // Display health percentage and automatically update
-            Health health = _fighter.Target;
-            _text.text = string.Format("{0:0.0}%", health.GetPercentage());
+            Health health = m_fighter.Target;
+            m_text.text = string.Format("{0:0.0}%", health.GetPercentage());
         }
     }
 }

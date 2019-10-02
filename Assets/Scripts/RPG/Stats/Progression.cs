@@ -34,7 +34,7 @@ namespace RPG.Stats
         /// <summary>
         /// Dictionary of character classes and their stats
         /// </summary>
-        private Dictionary<CharacterClass, Dictionary<Stat, float[]>> _lookupTable = null;
+        private Dictionary<CharacterClass, Dictionary<Stat, float[]>> m_lookupTable = null;
 
         /// <summary>
         /// Fetch the stat of a character class given level
@@ -46,7 +46,7 @@ namespace RPG.Stats
         public float GetStat(Stat stat, CharacterClass characterClass, int level)
         {
             BuildLookup();
-            float[] levels = _lookupTable[characterClass][stat];
+            float[] levels = m_lookupTable[characterClass][stat];
             if (levels.Length < level)
             {
                 return 0;
@@ -64,7 +64,7 @@ namespace RPG.Stats
         public int GetLevels(Stat stat, CharacterClass characterClass)
         {
             BuildLookup();
-            float[] levels = _lookupTable[characterClass][stat];
+            float[] levels = m_lookupTable[characterClass][stat];
             return levels.Length;
         }
 
@@ -74,13 +74,13 @@ namespace RPG.Stats
         private void BuildLookup()
         {
             // Dictionary already populated
-            if (_lookupTable != null)
+            if (m_lookupTable != null)
             {
                 return;
             }
 
             // Initialize
-            _lookupTable = new Dictionary<CharacterClass, Dictionary<Stat, float[]>>();
+            m_lookupTable = new Dictionary<CharacterClass, Dictionary<Stat, float[]>>();
             // For every character class with progression
             foreach (ProgressionCharacterClass progressionClass in characterClasses)
             {
@@ -92,7 +92,7 @@ namespace RPG.Stats
                     statLookupTable[progressionStat.stat] = progressionStat.levels;
                 }
 
-                _lookupTable[progressionClass.characterClass] = statLookupTable;
+                m_lookupTable[progressionClass.characterClass] = statLookupTable;
             }
         }
     }

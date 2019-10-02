@@ -5,23 +5,23 @@ namespace RPG.Stats
 {
     public class ExperienceDisplay : MonoBehaviour
     {
-        private Experience _experience;
-        private TextMeshProUGUI _text;
+        private Experience m_experience;
+        private TextMeshProUGUI m_text;
 
         private void Awake()
         {
-            _experience = GameObject.FindWithTag("Player").GetComponent<Experience>();
+            m_experience = GameObject.FindWithTag("Player").GetComponent<Experience>();
         }
 
         private void Start()
         {
-            _text = GetComponent<TextMeshProUGUI>();
+            m_text = GetComponent<TextMeshProUGUI>();
         }
 
         private void Update()
         {
             // Display experience points and automatically update
-            _text.text = string.Format("{0:0}", _experience.GetPoints());
+            m_text.text = string.Format("{0:0}", m_experience.GetPoints());
         }
     }
 }

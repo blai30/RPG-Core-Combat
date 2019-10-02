@@ -16,7 +16,7 @@ namespace RPG.Combat
         [SerializeField] private bool isRightHanded = true;
         [SerializeField] private Projectile projectile = null;
 
-        private const string weaponName = "Weapon";
+        private const string WeaponName = "Weapon";
 
         /// <summary>
         /// Getters
@@ -39,7 +39,7 @@ namespace RPG.Combat
             if (equippedWeapon != null)
             {
                 GameObject weapon = Instantiate(equippedWeapon, GetHandTransform(leftHand, rightHand));
-                weapon.name = weaponName;
+                weapon.name = WeaponName;
             }
 
             // Override animator with weapon animations
@@ -85,12 +85,12 @@ namespace RPG.Combat
         /// <param name="rightHand">Right hand transform of the character</param>
         private void DestroyOldWeapon(Transform leftHand, Transform rightHand)
         {
-            Transform oldWeapon = leftHand.Find(weaponName);
+            Transform oldWeapon = leftHand.Find(WeaponName);
 
             // Not already equipping a weapon
             if (oldWeapon == null)
             {
-                oldWeapon = rightHand.Find(weaponName);
+                oldWeapon = rightHand.Find(WeaponName);
             }
 
             // Not already equipping a weapon

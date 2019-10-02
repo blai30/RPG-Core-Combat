@@ -17,8 +17,7 @@ namespace RPG.Resources
         /// <summary>
         /// GameObject components
         /// </summary>
-        private Animator _animator;
-        private BaseStats _baseStats;
+        private BaseStats m_baseStats;
 
         /// <summary>
         /// Animator parameters
@@ -27,10 +26,9 @@ namespace RPG.Resources
 
         private void Start()
         {
-            _animator = GetComponent<Animator>();
-            _baseStats = GetComponent<BaseStats>();
+            m_baseStats = GetComponent<BaseStats>();
 
-            _baseStats.onLevelUp += RegenerateHealth;
+            m_baseStats.OnLevelUp += RegenerateHealth;
 
             if (healthPoints < 0)
             {
@@ -114,7 +112,7 @@ namespace RPG.Resources
 
         private void RegenerateHealth()
         {
-            float regenHealthPoints = _baseStats.GetStat(Stat.Health) * regenerationPercentage;
+            float regenHealthPoints = m_baseStats.GetStat(Stat.Health) * regenerationPercentage;
             healthPoints = Mathf.Max(healthPoints, regenHealthPoints);
         }
     }

@@ -15,9 +15,9 @@ namespace RPG.Combat
         [SerializeField] private GameObject hitEffect = null;
         [SerializeField] private GameObject[] destroyOnHit = null;
 
-        private Health _target = null;
-        private GameObject _instigator;
-        private float _damage = 0f;
+        private Health m_target = null;
+        private GameObject m_instigator;
+        private float m_damage = 0f;
 
         private void Start()
         {
@@ -28,13 +28,13 @@ namespace RPG.Combat
         private void Update()
         {
             // No target found
-            if (_target == null)
+            if (m_target == null)
             {
                 return;
             }
 
             // Continuously face the target until they die
-            if (isHoming && !_target.IsDead)
+            if (isHoming && !m_target.IsDead)
             {
                 transform.LookAt(GetAimLocation());
             }
@@ -51,9 +51,9 @@ namespace RPG.Combat
         /// <param name="damage">Pass the damage dealt</param>
         public void SetTarget(Health target, GameObject instigator, float damage)
         {
-            _target = target;
-            _damage = damage;
-            _instigator = instigator;
+            m_target = target;
+            m_damage = damage;
+            m_instigator = instigator;
 
             // Destroy projectile after some time if not already destroyed
             Destroy(gameObject, maxLifetime);
@@ -65,30 +65,30 @@ namespace RPG.Combat
         /// <returns>Vector3 of y-axis center of target</returns>
         private Vector3 GetAimLocation()
         {
-            CapsuleCollider targetCapsule = _target.GetComponent<CapsuleCollider>();
+            CapsuleCollider targetCapsule = m_target.GetComponent<CapsuleCollider>();
             if (targetCapsule == null)
             {
-                return _target.transform.position;
+                return m_target.transform.position;
             }
-            return _target.transform.position + (Vector3.up * (targetCapsule.height / 2));
+            return m_target.transform.position + (Vector3.up * (targetCapsule.height / 2));
         }
 
         private void OnTriggerEnter(Collider other)
         {
             // Collider is not the target
-            if (other.GetComponent<Health>() != _target)
+            if (other.GetComponent<Health>() != m_target)
             {
                 return;
             }
 
             // Target already dead
-            if (_target.IsDead)
+            if (m_target.IsDead)
             {
                 return;
             }
 
             // Deal damage and reward experience to instigator
-            _target.TakeDamage(_instigator, _damage);
+            m_target.TakeDamage(m_instigator, m_damage);
 
             // Stop the projectile
             travelSpeed = 0;
