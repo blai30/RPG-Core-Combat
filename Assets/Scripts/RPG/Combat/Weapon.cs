@@ -61,10 +61,10 @@ namespace RPG.Combat
         /// <param name="rightHand">Right hand transform of the character</param>
         /// <param name="target">Target to be attacked</param>
         /// <param name="instigator">GameObject that kills this GameObject (the Player)</param>
-        public void LaunchProjectile(Transform leftHand, Transform rightHand, Health target, GameObject instigator)
+        public void LaunchProjectile(Transform leftHand, Transform rightHand, Health target, GameObject instigator, float calculatedDamage)
         {
             Projectile projectileInstance = Instantiate(projectile, GetHandTransform(leftHand, rightHand).position, Quaternion.identity);
-            projectileInstance.SetTarget(target, instigator, weaponDamage);
+            projectileInstance.SetTarget(target, instigator, calculatedDamage);
         }
 
         /// <summary>

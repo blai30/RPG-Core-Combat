@@ -29,7 +29,7 @@ namespace RPG.Combat
 
             // Display health percentage and automatically update
             Health health = m_fighter.Target;
-            m_text.text = string.Format("{0:0.0}%", health.GetPercentage());
+            m_text.text = $"{health.GetHealthPoints():0}/{health.GetMaxHealthPoints():0}";
         }
     }
 }

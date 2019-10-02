@@ -21,7 +21,7 @@ namespace RPG.Resources
         private void Update()
         {
             // Display health percentage and automatically update
-            m_text.text = string.Format("{0:0.0}%", m_health.GetPercentage());
+            m_text.text = $"{m_health.GetHealthPoints():0}/{m_health.GetMaxHealthPoints():0}";
         }
     }
 }

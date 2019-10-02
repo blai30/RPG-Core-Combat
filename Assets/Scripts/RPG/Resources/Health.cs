@@ -47,6 +47,8 @@ namespace RPG.Resources
         /// <param name="damage">Damage dealt</param>
         public void TakeDamage(GameObject instigator, float damage)
         {
+            print(gameObject.name + " took damage: " + damage);
+
             // Health cannot go below 0
             healthPoints = Mathf.Max(healthPoints - damage, 0);
             print(healthPoints);
@@ -57,6 +59,16 @@ namespace RPG.Resources
                 Die();
                 AwardExperience(instigator);
             }
+        }
+
+        public float GetHealthPoints()
+        {
+            return healthPoints;
+        }
+
+        public float GetMaxHealthPoints()
+        {
+            return m_baseStats.GetStat(Stat.Health);
         }
 
         /// <summary>
