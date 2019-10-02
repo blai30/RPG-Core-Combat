@@ -40,7 +40,7 @@ namespace RPG.Stats
         /// <returns>Value of the stat</returns>
         public float GetStat(Stat stat)
         {
-            return progression.GetStat(stat, characterClass, GetLevel());
+            return progression.GetStat(stat, characterClass, GetLevel()) + GetAdditiveModifier(stat);
         }
 
         /// <summary>
@@ -56,11 +56,17 @@ namespace RPG.Stats
             return m_currentLevel;
         }
 
+        private float GetAdditiveModifier(Stat stat)
+        {
+            // TODO
+            return 0;
+        }
+
         /// <summary>
         /// Calculates level based on experience parameters
         /// </summary>
         /// <returns>Level value based on experience</returns>
-        public int CalculateLevel()
+        private int CalculateLevel()
         {
             // Enemies do not level up
             if (m_experience == null)
