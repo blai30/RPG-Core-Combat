@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace RPG.SceneManagement
@@ -9,7 +7,7 @@ namespace RPG.SceneManagement
     {
         private CanvasGroup m_canvasGroup;
 
-        private void Start()
+        private void Awake()
         {
             m_canvasGroup = GetComponent<CanvasGroup>();
         }
