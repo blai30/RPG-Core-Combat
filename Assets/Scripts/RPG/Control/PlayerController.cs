@@ -2,17 +2,37 @@
 using RPG.Movement;
 using RPG.Resources;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
+        enum CursorType
+        {
+            None,
+            Movement,
+            Combat,
+            UI
+        }
+
+        [System.Serializable]
+        struct CursorMapping
+        {
+            public CursorType cursorType;
+            public Texture2D texture;
+            public Vector2 hotspot;
+        }
+
+        [SerializeField] private CursorMapping[] cursorMappings = null;
+
         private Camera m_camera;
 
         /// <summary>
         /// GameObject components
         /// </summary>
         private Fighter m_fighter;
+
         private Health m_health;
         private Mover m_mover;
 
@@ -26,9 +46,15 @@ namespace RPG.Control
 
         void Update()
         {
+            if (InteractWithUI())
+            {
+                return;
+            }
+
             // No behavior when dead
             if (m_health.IsDead)
             {
+                SetCursor(CursorType.None);
                 return;
             }
 
@@ -43,6 +69,8 @@ namespace RPG.Control
             {
                 return;
             }
+
+            SetCursor(CursorType.None);
         }
 
         /// <summary>
@@ -52,6 +80,36 @@ namespace RPG.Control
         private Ray GetMouseRay()
         {
             return m_camera.ScreenPointToRay(Input.mousePosition);
+        }
+
+        private CursorMapping GetCursorMapping(CursorType cursorType)
+        {
+            foreach (CursorMapping cursorMapping in cursorMappings)
+            {
+                if (cursorMapping.cursorType == cursorType)
+                {
+                    return cursorMapping;
+                }
+            }
+
+            return cursorMappings[0];
+        }
+
+        private void SetCursor(CursorType cursorType)
+        {
+            CursorMapping cursorMapping = GetCursorMapping(cursorType);
+            Cursor.SetCursor(cursorMapping.texture, cursorMapping.hotspot, CursorMode.Auto);
+        }
+
+        private bool InteractWithUI()
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                SetCursor(CursorType.UI);
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -84,6 +142,7 @@ namespace RPG.Control
                     m_fighter.Attack(target.gameObject);
                 }
 
+                SetCursor(CursorType.Combat);
                 return true;
             }
 
@@ -107,6 +166,7 @@ namespace RPG.Control
                     m_mover.StartMoveAction(hit.point, 1f);
                 }
 
+                SetCursor(CursorType.Movement);
                 return true;
             }
 

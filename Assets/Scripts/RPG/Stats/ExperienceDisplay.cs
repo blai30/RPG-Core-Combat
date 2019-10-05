@@ -21,7 +21,7 @@ namespace RPG.Stats
         private void Update()
         {
             // Display experience points and automatically update
-            m_text.text = string.Format("{0:0}", m_experience.GetPoints());
+            m_text.text = $"{m_experience.GetPoints():0}/{m_experience.GetPointsToLevelUp():0}";
         }
     }
 }

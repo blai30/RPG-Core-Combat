@@ -141,8 +141,10 @@ namespace RPG.Resources
 
         private void RegenerateHealth()
         {
-            float regenHealthPoints = m_baseStats.GetStat(Stat.Health) * regenerationPercentage;
-            m_healthPoints.value = Mathf.Max(m_healthPoints.value, regenHealthPoints);
+//            float regenHealthPoints = m_baseStats.GetStat(Stat.Health) * regenerationPercentage;
+//            m_healthPoints.value = Mathf.Max(m_healthPoints.value, regenHealthPoints);
+
+            m_healthPoints.value = m_baseStats.GetStat(Stat.Health);
         }
     }
 }
