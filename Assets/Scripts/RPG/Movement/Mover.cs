@@ -26,8 +26,7 @@ namespace RPG.Movement
         /// </summary>
         private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
 
-        // Start is called before the first frame update
-        void Start()
+        private void Awake()
         {
             m_actionScheduler = GetComponent<ActionScheduler>();
             m_animator = GetComponent<Animator>();
@@ -35,8 +34,7 @@ namespace RPG.Movement
             m_navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
             m_navMeshAgent.enabled = !m_health.IsDead;
 

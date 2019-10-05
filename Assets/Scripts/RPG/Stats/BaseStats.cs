@@ -1,4 +1,5 @@
 ﻿using System;
+using GameDevTV.Utils;
 using UnityEngine;
 
 namespace RPG.Stats
@@ -7,6 +8,7 @@ namespace RPG.Stats
     {
         [SerializeField, Range(1, 99)] private int startingLevel = 1;
         [SerializeField] private CharacterClass characterClass;
+        [SerializeField] private bool useModifiers = false;
         [SerializeField] private Progression progression = null;
         [SerializeField] private GameObject levelUpEffect = null;
 
@@ -17,20 +19,45 @@ namespace RPG.Stats
         /// </summary>
         private Experience m_experience;
 
-        private int m_currentLevel = 0;
+        private LazyValue<int> m_currentLevel;
+
+        private void Awake()
+        {
+            m_experience = GetComponent<Experience>();
+            // Set level
+            m_currentLevel = new LazyValue<int>(CalculateLevel);
+        }
 
         private void Start()
         {
-            m_experience = GetComponent<Experience>();
+            m_currentLevel.ForceInit();
+        }
 
-            // Set level
-            m_currentLevel = CalculateLevel();
-
-            // Add event to listen for experience changes
+        private void OnEnable()
+        {
+            // Add event that listens for experience changes
             if (m_experience != null)
             {
                 m_experience.OnExperienceGained += UpdateLevel;
             }
+        }
+
+        private void OnDisable()
+        {
+            // Remove event that listens for experience changes
+            if (m_experience != null)
+            {
+                m_experience.OnExperienceGained -= UpdateLevel;
+            }
+        }
+
+        /// <summary>
+        /// Fetch current level
+        /// </summary>
+        /// <returns>Current level value</returns>
+        public int GetLevel()
+        {
+            return m_currentLevel.value;
         }
 
         /// <summary>
@@ -40,26 +67,50 @@ namespace RPG.Stats
         /// <returns>Value of the stat</returns>
         public float GetStat(Stat stat)
         {
-            return progression.GetStat(stat, characterClass, GetLevel()) + GetAdditiveModifier(stat);
+            return (GetBaseStat(stat) + GetAdditiveModifier(stat)) * (1 + GetPercentageModifier(stat) / 100);
         }
 
-        /// <summary>
-        /// Fetch current level
-        /// </summary>
-        /// <returns>Current level value</returns>
-        public int GetLevel()
+        private float GetBaseStat(Stat stat)
         {
-            if (m_currentLevel < 1)
-            {
-                m_currentLevel = CalculateLevel();
-            }
-            return m_currentLevel;
+            return progression.GetStat(stat, characterClass, GetLevel());
         }
 
         private float GetAdditiveModifier(Stat stat)
         {
-            // TODO
-            return 0;
+            if (!useModifiers)
+            {
+                return 0;
+            }
+
+            float total = 0;
+            foreach (IModifierProvider provider in GetComponents<IModifierProvider>())
+            {
+                foreach (float modifier in provider.GetAdditiveModifiers(stat))
+                {
+                    total += modifier;
+                }
+            }
+
+            return total;
+        }
+
+        private float GetPercentageModifier(Stat stat)
+        {
+            if (!useModifiers)
+            {
+                return 0;
+            }
+
+            float total = 0;
+            foreach (IModifierProvider provider in GetComponents<IModifierProvider>())
+            {
+                foreach (float modifier in provider.GetPercentageModifiers(stat))
+                {
+                    total += modifier;
+                }
+            }
+
+            return total;
         }
 
         /// <summary>
@@ -96,9 +147,9 @@ namespace RPG.Stats
         private void UpdateLevel()
         {
             int newLevel = CalculateLevel();
-            if (newLevel > m_currentLevel)
+            if (newLevel > m_currentLevel.value)
             {
-                m_currentLevel = newLevel;
+                m_currentLevel.value = newLevel;
                 LevelUpEffect();
                 OnLevelUp();
                 print("Levelled up to level " + newLevel + "!");

@@ -1,4 +1,7 @@
-﻿using RPG.Core;
+﻿using System;
+using System.Collections.Generic;
+using GameDevTV.Utils;
+using RPG.Core;
 using RPG.Movement;
 using RPG.Resources;
 using RPG.Saving;
@@ -7,7 +10,7 @@ using UnityEngine;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour, IAction, ISaveable
+    public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
     {
         /// <summary>
         /// Fighter stats
@@ -16,7 +19,6 @@ namespace RPG.Combat
         [SerializeField] private Transform leftHandTransform = null;
         [SerializeField] private Transform rightHandTransform = null;
         [SerializeField] private Weapon defaultWeapon = null;
-        [SerializeField] private Weapon currentWeapon = null;
 
         /// <summary>
         /// GameObject components
@@ -25,6 +27,7 @@ namespace RPG.Combat
         private Animator m_animator;
         private Mover m_mover;
 
+        private LazyValue<Weapon> m_currentWeapon;
         private Health m_target;
         private float m_timeSinceLastAttack = Mathf.Infinity;
 
@@ -36,16 +39,24 @@ namespace RPG.Combat
         private static readonly int AttackTrigger = Animator.StringToHash("attack");
         private static readonly int StopAttackTrigger = Animator.StringToHash("stopAttack");
 
-        private void Start()
+        private void Awake()
         {
             m_actionScheduler = GetComponent<ActionScheduler>();
             m_animator = GetComponent<Animator>();
             m_mover = GetComponent<Mover>();
 
-            if (currentWeapon == null)
-            {
-                EquipWeapon(defaultWeapon);
-            }
+            m_currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+        }
+
+        private Weapon SetupDefaultWeapon()
+        {
+            AttachWeapon(defaultWeapon);
+            return defaultWeapon;
+        }
+
+        private void Start()
+        {
+            m_currentWeapon.ForceInit();
         }
 
         private void Update()
@@ -65,7 +76,7 @@ namespace RPG.Combat
             }
 
             // Get in range of the target
-            if (m_target != null && !GetIsInRange(m_target.transform, currentWeapon.WeaponRange))
+            if (m_target != null && !GetIsInRange(m_target.transform, m_currentWeapon.value.WeaponRange))
             {
                 m_mover.MoveTo(m_target.transform.position, 1f);
             }
@@ -88,10 +99,10 @@ namespace RPG.Combat
             }
 
             float damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
-            if (currentWeapon.HasProjectile)
+            if (m_currentWeapon.value.HasProjectile)
             {
                 // Fire projectile
-                currentWeapon.LaunchProjectile(leftHandTransform, rightHandTransform, m_target, gameObject, damage);
+                m_currentWeapon.value.LaunchProjectile(leftHandTransform, rightHandTransform, m_target, gameObject, damage);
             }
             else
             {
@@ -163,19 +174,41 @@ namespace RPG.Combat
         /// <param name="weapon">Weapon to be equipped</param>
         public void EquipWeapon(Weapon weapon)
         {
-            currentWeapon = weapon;
-            weapon.Spawn(leftHandTransform, rightHandTransform, m_animator);
+            m_currentWeapon.value = weapon;
+            AttachWeapon(weapon);
+        }
+
+        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return m_currentWeapon.value.WeaponDamage;
+            }
+        }
+
+        public IEnumerable<float> GetPercentageModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return m_currentWeapon.value.PercentageBonus;
+            }
         }
 
         public object CaptureState()
         {
-            return currentWeapon.name;
+            return m_currentWeapon.value.name;
         }
 
         public void RestoreState(object state)
         {
             string weaponName = (string) state;
             Weapon weapon = UnityEngine.Resources.Load<Weapon>(weaponName);
+            EquipWeapon(weapon);
+        }
+
+        private void AttachWeapon(Weapon weapon)
+        {
+            weapon.Spawn(leftHandTransform, rightHandTransform, m_animator);
         }
 
         /// <summary>
@@ -216,9 +249,9 @@ namespace RPG.Combat
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.yellow;
-            if (currentWeapon != null)
+            if (m_currentWeapon != null)
             {
-                Gizmos.DrawWireSphere(transform.position, currentWeapon.WeaponRange);
+                Gizmos.DrawWireSphere(transform.position, m_currentWeapon.value.WeaponRange);
             }
         }
     }

@@ -24,11 +24,11 @@ MonoBehaviour:
       - 50
     - stat: 1
       levels:
-      - 5
-      - 10
-      - 15
-      - 20
-      - 25
+      - 2
+      - 4
+      - 6
+      - 9
+      - 12
     - stat: 3
       levels:
       - 5

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using RPG.Combat;
+﻿using RPG.Combat;
 using RPG.Movement;
 using RPG.Resources;
 using UnityEngine;
@@ -18,8 +16,7 @@ namespace RPG.Control
         private Health m_health;
         private Mover m_mover;
 
-        // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             m_camera = Camera.main;
             m_fighter = GetComponent<Fighter>();
@@ -27,7 +24,6 @@ namespace RPG.Control
             m_mover = GetComponent<Mover>();
         }
 
-        // Update is called once per frame
         void Update()
         {
             // No behavior when dead

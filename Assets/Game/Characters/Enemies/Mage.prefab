@@ -73,15 +73,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 385a1d21b1af92f4593469b2fae58759,
         type: 2}
-    - target: {fileID: 5358512817773399775, guid: 313338dbc7efe904c80141e15db65b96,
-        type: 3}
-      propertyPath: healthPoints
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 7418444451213645543, guid: 313338dbc7efe904c80141e15db65b96,
         type: 3}
       propertyPath: characterClass
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5358512817773399775, guid: 313338dbc7efe904c80141e15db65b96,
+        type: 3}
+      propertyPath: healthPoints
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 313338dbc7efe904c80141e15db65b96, type: 3}

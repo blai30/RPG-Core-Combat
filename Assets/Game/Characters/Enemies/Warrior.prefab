@@ -73,20 +73,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 88279a1eb868842498b66c7f45ce4296,
         type: 2}
+    - target: {fileID: 7418444451213645543, guid: 313338dbc7efe904c80141e15db65b96,
+        type: 3}
+      propertyPath: characterClass
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5358512817773399775, guid: 313338dbc7efe904c80141e15db65b96,
         type: 3}
       propertyPath: healthPoints
-      value: 8
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2841841705653058492, guid: 313338dbc7efe904c80141e15db65b96,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bfbe2e8b331e2cc42be1591f949c0e41, type: 2}
-    - target: {fileID: 7418444451213645543, guid: 313338dbc7efe904c80141e15db65b96,
-        type: 3}
-      propertyPath: characterClass
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 313338dbc7efe904c80141e15db65b96, type: 3}
