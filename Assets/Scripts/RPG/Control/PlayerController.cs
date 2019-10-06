@@ -8,14 +8,6 @@ namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
-        enum CursorType
-        {
-            None,
-            Movement,
-            Combat,
-            UI
-        }
-
         [System.Serializable]
         struct CursorMapping
         {
@@ -58,8 +50,7 @@ namespace RPG.Control
                 return;
             }
 
-            // Do combat
-            if (InteractWithCombat())
+            if (InteractWithComponent())
             {
                 return;
             }
@@ -112,41 +103,23 @@ namespace RPG.Control
             return false;
         }
 
-        /// <summary>
-        /// Do combat with raycast hit
-        /// </summary>
-        /// <returns>Initiate combat if combat target is found</returns>
-        private bool InteractWithCombat()
+        private bool InteractWithComponent()
         {
             // Get all layers of raycast hits
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
             foreach (RaycastHit hit in hits)
             {
-                // Find combat target from all raycast hits
-                CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-
-                if (target == null)
+                IRaycastable[] raycastables = hit.transform.GetComponents<IRaycastable>();
+                foreach (IRaycastable raycastable in raycastables)
                 {
-                    continue;
+                    if (raycastable.HandleRaycast(this))
+                    {
+                        SetCursor(raycastable.GetCursorType());
+                        return true;
+                    }
                 }
-
-                // Continue if cannot attack target
-                if (!m_fighter.CanAttack(target.gameObject))
-                {
-                    continue;
-                }
-
-                // Attack the target
-                if (Input.GetMouseButton(0))
-                {
-                    m_fighter.Attack(target.gameObject);
-                }
-
-                SetCursor(CursorType.Combat);
-                return true;
             }
 
-            // No target can be attacked
             return false;
         }
 
