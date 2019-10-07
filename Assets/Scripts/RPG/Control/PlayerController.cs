@@ -1,4 +1,5 @@
-﻿using RPG.Combat;
+﻿using System;
+using RPG.Combat;
 using RPG.Movement;
 using RPG.Resources;
 using UnityEngine;
@@ -106,7 +107,7 @@ namespace RPG.Control
         private bool InteractWithComponent()
         {
             // Get all layers of raycast hits
-            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+            RaycastHit[] hits = RaycastAllSorted();
             foreach (RaycastHit hit in hits)
             {
                 IRaycastable[] raycastables = hit.transform.GetComponents<IRaycastable>();
@@ -145,6 +146,19 @@ namespace RPG.Control
 
             // Cannot do movement
             return false;
+        }
+
+        private RaycastHit[] RaycastAllSorted()
+        {
+            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+            float[] distances = new float[hits.Length];
+            for (int i = 0; i < hits.Length; i++)
+            {
+                distances[i] = hits[i].distance;
+            }
+            Array.Sort(distances, hits);
+
+            return hits;
         }
     }
 }
