@@ -10,7 +10,7 @@ namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
-        [System.Serializable]
+        [Serializable]
         struct CursorMapping
         {
             public CursorType cursorType;
@@ -20,6 +20,7 @@ namespace RPG.Control
 
         [SerializeField] private CursorMapping[] cursorMappings = null;
         [SerializeField] private float maxNavMeshProjectionDistance = 1f;
+        [SerializeField] private float maxNavMeshPathLength = 60f;
 
         private Camera m_camera;
 
@@ -170,7 +171,38 @@ namespace RPG.Control
             }
 
             target = navMeshHit.position;
+
+            NavMeshPath path = new NavMeshPath();
+            if (!NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, path))
+            {
+                return false;
+            }
+            // Prevent navmesh from allowing player to walk towards a navmesh that is inaccessible, like the top of houses.
+            if (path.status != NavMeshPathStatus.PathComplete)
+            {
+                return false;
+            }
+
+            if (GetPathLength(path) > maxNavMeshPathLength)
+            {
+                return false;
+            }
+
             return true;
+        }
+
+        private float GetPathLength(NavMeshPath path)
+        {
+            float total = 0;
+            if (path.corners.Length >= 2)
+            {
+                for (int i = 0; i < path.corners.Length - 1; i++)
+                {
+                    total += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+                }
+            }
+
+            return total;
         }
 
         private RaycastHit[] RaycastAllSorted()
