@@ -12,10 +12,6 @@ namespace RPG.Combat
         private void Awake()
         {
             m_fighter = GameObject.FindWithTag("Player").GetComponent<Fighter>();
-        }
-
-        private void Start()
-        {
             m_text = GetComponent<TextMeshProUGUI>();
         }
 

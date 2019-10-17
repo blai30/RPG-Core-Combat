@@ -11,10 +11,6 @@ namespace RPG.Resources
         private void Awake()
         {
             m_health = GameObject.FindWithTag("Player").GetComponent<Health>();
-        }
-
-        private void Start()
-        {
             m_text = GetComponent<TextMeshProUGUI>();
         }
 
