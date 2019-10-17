@@ -1,9 +1,9 @@
-﻿using System;
-using GameDevTV.Utils;
+﻿using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RPG.Resources
 {
@@ -12,8 +12,8 @@ namespace RPG.Resources
         /// <summary>
         /// Properties of Health class
         /// </summary>
-        [SerializeField] private bool isDead = false;
         [SerializeField, Range(0, 1)] private float regenerationPercentage = 0.7f;
+        [SerializeField] private UnityEvent takeDamage;
 
         /// <summary>
         /// GameObject components
@@ -21,6 +21,7 @@ namespace RPG.Resources
         private BaseStats m_baseStats;
 
         private LazyValue<float> m_healthPoints;
+        private bool m_isDead = false;
 
         /// <summary>
         /// Animator parameters
@@ -52,11 +53,12 @@ namespace RPG.Resources
         /// <summary>
         /// Check if dead
         /// </summary>
-        public bool IsDead => isDead;
+        public bool IsDead => m_isDead;
 
         /// <summary>
         /// Take damage from an attack
         /// </summary>
+        /// <param name="instigator">Attacker dealing damage</param>
         /// <param name="damage">Damage dealt</param>
         public void TakeDamage(GameObject instigator, float damage)
         {
@@ -64,9 +66,10 @@ namespace RPG.Resources
 
             // Health cannot go below 0
             m_healthPoints.value = Mathf.Max(m_healthPoints.value - damage, 0);
+            takeDamage.Invoke();
 
             // Die when health reaches 0
-            if (!isDead && m_healthPoints.value <= 0)
+            if (!m_isDead && m_healthPoints.value <= 0)
             {
                 Die();
                 AwardExperience(instigator);
@@ -101,7 +104,7 @@ namespace RPG.Resources
         {
             m_healthPoints.value = (float) state;
             // Die when health reaches 0
-            if (!isDead && m_healthPoints.value <= 0)
+            if (!m_isDead && m_healthPoints.value <= 0)
             {
                 Die();
             }
@@ -117,7 +120,7 @@ namespace RPG.Resources
         /// </summary>
         private void Die()
         {
-            isDead = true;
+            m_isDead = true;
             // Get new animator component because Start is not called when loading
             GetComponent<Animator>().SetTrigger(DieTrigger);
             GetComponent<ActionScheduler>().CancelCurrentAction();
