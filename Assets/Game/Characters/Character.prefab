@@ -188,7 +188,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1973117732119054973}
         m_MethodName: Spawn
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -230,7 +230,7 @@ PrefabInstance:
     - target: {fileID: 3956438060637866687, guid: e4f3c281e96b6493c9c79a3c432a1cd5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3956438060637866687, guid: e4f3c281e96b6493c9c79a3c432a1cd5,
         type: 3}

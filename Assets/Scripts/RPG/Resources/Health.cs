@@ -9,11 +9,16 @@ namespace RPG.Resources
 {
     public class Health : MonoBehaviour, ISaveable
     {
+        [System.Serializable]
+        public class TakeDamageEvent : UnityEvent<float>
+        {
+        }
+
         /// <summary>
         /// Properties of Health class
         /// </summary>
         [SerializeField, Range(0, 1)] private float regenerationPercentage = 0.7f;
-        [SerializeField] private UnityEvent takeDamage;
+        [SerializeField] private TakeDamageEvent takeDamage;
 
         /// <summary>
         /// GameObject components
@@ -66,7 +71,7 @@ namespace RPG.Resources
 
             // Health cannot go below 0
             m_healthPoints.value = Mathf.Max(m_healthPoints.value - damage, 0);
-            takeDamage.Invoke();
+            takeDamage.Invoke(damage);
 
             // Die when health reaches 0
             if (!m_isDead && m_healthPoints.value <= 0)
