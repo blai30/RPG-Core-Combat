@@ -5,7 +5,7 @@ using RPG.Stats;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace RPG.Resources
+namespace RPG.Attributes
 {
     public class Health : MonoBehaviour, ISaveable
     {
@@ -19,6 +19,7 @@ namespace RPG.Resources
         /// </summary>
         [SerializeField, Range(0, 1)] private float regenerationPercentage = 0.7f;
         [SerializeField] private TakeDamageEvent takeDamage;
+        [SerializeField] private UnityEvent onDie;
 
         /// <summary>
         /// GameObject components
@@ -76,6 +77,7 @@ namespace RPG.Resources
             // Die when health reaches 0
             if (!m_isDead && m_healthPoints.value <= 0)
             {
+                onDie.Invoke();
                 Die();
                 AwardExperience(instigator);
             }
@@ -97,7 +99,12 @@ namespace RPG.Resources
         /// <returns>Current health over max health</returns>
         public float GetPercentage()
         {
-            return 100 * (m_healthPoints.value / GetComponent<BaseStats>().GetStat(Stat.Health));
+            return 100 * GetFraction();
+        }
+
+        public float GetFraction()
+        {
+            return m_healthPoints.value / m_baseStats.GetStat(Stat.Health);
         }
 
         public object CaptureState()
@@ -144,7 +151,7 @@ namespace RPG.Resources
                 return;
             }
 
-            experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
+            experience.GainExperience(m_baseStats.GetStat(Stat.ExperienceReward));
         }
 
         private void RegenerateHealth()

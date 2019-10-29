@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Movement;
-using RPG.Resources;
+using RPG.Attributes;
 using RPG.Saving;
 using RPG.Stats;
 using UnityEngine;
@@ -18,7 +18,7 @@ namespace RPG.Combat
         [SerializeField] private float timeBetweenAttacks = 1f;
         [SerializeField] private Transform leftHandTransform = null;
         [SerializeField] private Transform rightHandTransform = null;
-        [SerializeField] private Weapon defaultWeapon = null;
+        [SerializeField] private WeaponConfig defaultWeaponConfig = null;
 
         /// <summary>
         /// GameObject components
@@ -27,7 +27,7 @@ namespace RPG.Combat
         private Animator m_animator;
         private Mover m_mover;
 
-        private LazyValue<Weapon> m_currentWeapon;
+        private LazyValue<WeaponConfig> m_currentWeapon;
         private Health m_target;
         private float m_timeSinceLastAttack = Mathf.Infinity;
 
@@ -45,13 +45,13 @@ namespace RPG.Combat
             m_animator = GetComponent<Animator>();
             m_mover = GetComponent<Mover>();
 
-            m_currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
+            m_currentWeapon = new LazyValue<WeaponConfig>(SetupDefaultWeapon);
         }
 
-        private Weapon SetupDefaultWeapon()
+        private WeaponConfig SetupDefaultWeapon()
         {
-            AttachWeapon(defaultWeapon);
-            return defaultWeapon;
+            AttachWeapon(defaultWeaponConfig);
+            return defaultWeaponConfig;
         }
 
         private void Start()
@@ -171,11 +171,11 @@ namespace RPG.Combat
         /// <summary>
         /// Equip the weapon that is passed in
         /// </summary>
-        /// <param name="weapon">Weapon to be equipped</param>
-        public void EquipWeapon(Weapon weapon)
+        /// <param name="weaponConfig">Weapon to be equipped</param>
+        public void EquipWeapon(WeaponConfig weaponConfig)
         {
-            m_currentWeapon.value = weapon;
-            AttachWeapon(weapon);
+            m_currentWeapon.value = weaponConfig;
+            AttachWeapon(weaponConfig);
         }
 
         public IEnumerable<float> GetAdditiveModifiers(Stat stat)
@@ -202,13 +202,13 @@ namespace RPG.Combat
         public void RestoreState(object state)
         {
             string weaponName = (string) state;
-            Weapon weapon = UnityEngine.Resources.Load<Weapon>(weaponName);
-            EquipWeapon(weapon);
+            WeaponConfig weaponConfig = UnityEngine.Resources.Load<WeaponConfig>(weaponName);
+            EquipWeapon(weaponConfig);
         }
 
-        private void AttachWeapon(Weapon weapon)
+        private void AttachWeapon(WeaponConfig weaponConfig)
         {
-            weapon.Spawn(leftHandTransform, rightHandTransform, m_animator);
+            weaponConfig.Spawn(leftHandTransform, rightHandTransform, m_animator);
         }
 
         /// <summary>

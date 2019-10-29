@@ -1,5 +1,6 @@
-using RPG.Resources;
+using RPG.Attributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RPG.Combat
 {
@@ -14,6 +15,7 @@ namespace RPG.Combat
         [SerializeField] private bool isHoming = true;
         [SerializeField] private GameObject hitEffect = null;
         [SerializeField] private GameObject[] destroyOnHit = null;
+        [SerializeField] private UnityEvent onHit;
 
         private Health m_target = null;
         private GameObject m_instigator;
@@ -92,6 +94,9 @@ namespace RPG.Combat
 
             // Stop the projectile
             travelSpeed = 0;
+
+            // Call functions in Unity Event
+            onHit.Invoke();
 
             // Create effect
             if (hitEffect != null)

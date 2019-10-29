@@ -6,7 +6,7 @@ namespace RPG.Combat
 {
     public class WeaponPickup : MonoBehaviour, IRaycastable
     {
-        [SerializeField] private Weapon weapon = null;
+        [SerializeField] private WeaponConfig weaponConfig = null;
         [SerializeField] private float respawnTime = 5f;
         [SerializeField] private GameObject cube;
 
@@ -28,7 +28,7 @@ namespace RPG.Combat
 
         private void Pickup(Fighter fighter)
         {
-            fighter.EquipWeapon(weapon);
+            fighter.EquipWeapon(weaponConfig);
             // Weapon pickup disappears for some time and respawns after
             StartCoroutine(HideForSeconds(respawnTime));
         }
