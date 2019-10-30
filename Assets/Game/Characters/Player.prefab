@@ -28,6 +28,8 @@ MonoBehaviour:
   - cursorType: 4
     texture: {fileID: 2800000, guid: 8ea795c067613354898068091ffc7130, type: 3}
     hotspot: {x: 10, y: 6}
+  maxNavMeshProjectionDistance: 1
+  maxNavMeshPathLength: 60
 --- !u!114 &9137145062960186716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +247,11 @@ PrefabInstance:
       propertyPath: rightHandTransform
       value: 
       objectReference: {fileID: 8837642432018065633}
+    - target: {fileID: 1856932113, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
+      propertyPath: defaultWeaponConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: ebfba93674d10d642b27d6180c19f4c6,
+        type: 2}
     - target: {fileID: 260003221, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}
       propertyPath: m_Avatar
       value: 
@@ -264,6 +271,16 @@ PrefabInstance:
         type: 3}
       propertyPath: useModifiers
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 707425227017836523, guid: 649e6b74cb03cdd49b218179172bef05,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5552579665895337689, guid: 649e6b74cb03cdd49b218179172bef05,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 649e6b74cb03cdd49b218179172bef05, type: 3}

@@ -62,6 +62,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4373843341134697893, guid: ea28b4537822e9942b7ac7866923fba2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4383773358877687774, guid: ea28b4537822e9942b7ac7866923fba2,
         type: 3}
       propertyPath: m_Name
@@ -73,14 +78,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 385a1d21b1af92f4593469b2fae58759,
         type: 2}
+    - target: {fileID: 4383773358877687747, guid: ea28b4537822e9942b7ac7866923fba2,
+        type: 3}
+      propertyPath: weaponConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 385a1d21b1af92f4593469b2fae58759,
+        type: 2}
     - target: {fileID: 4383773358877687773, guid: ea28b4537822e9942b7ac7866923fba2,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4373843341134697893, guid: ea28b4537822e9942b7ac7866923fba2,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

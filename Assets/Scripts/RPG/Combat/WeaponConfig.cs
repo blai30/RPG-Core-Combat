@@ -33,14 +33,15 @@ namespace RPG.Combat
         /// <param name="leftHand">Left hand transform of the character</param>
         /// <param name="rightHand">Right hand transform of the character</param>
         /// <param name="animator">Animator of the character to override</param>
-        public void Spawn(Transform leftHand, Transform rightHand, Animator animator)
+        public Weapon Spawn(Transform leftHand, Transform rightHand, Animator animator)
         {
             DestroyOldWeapon(leftHand, rightHand);
 
+            Weapon weapon = null;
             // Create weapon to equip from weapon prefab
             if (equippedWeapon != null)
             {
-                Weapon weapon = Instantiate(equippedWeapon, GetHandTransform(leftHand, rightHand));
+                weapon = Instantiate(equippedWeapon, GetHandTransform(leftHand, rightHand));
                 weapon.gameObject.name = WeaponName;
             }
 
@@ -54,6 +55,8 @@ namespace RPG.Combat
             {
                 animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
             }
+
+            return weapon;
         }
 
         /// <summary>
