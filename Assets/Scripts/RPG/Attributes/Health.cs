@@ -83,6 +83,11 @@ namespace RPG.Attributes
             }
         }
 
+        public void Heal(float healthToRestore)
+        {
+            m_healthPoints.value = Mathf.Min(m_healthPoints.value + healthToRestore, GetMaxHealthPoints());
+        }
+
         public float GetHealthPoints()
         {
             return m_healthPoints.value;
