@@ -20,7 +20,7 @@ namespace RPG.Control
 
         [SerializeField] private CursorMapping[] cursorMappings = null;
         [SerializeField] private float maxNavMeshProjectionDistance = 1f;
-        [SerializeField] private float maxNavMeshPathLength = 60f;
+        [SerializeField] private float raycastRadius = 1f;
 
         private Camera m_camera;
 
@@ -138,6 +138,12 @@ namespace RPG.Control
             bool hasHit = RaycastNavMesh(out target);
             if (hasHit)
             {
+                // Destination is too far
+                if (!m_mover.CanMoveTo(target))
+                {
+                    return false;
+                }
+
                 // Click to move
                 if (Input.GetMouseButton(0))
                 {
@@ -171,43 +177,12 @@ namespace RPG.Control
             }
 
             target = navMeshHit.position;
-
-            NavMeshPath path = new NavMeshPath();
-            if (!NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, path))
-            {
-                return false;
-            }
-            // Prevent navmesh from allowing player to walk towards a navmesh that is inaccessible, like the top of houses.
-            if (path.status != NavMeshPathStatus.PathComplete)
-            {
-                return false;
-            }
-
-            if (GetPathLength(path) > maxNavMeshPathLength)
-            {
-                return false;
-            }
-
             return true;
-        }
-
-        private float GetPathLength(NavMeshPath path)
-        {
-            float total = 0;
-            if (path.corners.Length >= 2)
-            {
-                for (int i = 0; i < path.corners.Length - 1; i++)
-                {
-                    total += Vector3.Distance(path.corners[i], path.corners[i + 1]);
-                }
-            }
-
-            return total;
         }
 
         private RaycastHit[] RaycastAllSorted()
         {
-            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+            RaycastHit[] hits = Physics.SphereCastAll(GetMouseRay(), raycastRadius);
             float[] distances = new float[hits.Length];
             for (int i = 0; i < hits.Length; i++)
             {

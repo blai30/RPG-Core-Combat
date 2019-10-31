@@ -12,6 +12,7 @@ namespace RPG.Movement
     public class Mover : MonoBehaviour, IAction, ISaveable
     {
         [SerializeField] private float maxMoveSpeed = 5.66f;
+        [SerializeField] private float maxNavMeshPathLength = 60f;
 
         /// <summary>
         /// GameObject Components
@@ -45,16 +46,39 @@ namespace RPG.Movement
         /// Start moving
         /// </summary>
         /// <param name="destination">Destination for navmesh agent to move to</param>
+        /// <param name="speedFraction"></param>
         public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             m_actionScheduler.StartAction(this);
             MoveTo(destination, speedFraction);
         }
 
+        public bool CanMoveTo(Vector3 destination)
+        {
+            NavMeshPath path = new NavMeshPath();
+            if (!NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path))
+            {
+                return false;
+            }
+            // Prevent navmesh from allowing player to walk towards a navmesh that is inaccessible, like the top of houses.
+            if (path.status != NavMeshPathStatus.PathComplete)
+            {
+                return false;
+            }
+
+            if (GetPathLength(path) > maxNavMeshPathLength)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Move navmesh agent to destination
         /// </summary>
         /// <param name="destination">Destination for navmesh agent to move to</param>
+        /// <param name="speedFraction"></param>
         public void MoveTo(Vector3 destination, float speedFraction)
         {
             // Move navmesh agent to destination (raycast hit point)
@@ -82,6 +106,20 @@ namespace RPG.Movement
             GetComponent<NavMeshAgent>().enabled = false;
             transform.position = position.ToVector();
             GetComponent<NavMeshAgent>().enabled = true;
+        }
+
+        private float GetPathLength(NavMeshPath path)
+        {
+            float total = 0;
+            if (path.corners.Length >= 2)
+            {
+                for (int i = 0; i < path.corners.Length - 1; i++)
+                {
+                    total += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+                }
+            }
+
+            return total;
         }
 
         /// <summary>

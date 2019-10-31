@@ -14,10 +14,12 @@ namespace RPG.Control
     {
         [SerializeField] private float chaseDistance = 5f;
         [SerializeField] private float suspicionTime = 5f;
+        [SerializeField] private float aggroCooldownTime = 5f;
         [SerializeField] private PatrolPath patrolPath = null;
         [SerializeField] private float waypointTolerance = 1f;
         [SerializeField] private float waypointDwellTime = 3f;
         [SerializeField, Range(0, 1)] private float patrolSpeedFraction = 0.2f;
+        [SerializeField] private float shoutDistance = 5f;
 
         // Target player to chase
         private GameObject m_targetPlayer;
@@ -35,6 +37,7 @@ namespace RPG.Control
         private LazyValue<Vector3> m_guardPosition;
         private float m_timeSinceLastSawPlayer = Mathf.Infinity;
         private float m_timeSinceArrivedAtWaypoint = Mathf.Infinity;
+        private float m_timeSinceAggravated = Mathf.Infinity;
         private int m_currentWaypointIndex = 0;
 
         private void Awake()
@@ -60,7 +63,7 @@ namespace RPG.Control
                 return;
             }
 
-            if (m_fighter.GetIsInRange(m_targetPlayer.transform, chaseDistance) && m_fighter.CanAttack(m_targetPlayer))
+            if ((m_fighter.GetIsInRange(m_targetPlayer.transform, chaseDistance) || IsAggravated()) && m_fighter.CanAttack(m_targetPlayer))
             {
                 // Attack target player when in range
                 AttackBehavior();
@@ -79,6 +82,11 @@ namespace RPG.Control
             UpdateTimers();
         }
 
+        public void Aggravate()
+        {
+            m_timeSinceAggravated = 0f;
+        }
+
         private Vector3 GetGuardPosition()
         {
             return transform.position;
@@ -91,6 +99,7 @@ namespace RPG.Control
         {
             m_timeSinceLastSawPlayer += Time.deltaTime;
             m_timeSinceArrivedAtWaypoint += Time.deltaTime;
+            m_timeSinceAggravated += Time.deltaTime;
         }
 
         /// <summary>
@@ -100,6 +109,7 @@ namespace RPG.Control
         {
             m_timeSinceLastSawPlayer = 0;
             m_fighter.Attack(m_targetPlayer);
+            AggravateNearbyEnemies();
         }
 
         /// <summary>
@@ -159,6 +169,25 @@ namespace RPG.Control
         private Vector3 GetCurrentWaypoint()
         {
             return patrolPath.GetWaypointPosition(m_currentWaypointIndex);
+        }
+
+        private bool IsAggravated()
+        {
+            return m_timeSinceAggravated < aggroCooldownTime;
+        }
+
+        private void AggravateNearbyEnemies()
+        {
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, shoutDistance, Vector3.up, 0);
+            foreach (RaycastHit hit in hits)
+            {
+                AIController ai = hit.collider.GetComponent<AIController>();
+                if (ai == null)
+                {
+                    continue;
+                }
+                ai.Aggravate();
+            }
         }
 
         // Called by Unity

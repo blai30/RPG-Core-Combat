@@ -157,6 +157,12 @@ namespace RPG.Combat
                 return false;
             }
 
+            // Enemy is too far
+            if (!m_mover.CanMoveTo(combatTarget.transform.position))
+            {
+                return false;
+            }
+
             // Check if the target has the Health component
             Health targetToTest = combatTarget.GetComponent<Health>();
 
