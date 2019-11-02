@@ -73,7 +73,7 @@ Material:
     m_Colors:
     - Color_165DE4AA: {r: 0.19109946, g: 0.25392666, b: 0.3337696, a: 0}
     - Color_595E446A: {r: 0, g: 0, b: 0, a: 1}
-    - Color_CDE0F7B2: {r: 0, g: 0.72725093, b: 0.8018868, a: 1}
-    - Color_CEA3655F: {r: 0, g: 0.07694079, b: 0.2264151, a: 1}
+    - Color_CDE0F7B2: {r: 0, g: 0.33551088, b: 0.38679248, a: 1}
+    - Color_CEA3655F: {r: 0.17688681, g: 0.19270588, b: 0.23584908, a: 1}
     - _DiffuseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _SpecularColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
