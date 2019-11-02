@@ -1,5 +1,5 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "IL3DN/Cloud"
 {
     Properties
@@ -12,7 +12,7 @@ Shader "IL3DN/Cloud"
 
     SubShader
     {
-		
+
 
         Tags { "RenderPipeline"="LightweightPipeline" "RenderType"="TransparentCutout" "Queue"="AlphaTest" }
         Cull Off
@@ -20,7 +20,7 @@ Shader "IL3DN/Cloud"
 		#pragma target 3.0
 		ENDHLSL
 
-		
+
         Pass
         {
             Tags { "LightMode"="LightweightForward" }
@@ -31,7 +31,7 @@ Shader "IL3DN/Cloud"
 			ZTest LEqual
 			Offset 0 , 0
 			ColorMask RGBA
-			
+
 
             HLSLPROGRAM
             #define ASE_SRP_VERSION 50702
@@ -53,19 +53,19 @@ Shader "IL3DN/Cloud"
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing
-            
+
             #pragma vertex vert
             #pragma fragment frag
 
 
             // Lighting include is needed because of GI
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/Shaders/UnlitInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
 
-            
+
 
 			sampler2D _MainTex;
 			CBUFFER_START( UnityPerMaterial )
@@ -93,7 +93,7 @@ Shader "IL3DN/Cloud"
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-			
+
             GraphVertexOutput vert (GraphVertexInput v)
             {
                 GraphVertexOutput o = (GraphVertexOutput)0;
@@ -101,7 +101,7 @@ Shader "IL3DN/Cloud"
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 				o.ase_texcoord1.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord1.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -111,7 +111,7 @@ Shader "IL3DN/Cloud"
 				#endif
 				float3 vertexValue =  defaultVertexValue ;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				v.vertex.xyz = vertexValue; 
+				v.vertex.xyz = vertexValue;
 				#else
 				v.vertex.xyz += vertexValue;
 				#endif
@@ -130,11 +130,11 @@ Shader "IL3DN/Cloud"
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 				float2 uv_MainTex = IN.ase_texcoord1.xy * _MainTex_ST.xy + _MainTex_ST.zw;
 				float4 tex2DNode9 = tex2D( _MainTex, uv_MainTex );
-				
+
 		        float3 Color = ( _Color * tex2DNode9 ).rgb;
 		        float Alpha = tex2DNode9.a;
 		        float AlphaClipThreshold = _AlphaCutoff;
-			
+
 			#if _AlphaClip
 				clip(Alpha - AlphaClipThreshold);
 			#endif
@@ -152,10 +152,10 @@ Shader "IL3DN/Cloud"
             ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
             Name "ShadowCaster"
             Tags { "LightMode"="ShadowCaster" }
 			ZWrite On
@@ -168,7 +168,7 @@ Shader "IL3DN/Cloud"
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            
+
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing
@@ -177,12 +177,12 @@ Shader "IL3DN/Cloud"
             #pragma fragment ShadowPassFragment
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-            
+
 
 			sampler2D _MainTex;
 			CBUFFER_START( UnityPerMaterial )
@@ -210,16 +210,16 @@ Shader "IL3DN/Cloud"
             // x: global clip space bias, y: normal world space bias
             float3 _LightDirection;
 
-			
+
             VertexOutput ShadowPassVertex(GraphVertexInput v )
             {
                 VertexOutput o;
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                
+
 				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -248,7 +248,7 @@ Shader "IL3DN/Cloud"
                 float4 clipPos = TransformWorldToHClip(positionWS);
 
                 // _ShadowBias.x sign depens on if platform has reversed z buffer
-                //clipPos.z += _ShadowBias.x; 
+                //clipPos.z += _ShadowBias.x;
 
             #if UNITY_REVERSED_Z
                 clipPos.z = min(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
@@ -266,7 +266,7 @@ Shader "IL3DN/Cloud"
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
         		float2 uv_MainTex = IN.ase_texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;
         		float4 tex2DNode9 = tex2D( _MainTex, uv_MainTex );
-        		
+
 
 				float Alpha = tex2DNode9.a;
 				float AlphaClipThreshold = _AlphaCutoff;
@@ -283,10 +283,10 @@ Shader "IL3DN/Cloud"
             ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
             Name "DepthOnly"
             Tags { "LightMode"="DepthOnly" }
 
@@ -311,12 +311,12 @@ Shader "IL3DN/Cloud"
             #pragma fragment frag
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-            
+
 
 			sampler2D _MainTex;
 			CBUFFER_START( UnityPerMaterial )
@@ -341,7 +341,7 @@ Shader "IL3DN/Cloud"
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-			
+
 			VertexOutput vert( GraphVertexInput v  )
 			{
 					VertexOutput o = (VertexOutput)0;
@@ -349,7 +349,7 @@ Shader "IL3DN/Cloud"
 					UNITY_TRANSFER_INSTANCE_ID(v, o);
 					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 					o.ase_texcoord.xy = v.ase_texcoord.xy;
-					
+
 					//setting value to unused interpolator channels and avoid initialization warnings
 					o.ase_texcoord.zw = 0;
 					#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -357,7 +357,7 @@ Shader "IL3DN/Cloud"
 					#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 					#endif
-					float3 vertexValue =  defaultVertexValue ;	
+					float3 vertexValue =  defaultVertexValue ;
 					#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 					#else
@@ -374,7 +374,7 @@ Shader "IL3DN/Cloud"
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 				float2 uv_MainTex = IN.ase_texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;
 				float4 tex2DNode9 = tex2D( _MainTex, uv_MainTex );
-				
+
 
 				float Alpha = tex2DNode9.a;
 				float AlphaClipThreshold = _AlphaCutoff;
@@ -389,11 +389,11 @@ Shader "IL3DN/Cloud"
             }
             ENDHLSL
         }
-		
+
     }
     Fallback "Hidden/InternalErrorShader"
 	CustomEditor "ASEMaterialInspector"
-	
+
 }
 /*ASEBEGIN
 Version=17009

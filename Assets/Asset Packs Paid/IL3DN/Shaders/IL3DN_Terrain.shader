@@ -1,5 +1,5 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "IL3DN/Terrain First-Pass"
 {
     Properties
@@ -19,17 +19,17 @@ Shader "IL3DN/Terrain First-Pass"
 
     SubShader
     {
-		
+
         Tags { "RenderPipeline"="LightweightPipeline" "RenderType"="Opaque" "Queue"="Geometry" }
 
 		Cull Back
 		HLSLINCLUDE
 		#pragma target 3.0
 		ENDHLSL
-		
+
         Pass
         {
-			
+
         	Tags { "LightMode"="LightweightForward" }
 
         	Name "Base"
@@ -38,7 +38,7 @@ Shader "IL3DN/Terrain First-Pass"
 			ZTest LEqual
 			Offset 0 , 0
 			ColorMask RGBA
-            
+
         	HLSLPROGRAM
             #pragma multi_compile _ LOD_FADE_CROSSFADE
             #define ASE_SRP_VERSION 60900
@@ -47,7 +47,7 @@ Shader "IL3DN/Terrain First-Pass"
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            
+
 
         	// -------------------------------------
             // Lightweight Pipeline keywords
@@ -57,7 +57,7 @@ Shader "IL3DN/Terrain First-Pass"
             #pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile _ _SHADOWS_SOFT
             #pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
-            
+
         	// -------------------------------------
             // Unity defined keywords
             #pragma multi_compile _ DIRLIGHTMAP_COMBINED
@@ -71,13 +71,13 @@ Shader "IL3DN/Terrain First-Pass"
             #pragma vertex vert
         	#pragma fragment frag
 
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
         	#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
         	#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
-		
-			
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
+
 
 			sampler2D _Control;
 			sampler2D _Splat0;
@@ -120,7 +120,7 @@ Shader "IL3DN/Terrain First-Pass"
             	UNITY_VERTEX_OUTPUT_STEREO
             };
 
-			
+
             GraphVertexOutput vert (GraphVertexInput v  )
         	{
         		GraphVertexOutput o = (GraphVertexOutput)0;
@@ -129,7 +129,7 @@ Shader "IL3DN/Terrain First-Pass"
         		UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
 				o.ase_texcoord7.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord7.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -155,7 +155,7 @@ Shader "IL3DN/Terrain First-Pass"
 				o.tSpace2 = float4(lwWTangent.z, lwWBinormal.z, lwWNormal.z, lwWorldPos.z);
 
                 VertexPositionInputs vertexInput = GetVertexPositionInputs(v.vertex.xyz);
-                
+
          		// We either sample GI from lightmap or SH.
         	    // Lightmap UV and vertex SH coefficients use the same interpolator ("float2 lightmapUV" for lightmap or "half3 vertexSH" for SH)
                 // see DECLARE_LIGHTMAP_OR_SH macro.
@@ -184,7 +184,7 @@ Shader "IL3DN/Terrain First-Pass"
 				float3 WorldSpaceBiTangent = float3(IN.tSpace0.y,IN.tSpace1.y,IN.tSpace2.y);
 				float3 WorldSpacePosition = float3(IN.tSpace0.w,IN.tSpace1.w,IN.tSpace2.w);
 				float3 WorldSpaceViewDirection = SafeNormalize( _WorldSpaceCameraPos.xyz  - WorldSpacePosition );
-    
+
 				float2 uv_Control = IN.ase_texcoord7.xy * _Control_ST.xy + _Control_ST.zw;
 				float4 tex2DNode5_g6 = tex2D( _Control, uv_Control );
 				float dotResult20_g6 = dot( tex2DNode5_g6 , float4(1,1,1,1) );
@@ -202,10 +202,10 @@ Shader "IL3DN/Terrain First-Pass"
 				float4 weightedBlendVar9_g6 = SplatControl26_g6;
 				float4 weightedBlend9_g6 = ( weightedBlendVar9_g6.x*( _Color0 * tex2D( _Splat0, uv_Splat0 ) ) + weightedBlendVar9_g6.y*( _Color1 * tex2D( _Splat1, uv_Splat1 ) ) + weightedBlendVar9_g6.z*( _Color2 * tex2D( _Splat2, uv_Splat2 ) ) + weightedBlendVar9_g6.w*( _Color3 * tex2D( _Splat3, uv_Splat3 ) ) );
 				float4 MixDiffuse28_g6 = weightedBlend9_g6;
-				
+
 				float3 temp_cast_4 = (0.0).xxx;
-				
-				
+
+
 		        float3 Albedo = MixDiffuse28_g6.xyz;
 				float3 Normal = float3(0, 0, 1);
 				float3 Emission = 0;
@@ -243,13 +243,13 @@ Shader "IL3DN/Terrain First-Pass"
         	    inputData.bakedGI = SAMPLE_GI(IN.lightmapUVOrVertexSH.xy, IN.lightmapUVOrVertexSH.xyz, inputData.normalWS);
 
         		half4 color = LightweightFragmentPBR(
-        			inputData, 
-        			Albedo, 
-        			Metallic, 
-        			Specular, 
-        			Smoothness, 
-        			Occlusion, 
-        			Emission, 
+        			inputData,
+        			Albedo,
+        			Metallic,
+        			Specular,
+        			Smoothness,
+        			Occlusion,
+        			Emission,
         			Alpha);
 
 			#ifdef TERRAIN_SPLAT_ADDPASS
@@ -265,7 +265,7 @@ Shader "IL3DN/Terrain First-Pass"
 		#if ASE_LW_FINAL_COLOR_ALPHA_MULTIPLY
 				color.rgb *= color.a;
 		#endif
-		
+
 		#ifdef LOD_FADE_CROSSFADE
 				LODDitheringTransition (IN.clipPos.xyz, unity_LODFade.x);
 		#endif
@@ -275,10 +275,10 @@ Shader "IL3DN/Terrain First-Pass"
         	ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
         	Name "ShadowCaster"
             Tags { "LightMode"="ShadowCaster" }
 
@@ -292,7 +292,7 @@ Shader "IL3DN/Terrain First-Pass"
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            
+
 
             //--------------------------------------
             // GPU Instancing
@@ -302,18 +302,18 @@ Shader "IL3DN/Terrain First-Pass"
             #pragma fragment ShadowPassFragment
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-            
+
 
             struct GraphVertexInput
             {
                 float4 vertex : POSITION;
                 float3 ase_normal : NORMAL;
-				
+
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
@@ -332,12 +332,12 @@ Shader "IL3DN/Terrain First-Pass"
         	struct VertexOutput
         	{
         	    float4 clipPos      : SV_POSITION;
-                
+
                 UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
         	};
 
-			
+
             // x: global clip space bias, y: normal world space bias
             float3 _LightDirection;
 
@@ -348,7 +348,7 @@ Shader "IL3DN/Terrain First-Pass"
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO (o);
 
-				
+
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 				float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -392,7 +392,7 @@ Shader "IL3DN/Terrain First-Pass"
                 UNITY_SETUP_INSTANCE_ID(IN);
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 
-               
+
 
 				float Alpha = 1;
 				float AlphaClipThreshold = AlphaClipThreshold;
@@ -410,10 +410,10 @@ Shader "IL3DN/Terrain First-Pass"
             ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
         	Name "DepthOnly"
             Tags { "LightMode"="DepthOnly" }
 
@@ -436,12 +436,12 @@ Shader "IL3DN/Terrain First-Pass"
             #pragma fragment frag
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-            
+
 
 			CBUFFER_START( UnityPerMaterial )
 			float4 _Control_ST;
@@ -459,19 +459,19 @@ Shader "IL3DN/Terrain First-Pass"
             {
                 float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
         	struct VertexOutput
         	{
         	    float4 clipPos      : SV_POSITION;
-                
+
                 UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
         	};
 
-			           
+
 
             VertexOutput vert(GraphVertexInput v  )
             {
@@ -480,7 +480,7 @@ Shader "IL3DN/Terrain First-Pass"
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				
+
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 				float3 defaultVertexValue = v.vertex.xyz;
 				#else
@@ -503,7 +503,7 @@ Shader "IL3DN/Terrain First-Pass"
             {
                 UNITY_SETUP_INSTANCE_ID(IN);
 
-				
+
 
 				float Alpha = 1;
 				float AlphaClipThreshold = AlphaClipThreshold;
@@ -520,10 +520,10 @@ Shader "IL3DN/Terrain First-Pass"
         }
 
         // This pass it not used during regular rendering, only for lightmap baking.
-		
+
         Pass
         {
-			
+
         	Name "Meta"
             Tags { "LightMode"="Meta" }
 
@@ -540,13 +540,13 @@ Shader "IL3DN/Terrain First-Pass"
             #pragma vertex vert
             #pragma fragment frag
 
-			
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/MetaInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-            
+
 
 			sampler2D _Control;
 			sampler2D _Splat0;
@@ -587,7 +587,7 @@ Shader "IL3DN/Terrain First-Pass"
                 UNITY_VERTEX_OUTPUT_STEREO
         	};
 
-			
+
             VertexOutput vert(GraphVertexInput v  )
             {
                 VertexOutput o = (VertexOutput)0;
@@ -595,7 +595,7 @@ Shader "IL3DN/Terrain First-Pass"
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -611,7 +611,7 @@ Shader "IL3DN/Terrain First-Pass"
 				#endif
 
 				v.ase_normal =  v.ase_normal ;
-#if !defined( ASE_SRP_VERSION ) || ASE_SRP_VERSION  > 51300				
+#if !defined( ASE_SRP_VERSION ) || ASE_SRP_VERSION  > 51300
                 o.clipPos = MetaVertexPosition(v.vertex, v.texcoord1.xy, v.texcoord1.xy, unity_LightmapST, unity_DynamicLightmapST);
 #else
 				o.clipPos = MetaVertexPosition (v.vertex, v.texcoord1.xy, v.texcoord2.xy, unity_LightmapST);
@@ -640,8 +640,8 @@ Shader "IL3DN/Terrain First-Pass"
            		float4 weightedBlendVar9_g6 = SplatControl26_g6;
            		float4 weightedBlend9_g6 = ( weightedBlendVar9_g6.x*( _Color0 * tex2D( _Splat0, uv_Splat0 ) ) + weightedBlendVar9_g6.y*( _Color1 * tex2D( _Splat1, uv_Splat1 ) ) + weightedBlendVar9_g6.z*( _Color2 * tex2D( _Splat2, uv_Splat2 ) ) + weightedBlendVar9_g6.w*( _Color3 * tex2D( _Splat3, uv_Splat3 ) ) );
            		float4 MixDiffuse28_g6 = weightedBlend9_g6;
-           		
-				
+
+
 		        float3 Albedo = MixDiffuse28_g6.xyz;
 				float3 Emission = 0;
 				float Alpha = 1;
@@ -654,16 +654,16 @@ Shader "IL3DN/Terrain First-Pass"
                 MetaInput metaInput = (MetaInput)0;
                 metaInput.Albedo = Albedo;
                 metaInput.Emission = Emission;
-                
+
                 return MetaFragment(metaInput);
             }
             ENDHLSL
         }
-		
+
     }
     Fallback "Hidden/InternalErrorShader"
 	CustomEditor "ASEMaterialInspector"
-	
+
 }
 /*ASEBEGIN
 Version=17009

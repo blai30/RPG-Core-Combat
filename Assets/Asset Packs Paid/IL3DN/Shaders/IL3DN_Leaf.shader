@@ -1,5 +1,5 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "IL3DN/Leaf"
 {
     Properties
@@ -16,17 +16,17 @@ Shader "IL3DN/Leaf"
 
     SubShader
     {
-		
+
         Tags { "RenderPipeline"="LightweightPipeline" "RenderType"="TransparentCutout" "Queue"="AlphaTest" }
 
 		Cull Off
 		HLSLINCLUDE
 		#pragma target 3.0
 		ENDHLSL
-		
+
         Pass
         {
-			
+
         	Tags { "LightMode"="LightweightForward" }
 
         	Name "Base"
@@ -35,7 +35,7 @@ Shader "IL3DN/Leaf"
 			ZTest LEqual
 			Offset 0 , 0
 			ColorMask RGBA
-            
+
         	HLSLPROGRAM
             #pragma multi_compile _ LOD_FADE_CROSSFADE
             #define ASE_SRP_VERSION 60900
@@ -45,7 +45,7 @@ Shader "IL3DN/Leaf"
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            
+
 
         	// -------------------------------------
             // Lightweight Pipeline keywords
@@ -55,7 +55,7 @@ Shader "IL3DN/Leaf"
             #pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile _ _SHADOWS_SOFT
             #pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
-            
+
         	// -------------------------------------
             // Unity defined keywords
             #pragma multi_compile _ DIRLIGHTMAP_COMBINED
@@ -69,12 +69,12 @@ Shader "IL3DN/Leaf"
             #pragma vertex vert
         	#pragma fragment frag
 
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
         	#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
         	#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
-		
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
 			#pragma multi_compile __ _WIND_ON
 			#pragma multi_compile __ _WIGGLE_ON
 
@@ -144,7 +144,7 @@ Shader "IL3DN/Leaf"
 				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
 				return 130.0 * dot( m, g );
 			}
-			
+
 
             GraphVertexOutput vert (GraphVertexInput v  )
         	{
@@ -167,9 +167,9 @@ Shader "IL3DN/Leaf"
 				#else
 				float4 staticSwitch897 = float4( 0,0,0,0 );
 				#endif
-				
+
 				o.ase_texcoord7.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord7.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -195,7 +195,7 @@ Shader "IL3DN/Leaf"
 				o.tSpace2 = float4(lwWTangent.z, lwWBinormal.z, lwWNormal.z, lwWorldPos.z);
 
                 VertexPositionInputs vertexInput = GetVertexPositionInputs(v.vertex.xyz);
-                
+
          		// We either sample GI from lightmap or SH.
         	    // Lightmap UV and vertex SH coefficients use the same interpolator ("float2 lightmapUV" for lightmap or "half3 vertexSH" for SH)
                 // see DECLARE_LIGHTMAP_OR_SH macro.
@@ -224,7 +224,7 @@ Shader "IL3DN/Leaf"
 				float3 WorldSpaceBiTangent = float3(IN.tSpace0.y,IN.tSpace1.y,IN.tSpace2.y);
 				float3 WorldSpacePosition = float3(IN.tSpace0.w,IN.tSpace1.w,IN.tSpace2.w);
 				float3 WorldSpaceViewDirection = SafeNormalize( _WorldSpaceCameraPos.xyz  - WorldSpacePosition );
-    
+
 				float2 uv0746 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
 				float3 worldToObjDir883 = mul( GetWorldToObjectMatrix(), float4( (WindDirection).xzy, 0 ) ).xyz;
 				float2 panner706 = ( 1.0 * _Time.y * ( worldToObjDir883 * WindSpeedFloat ).xy + (WorldSpacePosition).xz);
@@ -241,10 +241,10 @@ Shader "IL3DN/Leaf"
 				float2 staticSwitch898 = uv0746;
 				#endif
 				float4 tex2DNode97 = tex2D( _MainTex, staticSwitch898 );
-				
+
 				float3 temp_cast_3 = (0.0).xxx;
-				
-				
+
+
 		        float3 Albedo = ( _Color * tex2DNode97 ).rgb;
 				float3 Normal = float3(0, 0, 1);
 				float3 Emission = 0;
@@ -282,13 +282,13 @@ Shader "IL3DN/Leaf"
         	    inputData.bakedGI = SAMPLE_GI(IN.lightmapUVOrVertexSH.xy, IN.lightmapUVOrVertexSH.xyz, inputData.normalWS);
 
         		half4 color = LightweightFragmentPBR(
-        			inputData, 
-        			Albedo, 
-        			Metallic, 
-        			Specular, 
-        			Smoothness, 
-        			Occlusion, 
-        			Emission, 
+        			inputData,
+        			Albedo,
+        			Metallic,
+        			Specular,
+        			Smoothness,
+        			Occlusion,
+        			Emission,
         			Alpha);
 
 			#ifdef TERRAIN_SPLAT_ADDPASS
@@ -304,7 +304,7 @@ Shader "IL3DN/Leaf"
 		#if ASE_LW_FINAL_COLOR_ALPHA_MULTIPLY
 				color.rgb *= color.a;
 		#endif
-		
+
 		#ifdef LOD_FADE_CROSSFADE
 				LODDitheringTransition (IN.clipPos.xyz, unity_LODFade.x);
 		#endif
@@ -314,10 +314,10 @@ Shader "IL3DN/Leaf"
         	ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
         	Name "ShadowCaster"
             Tags { "LightMode"="ShadowCaster" }
 
@@ -332,7 +332,7 @@ Shader "IL3DN/Leaf"
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            
+
 
             //--------------------------------------
             // GPU Instancing
@@ -342,9 +342,9 @@ Shader "IL3DN/Leaf"
             #pragma fragment ShadowPassFragment
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
             #pragma multi_compile __ _WIND_ON
@@ -409,7 +409,7 @@ Shader "IL3DN/Leaf"
 				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
 				return 130.0 * dot( m, g );
 			}
-			
+
 
             // x: global clip space bias, y: normal world space bias
             float3 _LightDirection;
@@ -435,11 +435,11 @@ Shader "IL3DN/Leaf"
 				#else
 				float4 staticSwitch897 = float4( 0,0,0,0 );
 				#endif
-				
+
 				o.ase_texcoord8.xyz = ase_worldPos;
-				
+
 				o.ase_texcoord7.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord7.zw = 0;
 				o.ase_texcoord8.w = 0;
@@ -503,7 +503,7 @@ Shader "IL3DN/Leaf"
                float2 staticSwitch898 = uv0746;
                #endif
                float4 tex2DNode97 = tex2D( _MainTex, staticSwitch898 );
-               
+
 
 				float Alpha = tex2DNode97.a;
 				float AlphaClipThreshold = _AlphaCutoff;
@@ -521,10 +521,10 @@ Shader "IL3DN/Leaf"
             ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
         	Name "DepthOnly"
             Tags { "LightMode"="DepthOnly" }
 
@@ -548,9 +548,9 @@ Shader "IL3DN/Leaf"
             #pragma fragment frag
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
             #pragma multi_compile __ _WIND_ON
@@ -615,8 +615,8 @@ Shader "IL3DN/Leaf"
 				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
 				return 130.0 * dot( m, g );
 			}
-			
-           
+
+
 
             VertexOutput vert(GraphVertexInput v  )
             {
@@ -639,11 +639,11 @@ Shader "IL3DN/Leaf"
 				#else
 				float4 staticSwitch897 = float4( 0,0,0,0 );
 				#endif
-				
+
 				o.ase_texcoord1.xyz = ase_worldPos;
-				
+
 				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord.zw = 0;
 				o.ase_texcoord1.w = 0;
@@ -686,7 +686,7 @@ Shader "IL3DN/Leaf"
 				float2 staticSwitch898 = uv0746;
 				#endif
 				float4 tex2DNode97 = tex2D( _MainTex, staticSwitch898 );
-				
+
 
 				float Alpha = tex2DNode97.a;
 				float AlphaClipThreshold = _AlphaCutoff;
@@ -703,10 +703,10 @@ Shader "IL3DN/Leaf"
         }
 
         // This pass it not used during regular rendering, only for lightmap baking.
-		
+
         Pass
         {
-			
+
         	Name "Meta"
             Tags { "LightMode"="Meta" }
 
@@ -724,10 +724,10 @@ Shader "IL3DN/Leaf"
             #pragma vertex vert
             #pragma fragment frag
 
-			
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/MetaInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
             #pragma multi_compile __ _WIND_ON
@@ -798,7 +798,7 @@ Shader "IL3DN/Leaf"
 				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
 				return 130.0 * dot( m, g );
 			}
-			
+
 
             VertexOutput vert(GraphVertexInput v  )
             {
@@ -820,11 +820,11 @@ Shader "IL3DN/Leaf"
 				#else
 				float4 staticSwitch897 = float4( 0,0,0,0 );
 				#endif
-				
+
 				o.ase_texcoord1.xyz = ase_worldPos;
-				
+
 				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord.zw = 0;
 				o.ase_texcoord1.w = 0;
@@ -841,7 +841,7 @@ Shader "IL3DN/Leaf"
 				#endif
 
 				v.ase_normal =  v.ase_normal ;
-#if !defined( ASE_SRP_VERSION ) || ASE_SRP_VERSION  > 51300				
+#if !defined( ASE_SRP_VERSION ) || ASE_SRP_VERSION  > 51300
                 o.clipPos = MetaVertexPosition(v.vertex, v.texcoord1.xy, v.texcoord1.xy, unity_LightmapST, unity_DynamicLightmapST);
 #else
 				o.clipPos = MetaVertexPosition (v.vertex, v.texcoord1.xy, v.texcoord2.xy, unity_LightmapST);
@@ -870,8 +870,8 @@ Shader "IL3DN/Leaf"
            		float2 staticSwitch898 = uv0746;
            		#endif
            		float4 tex2DNode97 = tex2D( _MainTex, staticSwitch898 );
-           		
-				
+
+
 		        float3 Albedo = ( _Color * tex2DNode97 ).rgb;
 				float3 Emission = 0;
 				float Alpha = tex2DNode97.a;
@@ -884,16 +884,16 @@ Shader "IL3DN/Leaf"
                 MetaInput metaInput = (MetaInput)0;
                 metaInput.Albedo = Albedo;
                 metaInput.Emission = Emission;
-                
+
                 return MetaFragment(metaInput);
             }
             ENDHLSL
         }
-		
+
     }
     Fallback "Hidden/InternalErrorShader"
 	CustomEditor "ASEMaterialInspector"
-	
+
 }
 /*ASEBEGIN
 Version=17009

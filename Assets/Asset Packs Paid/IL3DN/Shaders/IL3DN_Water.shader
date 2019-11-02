@@ -1,5 +1,5 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "IL3DN/Water"
 {
     Properties
@@ -20,17 +20,17 @@ Shader "IL3DN/Water"
 
     SubShader
     {
-		
+
         Tags { "RenderPipeline"="LightweightPipeline" "RenderType"="Transparent" "Queue"="Transparent" }
 
 		Cull Back
 		HLSLINCLUDE
 		#pragma target 3.0
 		ENDHLSL
-		
+
         Pass
         {
-			
+
         	Tags { "LightMode"="LightweightForward" }
 
         	Name "Base"
@@ -39,7 +39,7 @@ Shader "IL3DN/Water"
 			ZTest LEqual
 			Offset 0,0
 			ColorMask RGBA
-            
+
         	HLSLPROGRAM
             #pragma multi_compile _ LOD_FADE_CROSSFADE
             #define ASE_SRP_VERSION 60900
@@ -50,7 +50,7 @@ Shader "IL3DN/Water"
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            
+
 
         	// -------------------------------------
             // Lightweight Pipeline keywords
@@ -60,7 +60,7 @@ Shader "IL3DN/Water"
             #pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile _ _SHADOWS_SOFT
             #pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
-            
+
         	// -------------------------------------
             // Unity defined keywords
             #pragma multi_compile _ DIRLIGHTMAP_COMBINED
@@ -74,13 +74,13 @@ Shader "IL3DN/Water"
             #pragma vertex vert
         	#pragma fragment frag
 
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
         	#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
         	#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
-        	#include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
-		
-			
+        	#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
+
 
 			uniform float4 _CameraDepthTexture_TexelSize;
 			sampler2D _Normal;
@@ -149,7 +149,7 @@ Shader "IL3DN/Water"
 				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
 				return 130.0 * dot( m, g );
 			}
-			
+
 
             GraphVertexOutput vert (GraphVertexInput v  )
         	{
@@ -161,9 +161,9 @@ Shader "IL3DN/Water"
 				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
 				float4 screenPos = ComputeScreenPos(ase_clipPos);
 				o.ase_texcoord7 = screenPos;
-				
+
 				o.ase_texcoord8.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord8.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -189,7 +189,7 @@ Shader "IL3DN/Water"
 				o.tSpace2 = float4(lwWTangent.z, lwWBinormal.z, lwWNormal.z, lwWorldPos.z);
 
                 VertexPositionInputs vertexInput = GetVertexPositionInputs(v.vertex.xyz);
-                
+
          		// We either sample GI from lightmap or SH.
         	    // Lightmap UV and vertex SH coefficients use the same interpolator ("float2 lightmapUV" for lightmap or "half3 vertexSH" for SH)
                 // see DECLARE_LIGHTMAP_OR_SH macro.
@@ -218,7 +218,7 @@ Shader "IL3DN/Water"
 				float3 WorldSpaceBiTangent = float3(IN.tSpace0.y,IN.tSpace1.y,IN.tSpace2.y);
 				float3 WorldSpacePosition = float3(IN.tSpace0.w,IN.tSpace1.w,IN.tSpace2.w);
 				float3 WorldSpaceViewDirection = SafeNormalize( _WorldSpaceCameraPos.xyz  - WorldSpacePosition );
-    
+
 				half2 temp_output_252_0 = (WorldSpacePosition).xz;
 				half2 panner253 = ( 0.1 * _Time.y * float2( 1,0 ) + temp_output_252_0);
 				half simplePerlin2D244 = snoise( ( panner253 * 1 ) );
@@ -236,23 +236,23 @@ Shader "IL3DN/Water"
 				float topWater237 = saturate( ( 1.0 - edgeEffect208 ) );
 				float deepWater170 = saturate( pow( edgeEffect208 , _WaterFalloff ) );
 				half4 lerpResult13 = lerp( _BottomColor , _MidColor , deepWater170);
-				
+
 				half2 temp_output_347_0 = ( float2( 100,100 ) * _Size );
 				float mulTime242 = _Time.y * _Speed;
 				half2 temp_cast_1 = (mulTime242).xx;
 				half2 uv0241 = IN.ase_texcoord8.xy * temp_output_347_0 + temp_cast_1;
 				half2 temp_cast_2 = (( 1.0 - mulTime242 )).xx;
 				half2 uv0364 = IN.ase_texcoord8.xy * temp_output_347_0 + temp_cast_2;
-				
+
 				half fresnelNdotV340 = dot( WorldSpaceNormal, WorldSpaceViewDirection );
 				half fresnelNode340 = ( 0.0 + 1.0 * pow( 1.0 - fresnelNdotV340, _Smoothness ) );
 				half temp_output_349_0 = saturate( fresnelNode340 );
 				half3 temp_cast_3 = (temp_output_349_0).xxx;
-				
+
 				half fresnelNdotV341 = dot( WorldSpaceNormal, WorldSpaceViewDirection );
 				half fresnelNode341 = ( 0.2 + 1.0 * pow( 1.0 - fresnelNdotV341, _Transparency ) );
-				
-				
+
+
 		        float3 Albedo = saturate( ( saturate( ( ( _FoamColor * foamWater218 ) + ( _FoamColor * foamEdge280 ) ) ) + ( _TopColor * topWater237 ) + lerpResult13 ) ).rgb;
 				float3 Normal = BlendNormal( UnpackNormalScale( tex2D( _Normal, uv0241 ), _NormalStrenght ) , UnpackNormalScale( tex2D( _Normal, uv0364 ), _NormalStrenght ) );
 				float3 Emission = 0;
@@ -290,13 +290,13 @@ Shader "IL3DN/Water"
         	    inputData.bakedGI = SAMPLE_GI(IN.lightmapUVOrVertexSH.xy, IN.lightmapUVOrVertexSH.xyz, inputData.normalWS);
 
         		half4 color = LightweightFragmentPBR(
-        			inputData, 
-        			Albedo, 
-        			Metallic, 
-        			Specular, 
-        			Smoothness, 
-        			Occlusion, 
-        			Emission, 
+        			inputData,
+        			Albedo,
+        			Metallic,
+        			Specular,
+        			Smoothness,
+        			Occlusion,
+        			Emission,
         			Alpha);
 
 			#ifdef TERRAIN_SPLAT_ADDPASS
@@ -312,7 +312,7 @@ Shader "IL3DN/Water"
 		#if ASE_LW_FINAL_COLOR_ALPHA_MULTIPLY
 				color.rgb *= color.a;
 		#endif
-		
+
 		#ifdef LOD_FADE_CROSSFADE
 				LODDitheringTransition (IN.clipPos.xyz, unity_LODFade.x);
 		#endif
@@ -322,10 +322,10 @@ Shader "IL3DN/Water"
         	ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
         	Name "ShadowCaster"
             Tags { "LightMode"="ShadowCaster" }
 
@@ -339,7 +339,7 @@ Shader "IL3DN/Water"
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            
+
 
             //--------------------------------------
             // GPU Instancing
@@ -349,18 +349,18 @@ Shader "IL3DN/Water"
             #pragma fragment ShadowPassFragment
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-            
+
 
             struct GraphVertexInput
             {
                 float4 vertex : POSITION;
                 float3 ase_normal : NORMAL;
-				
+
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
@@ -386,7 +386,7 @@ Shader "IL3DN/Water"
 				UNITY_VERTEX_OUTPUT_STEREO
         	};
 
-			
+
             // x: global clip space bias, y: normal world space bias
             float3 _LightDirection;
 
@@ -401,8 +401,8 @@ Shader "IL3DN/Water"
 				o.ase_texcoord7.xyz = ase_worldPos;
 				half3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
 				o.ase_texcoord8.xyz = ase_worldNormal;
-				
-				
+
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord7.w = 0;
 				o.ase_texcoord8.w = 0;
@@ -455,7 +455,7 @@ Shader "IL3DN/Water"
                half3 ase_worldNormal = IN.ase_texcoord8.xyz;
                half fresnelNdotV341 = dot( ase_worldNormal, ase_worldViewDir );
                half fresnelNode341 = ( 0.2 + 1.0 * pow( 1.0 - fresnelNdotV341, _Transparency ) );
-               
+
 
 				float Alpha = saturate( fresnelNode341 );
 				float AlphaClipThreshold = AlphaClipThreshold;
@@ -473,10 +473,10 @@ Shader "IL3DN/Water"
             ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
         	Name "DepthOnly"
             Tags { "LightMode"="DepthOnly" }
 
@@ -499,12 +499,12 @@ Shader "IL3DN/Water"
             #pragma fragment frag
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-            
+
 
 			CBUFFER_START( UnityPerMaterial )
 			float4 _FoamColor;
@@ -523,7 +523,7 @@ Shader "IL3DN/Water"
             {
                 float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
-				
+
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
@@ -536,7 +536,7 @@ Shader "IL3DN/Water"
                 UNITY_VERTEX_OUTPUT_STEREO
         	};
 
-			           
+
 
             VertexOutput vert(GraphVertexInput v  )
             {
@@ -549,8 +549,8 @@ Shader "IL3DN/Water"
 				o.ase_texcoord.xyz = ase_worldPos;
 				half3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
 				o.ase_texcoord1.xyz = ase_worldNormal;
-				
-				
+
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord.w = 0;
 				o.ase_texcoord1.w = 0;
@@ -582,7 +582,7 @@ Shader "IL3DN/Water"
 				half3 ase_worldNormal = IN.ase_texcoord1.xyz;
 				half fresnelNdotV341 = dot( ase_worldNormal, ase_worldViewDir );
 				half fresnelNode341 = ( 0.2 + 1.0 * pow( 1.0 - fresnelNdotV341, _Transparency ) );
-				
+
 
 				float Alpha = saturate( fresnelNode341 );
 				float AlphaClipThreshold = AlphaClipThreshold;
@@ -599,10 +599,10 @@ Shader "IL3DN/Water"
         }
 
         // This pass it not used during regular rendering, only for lightmap baking.
-		
+
         Pass
         {
-			
+
         	Name "Meta"
             Tags { "LightMode"="Meta" }
 
@@ -620,13 +620,13 @@ Shader "IL3DN/Water"
             #pragma vertex vert
             #pragma fragment frag
 
-			
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/MetaInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MetaInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-            
+
 
 			uniform float4 _CameraDepthTexture_TexelSize;
 			CBUFFER_START( UnityPerMaterial )
@@ -652,7 +652,7 @@ Shader "IL3DN/Water"
 				float3 ase_normal : NORMAL;
 				float4 texcoord1 : TEXCOORD1;
 				float4 texcoord2 : TEXCOORD2;
-				
+
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
@@ -693,7 +693,7 @@ Shader "IL3DN/Water"
 				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
 				return 130.0 * dot( m, g );
 			}
-			
+
 
             VertexOutput vert(GraphVertexInput v  )
             {
@@ -706,11 +706,11 @@ Shader "IL3DN/Water"
 				float4 ase_clipPos = TransformObjectToHClip((v.vertex).xyz);
 				float4 screenPos = ComputeScreenPos(ase_clipPos);
 				o.ase_texcoord1 = screenPos;
-				
+
 				half3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
 				o.ase_texcoord2.xyz = ase_worldNormal;
-				
-				
+
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord.w = 0;
 				o.ase_texcoord2.w = 0;
@@ -727,7 +727,7 @@ Shader "IL3DN/Water"
 				#endif
 
 				v.ase_normal =  v.ase_normal ;
-#if !defined( ASE_SRP_VERSION ) || ASE_SRP_VERSION  > 51300				
+#if !defined( ASE_SRP_VERSION ) || ASE_SRP_VERSION  > 51300
                 o.clipPos = MetaVertexPosition(v.vertex, v.texcoord1.xy, v.texcoord1.xy, unity_LightmapST, unity_DynamicLightmapST);
 #else
 				o.clipPos = MetaVertexPosition (v.vertex, v.texcoord1.xy, v.texcoord2.xy, unity_LightmapST);
@@ -757,14 +757,14 @@ Shader "IL3DN/Water"
            		float topWater237 = saturate( ( 1.0 - edgeEffect208 ) );
            		float deepWater170 = saturate( pow( edgeEffect208 , _WaterFalloff ) );
            		half4 lerpResult13 = lerp( _BottomColor , _MidColor , deepWater170);
-           		
+
            		float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - ase_worldPos );
            		ase_worldViewDir = normalize(ase_worldViewDir);
            		half3 ase_worldNormal = IN.ase_texcoord2.xyz;
            		half fresnelNdotV341 = dot( ase_worldNormal, ase_worldViewDir );
            		half fresnelNode341 = ( 0.2 + 1.0 * pow( 1.0 - fresnelNdotV341, _Transparency ) );
-           		
-				
+
+
 		        float3 Albedo = saturate( ( saturate( ( ( _FoamColor * foamWater218 ) + ( _FoamColor * foamEdge280 ) ) ) + ( _TopColor * topWater237 ) + lerpResult13 ) ).rgb;
 				float3 Emission = 0;
 				float Alpha = saturate( fresnelNode341 );
@@ -777,16 +777,16 @@ Shader "IL3DN/Water"
                 MetaInput metaInput = (MetaInput)0;
                 metaInput.Albedo = Albedo;
                 metaInput.Emission = Emission;
-                
+
                 return MetaFragment(metaInput);
             }
             ENDHLSL
         }
-		
+
     }
     Fallback "Hidden/InternalErrorShader"
 	CustomEditor "ASEMaterialInspector"
-	
+
 }
 /*ASEBEGIN
 Version=17009

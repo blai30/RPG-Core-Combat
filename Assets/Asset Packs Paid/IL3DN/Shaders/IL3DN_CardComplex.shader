@@ -1,5 +1,5 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "IL3DN/Card-TwoColors"
 {
     Properties
@@ -15,7 +15,7 @@ Shader "IL3DN/Card-TwoColors"
 
     SubShader
     {
-		
+
 
         Tags { "RenderPipeline"="LightweightPipeline" "RenderType"="TransparentCutout" "Queue"="AlphaTest" }
         Cull Off
@@ -23,7 +23,7 @@ Shader "IL3DN/Card-TwoColors"
 		#pragma target 3.0
 		ENDHLSL
 
-		
+
         Pass
         {
             Tags { "LightMode"="LightweightForward" }
@@ -34,7 +34,7 @@ Shader "IL3DN/Card-TwoColors"
 			ZTest LEqual
 			Offset 0 , 0
 			ColorMask RGBA
-			
+
 
             HLSLPROGRAM
             #pragma multi_compile _ LOD_FADE_CROSSFADE
@@ -57,17 +57,17 @@ Shader "IL3DN/Card-TwoColors"
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing
-            
+
             #pragma vertex vert
             #pragma fragment frag
 
 
             // Lighting include is needed because of GI
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/Shaders/UnlitInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
 
             #pragma multi_compile __ _WIND_ON
             #pragma shader_feature _ISDEAD_ON
@@ -132,7 +132,7 @@ Shader "IL3DN/Card-TwoColors"
 				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
 				return 130.0 * dot( m, g );
 			}
-			
+
 
             GraphVertexOutput vert (GraphVertexInput v)
             {
@@ -154,9 +154,9 @@ Shader "IL3DN/Card-TwoColors"
 				#else
 				float4 staticSwitch897 = float4( 0,0,0,0 );
 				#endif
-				
+
 				o.ase_texcoord1.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord1.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -166,7 +166,7 @@ Shader "IL3DN/Card-TwoColors"
 				#endif
 				float3 vertexValue = staticSwitch897.xyz;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				v.vertex.xyz = vertexValue; 
+				v.vertex.xyz = vertexValue;
 				#else
 				v.vertex.xyz += vertexValue;
 				#endif
@@ -192,11 +192,11 @@ Shader "IL3DN/Card-TwoColors"
 				#endif
 				float4 tex2DNode97 = tex2D( _MainTex, staticSwitch903 );
 				float4 lerpResult901 = lerp( _Bark , _Leaves , tex2DNode97.g);
-				
+
 		        float3 Color = lerpResult901.rgb;
 		        float Alpha = tex2DNode97.a;
 		        float AlphaClipThreshold = _AlphaCutoff;
-			
+
 			#if _AlphaClip
 				clip(Alpha - AlphaClipThreshold);
 			#endif
@@ -214,10 +214,10 @@ Shader "IL3DN/Card-TwoColors"
             ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
             Name "ShadowCaster"
             Tags { "LightMode"="ShadowCaster" }
 			ZWrite On
@@ -231,7 +231,7 @@ Shader "IL3DN/Card-TwoColors"
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            
+
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing
@@ -240,9 +240,9 @@ Shader "IL3DN/Card-TwoColors"
             #pragma fragment ShadowPassFragment
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
             #pragma multi_compile __ _WIND_ON
@@ -308,7 +308,7 @@ Shader "IL3DN/Card-TwoColors"
 				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
 				return 130.0 * dot( m, g );
 			}
-			
+
 
             VertexOutput ShadowPassVertex(GraphVertexInput v )
             {
@@ -316,7 +316,7 @@ Shader "IL3DN/Card-TwoColors"
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                
+
 				float mulTime877 = _Time.y * 0.25;
 				float2 temp_cast_0 = (mulTime877).xx;
 				float simplePerlin2D879 = snoise( temp_cast_0 );
@@ -331,9 +331,9 @@ Shader "IL3DN/Card-TwoColors"
 				#else
 				float4 staticSwitch897 = float4( 0,0,0,0 );
 				#endif
-				
+
 				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -362,7 +362,7 @@ Shader "IL3DN/Card-TwoColors"
                 float4 clipPos = TransformWorldToHClip(positionWS);
 
                 // _ShadowBias.x sign depens on if platform has reversed z buffer
-                //clipPos.z += _ShadowBias.x; 
+                //clipPos.z += _ShadowBias.x;
 
             #if UNITY_REVERSED_Z
                 clipPos.z = min(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
@@ -386,7 +386,7 @@ Shader "IL3DN/Card-TwoColors"
         		float2 staticSwitch903 = uv0906;
         		#endif
         		float4 tex2DNode97 = tex2D( _MainTex, staticSwitch903 );
-        		
+
 
 				float Alpha = tex2DNode97.a;
 				float AlphaClipThreshold = _AlphaCutoff;
@@ -403,10 +403,10 @@ Shader "IL3DN/Card-TwoColors"
             ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
             Name "DepthOnly"
             Tags { "LightMode"="DepthOnly" }
 
@@ -432,9 +432,9 @@ Shader "IL3DN/Card-TwoColors"
             #pragma fragment frag
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
             #pragma multi_compile __ _WIND_ON
@@ -497,7 +497,7 @@ Shader "IL3DN/Card-TwoColors"
 				g.yz = a0.yz * x12.xz + h.yz * x12.yw;
 				return 130.0 * dot( m, g );
 			}
-			
+
 
 			VertexOutput vert( GraphVertexInput v  )
 			{
@@ -519,9 +519,9 @@ Shader "IL3DN/Card-TwoColors"
 					#else
 					float4 staticSwitch897 = float4( 0,0,0,0 );
 					#endif
-					
+
 					o.ase_texcoord.xy = v.ase_texcoord.xy;
-					
+
 					//setting value to unused interpolator channels and avoid initialization warnings
 					o.ase_texcoord.zw = 0;
 					#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -529,7 +529,7 @@ Shader "IL3DN/Card-TwoColors"
 					#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 					#endif
-					float3 vertexValue = staticSwitch897.xyz;	
+					float3 vertexValue = staticSwitch897.xyz;
 					#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 					#else
@@ -552,7 +552,7 @@ Shader "IL3DN/Card-TwoColors"
 				float2 staticSwitch903 = uv0906;
 				#endif
 				float4 tex2DNode97 = tex2D( _MainTex, staticSwitch903 );
-				
+
 
 				float Alpha = tex2DNode97.a;
 				float AlphaClipThreshold = _AlphaCutoff;
@@ -567,11 +567,11 @@ Shader "IL3DN/Card-TwoColors"
             }
             ENDHLSL
         }
-		
+
     }
     Fallback "Hidden/InternalErrorShader"
 	CustomEditor "ASEMaterialInspector"
-	
+
 }
 /*ASEBEGIN
 Version=17009

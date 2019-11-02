@@ -1,5 +1,5 @@
 // Made with Amplify Shader Editor
-// Available at the Unity Asset Store - http://u3d.as/y3X 
+// Available at the Unity Asset Store - http://u3d.as/y3X
 Shader "IL3DN/SoftParticle"
 {
     Properties
@@ -12,7 +12,7 @@ Shader "IL3DN/SoftParticle"
 
     SubShader
     {
-		
+
 
         Tags { "RenderPipeline"="LightweightPipeline" "RenderType"="Transparent" "Queue"="Transparent" }
         Cull Back
@@ -20,7 +20,7 @@ Shader "IL3DN/SoftParticle"
 		#pragma target 3.0
 		ENDHLSL
 
-		
+
         Pass
         {
             Tags { "LightMode"="LightweightForward" }
@@ -31,7 +31,7 @@ Shader "IL3DN/SoftParticle"
 			ZTest LEqual
 			Offset 0 , 0
 			ColorMask RGBA
-			
+
 
             HLSLPROGRAM
             #define ASE_SRP_VERSION 50702
@@ -53,19 +53,19 @@ Shader "IL3DN/SoftParticle"
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing
-            
+
             #pragma vertex vert
             #pragma fragment frag
 
 
             // Lighting include is needed because of GI
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/Shaders/UnlitInput.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
 
-            
+
 
 			sampler2D _Diffuse;
 			uniform float4 _CameraDepthTexture_TexelSize;
@@ -95,7 +95,7 @@ Shader "IL3DN/SoftParticle"
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-			
+
             GraphVertexOutput vert (GraphVertexInput v)
             {
                 GraphVertexOutput o = (GraphVertexOutput)0;
@@ -106,9 +106,9 @@ Shader "IL3DN/SoftParticle"
 				float4 ase_clipPos80 = TransformObjectToHClip((vertexPos80).xyz);
 				float4 screenPos80 = ComputeScreenPos(ase_clipPos80);
 				o.ase_texcoord2 = screenPos80;
-				
+
 				o.ase_texcoord1.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord1.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -118,7 +118,7 @@ Shader "IL3DN/SoftParticle"
 				#endif
 				float3 vertexValue =  defaultVertexValue ;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
-				v.vertex.xyz = vertexValue; 
+				v.vertex.xyz = vertexValue;
 				#else
 				v.vertex.xyz += vertexValue;
 				#endif
@@ -137,17 +137,17 @@ Shader "IL3DN/SoftParticle"
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
 				float2 uv_Diffuse = IN.ase_texcoord1.xy * _Diffuse_ST.xy + _Diffuse_ST.zw;
 				float4 tex2DNode9 = tex2D( _Diffuse, uv_Diffuse );
-				
+
 				float4 screenPos80 = IN.ase_texcoord2;
 				float4 ase_screenPosNorm80 = screenPos80 / screenPos80.w;
 				ase_screenPosNorm80.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm80.z : ase_screenPosNorm80.z * 0.5 + 0.5;
 				float screenDepth80 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm80.xy ),_ZBufferParams);
 				float distanceDepth80 = abs( ( screenDepth80 - LinearEyeDepth( ase_screenPosNorm80.z,_ZBufferParams ) ) / ( _SoftParticleFactor ) );
-				
+
 		        float3 Color = ( _Color * tex2DNode9 ).rgb;
 		        float Alpha = ( tex2DNode9.a * saturate( distanceDepth80 ) * _Color.a );
 		        float AlphaClipThreshold = 0;
-			
+
 			#if _AlphaClip
 				clip(Alpha - AlphaClipThreshold);
 			#endif
@@ -165,10 +165,10 @@ Shader "IL3DN/SoftParticle"
             ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
             Name "ShadowCaster"
             Tags { "LightMode"="ShadowCaster" }
 			ZWrite On
@@ -181,7 +181,7 @@ Shader "IL3DN/SoftParticle"
             // Required to compile gles 2.0 with standard srp library
             #pragma prefer_hlslcc gles
             #pragma exclude_renderers d3d11_9x
-            
+
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing
@@ -190,12 +190,12 @@ Shader "IL3DN/SoftParticle"
             #pragma fragment ShadowPassFragment
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-            
+
 
 			sampler2D _Diffuse;
 			uniform float4 _CameraDepthTexture_TexelSize;
@@ -225,21 +225,21 @@ Shader "IL3DN/SoftParticle"
             // x: global clip space bias, y: normal world space bias
             float3 _LightDirection;
 
-			
+
             VertexOutput ShadowPassVertex(GraphVertexInput v )
             {
                 VertexOutput o;
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                
+
 				float3 vertexPos80 = v.vertex.xyz;
 				float4 ase_clipPos80 = TransformObjectToHClip((vertexPos80).xyz);
 				float4 screenPos80 = ComputeScreenPos(ase_clipPos80);
 				o.ase_texcoord1 = screenPos80;
-				
+
 				o.ase_texcoord.xy = v.ase_texcoord.xy;
-				
+
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord.zw = 0;
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -268,7 +268,7 @@ Shader "IL3DN/SoftParticle"
                 float4 clipPos = TransformWorldToHClip(positionWS);
 
                 // _ShadowBias.x sign depens on if platform has reversed z buffer
-                //clipPos.z += _ShadowBias.x; 
+                //clipPos.z += _ShadowBias.x;
 
             #if UNITY_REVERSED_Z
                 clipPos.z = min(clipPos.z, clipPos.w * UNITY_NEAR_CLIP_VALUE);
@@ -291,7 +291,7 @@ Shader "IL3DN/SoftParticle"
         		ase_screenPosNorm80.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm80.z : ase_screenPosNorm80.z * 0.5 + 0.5;
         		float screenDepth80 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm80.xy ),_ZBufferParams);
         		float distanceDepth80 = abs( ( screenDepth80 - LinearEyeDepth( ase_screenPosNorm80.z,_ZBufferParams ) ) / ( _SoftParticleFactor ) );
-        		
+
 
 				float Alpha = ( tex2DNode9.a * saturate( distanceDepth80 ) * _Color.a );
 				float AlphaClipThreshold = AlphaClipThreshold;
@@ -308,10 +308,10 @@ Shader "IL3DN/SoftParticle"
             ENDHLSL
         }
 
-		
+
         Pass
         {
-			
+
             Name "DepthOnly"
             Tags { "LightMode"="DepthOnly" }
 
@@ -336,12 +336,12 @@ Shader "IL3DN/SoftParticle"
             #pragma fragment frag
 
 
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Lighting.hlsl"
-            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/ShaderGraphFunctions.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
-            
+
 
 			sampler2D _Diffuse;
 			uniform float4 _CameraDepthTexture_TexelSize;
@@ -368,7 +368,7 @@ Shader "IL3DN/SoftParticle"
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 
-			
+
 			VertexOutput vert( GraphVertexInput v  )
 			{
 					VertexOutput o = (VertexOutput)0;
@@ -379,9 +379,9 @@ Shader "IL3DN/SoftParticle"
 					float4 ase_clipPos80 = TransformObjectToHClip((vertexPos80).xyz);
 					float4 screenPos80 = ComputeScreenPos(ase_clipPos80);
 					o.ase_texcoord1 = screenPos80;
-					
+
 					o.ase_texcoord.xy = v.ase_texcoord.xy;
-					
+
 					//setting value to unused interpolator channels and avoid initialization warnings
 					o.ase_texcoord.zw = 0;
 					#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -389,7 +389,7 @@ Shader "IL3DN/SoftParticle"
 					#else
 					float3 defaultVertexValue = float3(0, 0, 0);
 					#endif
-					float3 vertexValue =  defaultVertexValue ;	
+					float3 vertexValue =  defaultVertexValue ;
 					#ifdef ASE_ABSOLUTE_VERTEX_POS
 					v.vertex.xyz = vertexValue;
 					#else
@@ -411,7 +411,7 @@ Shader "IL3DN/SoftParticle"
 				ase_screenPosNorm80.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? ase_screenPosNorm80.z : ase_screenPosNorm80.z * 0.5 + 0.5;
 				float screenDepth80 = LinearEyeDepth(SHADERGRAPH_SAMPLE_SCENE_DEPTH( ase_screenPosNorm80.xy ),_ZBufferParams);
 				float distanceDepth80 = abs( ( screenDepth80 - LinearEyeDepth( ase_screenPosNorm80.z,_ZBufferParams ) ) / ( _SoftParticleFactor ) );
-				
+
 
 				float Alpha = ( tex2DNode9.a * saturate( distanceDepth80 ) * _Color.a );
 				float AlphaClipThreshold = AlphaClipThreshold;
@@ -426,11 +426,11 @@ Shader "IL3DN/SoftParticle"
             }
             ENDHLSL
         }
-		
+
     }
     Fallback "Hidden/InternalErrorShader"
 	CustomEditor "ASEMaterialInspector"
-	
+
 }
 /*ASEBEGIN
 Version=17009

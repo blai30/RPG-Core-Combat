@@ -135,8 +135,7 @@ namespace RPG.Control
         {
             // Send raycast from camera through screen to terrain
             Vector3 target;
-            bool hasHit = RaycastNavMesh(out target);
-            if (hasHit)
+            if (RaycastNavMesh(out target))
             {
                 // Destination is too far
                 if (!m_mover.CanMoveTo(target))
