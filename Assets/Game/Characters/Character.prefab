@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 2972298621101924364}
   - component: {fileID: -8822163331786360780}
   - component: {fileID: 503919496108924778}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMoveSpeed: 5.66
+  maxNavMeshPathLength: 60
 --- !u!114 &1856932113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,6 +531,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7490355530478798145}
     m_Modifications:
+    - target: {fileID: 2178055527574842591, guid: e4f3c281e96b6493c9c79a3c432a1cd5,
+        type: 3}
+      propertyPath: m_Name
+      value: Damage Text Spawner
+      objectReference: {fileID: 0}
     - target: {fileID: 3956438060637866687, guid: e4f3c281e96b6493c9c79a3c432a1cd5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -584,11 +590,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2178055527574842591, guid: e4f3c281e96b6493c9c79a3c432a1cd5,
-        type: 3}
-      propertyPath: m_Name
-      value: Damage Text Spawner
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4f3c281e96b6493c9c79a3c432a1cd5, type: 3}
