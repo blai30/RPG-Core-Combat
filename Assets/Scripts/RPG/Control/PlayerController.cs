@@ -76,7 +76,8 @@ namespace RPG.Control
 
         public void OnLook(InputValue value)
         {
-            m_lookVector = value.Get<Vector2>();
+            Vector3 look = m_camera.ScreenToWorldPoint(new Vector3(value.Get<Vector2>().x, value.Get<Vector2>().y, transform.position.z));
+            m_lookVector = (look - transform.position).normalized;
         }
 
         private CursorMapping GetCursorMapping(CursorType cursorType)
