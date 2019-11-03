@@ -3,8 +3,8 @@ using RPG.Combat;
 using RPG.Movement;
 using RPG.Attributes;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 namespace RPG.Control
 {
@@ -28,9 +28,11 @@ namespace RPG.Control
         /// GameObject components
         /// </summary>
         private Fighter m_fighter;
-
         private Health m_health;
         private Mover m_mover;
+
+        private Vector2 m_moveVector;
+        private Vector2 m_lookVector;
 
         void Awake()
         {
@@ -42,10 +44,10 @@ namespace RPG.Control
 
         void Update()
         {
-            if (InteractWithUI())
-            {
-                return;
-            }
+//            if (InteractWithUI())
+//            {
+//                return;
+//            }
 
             // No behavior when dead
             if (m_health.IsDead)
@@ -54,27 +56,27 @@ namespace RPG.Control
                 return;
             }
 
-            if (InteractWithComponent())
+            if (m_moveVector.sqrMagnitude > 0.01)
             {
-                return;
+                m_mover.Move(new Vector3(m_moveVector.x, 0, m_moveVector.y), 1f);
             }
 
-            // Do movement
-            if (InteractWithMovement())
+            if (m_lookVector.sqrMagnitude > 0.01)
             {
-                return;
+                m_mover.LookTo(new Vector3(m_lookVector.x, 0, m_lookVector.y));
             }
 
             SetCursor(CursorType.None);
         }
 
-        /// <summary>
-        /// Send raycast from camera to mouse click position
-        /// </summary>
-        /// <returns>Ray of the mouse click</returns>
-        private Ray GetMouseRay()
+        public void OnMove(InputValue value)
         {
-            return m_camera.ScreenPointToRay(Input.mousePosition);
+            m_moveVector = value.Get<Vector2>();
+        }
+
+        public void OnLook(InputValue value)
+        {
+            m_lookVector = value.Get<Vector2>();
         }
 
         private CursorMapping GetCursorMapping(CursorType cursorType)
@@ -105,91 +107,6 @@ namespace RPG.Control
             }
 
             return false;
-        }
-
-        private bool InteractWithComponent()
-        {
-            // Get all layers of raycast hits
-            RaycastHit[] hits = RaycastAllSorted();
-            foreach (RaycastHit hit in hits)
-            {
-                IRaycastable[] raycastables = hit.transform.GetComponents<IRaycastable>();
-                foreach (IRaycastable raycastable in raycastables)
-                {
-                    if (raycastable.HandleRaycast(this))
-                    {
-                        SetCursor(raycastable.GetCursorType());
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Do movement with raycast hit
-        /// </summary>
-        /// <returns></returns>
-        private bool InteractWithMovement()
-        {
-            // Send raycast from camera through screen to terrain
-            Vector3 target;
-            if (RaycastNavMesh(out target))
-            {
-                // Destination is too far
-                if (!m_mover.CanMoveTo(target))
-                {
-                    return false;
-                }
-
-                // Click to move
-                if (Input.GetMouseButton(0))
-                {
-                    m_mover.StartMoveAction(target, 1f);
-                }
-
-                SetCursor(CursorType.Movement);
-                return true;
-            }
-
-            // Cannot do movement
-            return false;
-        }
-
-        private bool RaycastNavMesh(out Vector3 target)
-        {
-            target = new Vector3();
-
-            // Raycast to terrain
-            RaycastHit hit;
-            if (!Physics.Raycast(GetMouseRay(), out hit))
-            {
-                return false;
-            }
-
-            // Find nearest navmesh point
-            NavMeshHit navMeshHit;
-            if (!NavMesh.SamplePosition(hit.point, out navMeshHit, maxNavMeshProjectionDistance, NavMesh.AllAreas))
-            {
-                return false;
-            }
-
-            target = navMeshHit.position;
-            return true;
-        }
-
-        private RaycastHit[] RaycastAllSorted()
-        {
-            RaycastHit[] hits = Physics.SphereCastAll(GetMouseRay(), raycastRadius);
-            float[] distances = new float[hits.Length];
-            for (int i = 0; i < hits.Length; i++)
-            {
-                distances[i] = hits[i].distance;
-            }
-            Array.Sort(distances, hits);
-
-            return hits;
         }
     }
 }

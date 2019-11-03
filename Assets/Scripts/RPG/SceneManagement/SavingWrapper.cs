@@ -17,26 +17,26 @@ namespace RPG.SceneManagement
             StartCoroutine(LoadLastScene());
         }
 
-        void Update()
-        {
-            // Save the game state
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                Save();
-            }
-
-            // Load the game state
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                Load();
-            }
-
-            // Delete the game state
-            if (Input.GetKeyDown(KeyCode.Delete))
-            {
-                Delete();
-            }
-        }
+//        void Update()
+//        {
+//            // Save the game state
+//            if (Input.GetKeyDown(KeyCode.S))
+//            {
+//                Save();
+//            }
+//
+//            // Load the game state
+//            if (Input.GetKeyDown(KeyCode.L))
+//            {
+//                Load();
+//            }
+//
+//            // Delete the game state
+//            if (Input.GetKeyDown(KeyCode.Delete))
+//            {
+//                Delete();
+//            }
+//        }
 
         private IEnumerator LoadLastScene()
         {
