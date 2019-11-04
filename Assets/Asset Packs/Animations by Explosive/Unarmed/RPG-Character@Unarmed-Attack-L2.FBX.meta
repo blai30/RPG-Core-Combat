@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 69f3b1b43eb337548a8633b7b82d6fc6
 ModelImporter:
-  serializedVersion: 23
+  serializedVersion: 19
   fileIDToRecycleName:
     100000: B_Head
     100002: B_L_Calf
@@ -58,6 +58,7 @@ ModelImporter:
     100104: Motion
     100106: RPG-Character-Mesh
     100108: //RootNode
+    100110: Exporter
     400000: B_Head
     400002: B_L_Calf
     400004: B_L_Clavicle
@@ -113,53 +114,46 @@ ModelImporter:
     400104: Motion
     400106: RPG-Character-Mesh
     400108: //RootNode
+    400110: Exporter
     4300000: RPG-Character-Mesh
     7400000: Unarmed-Attack-L2
     9500000: //RootNode
     13700000: RPG-Character-Mesh
     2186277476908879412: ImportLogs
-  externalObjects: {}
   materials:
     importMaterials: 0
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: 
+    motionNodeName: Motion
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
-      improve retargeting quality.\n\t'B_Spine' has translation animation that will
-      be discarded.\n\t'B_Spine2' is inbetween humanoid transforms and has rotation
-      animation that will be discarded.\n"
-    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tLeftLowerLeg
-      average position error 0.4 mm and maximum position error 1.9 mm at time 0:12
-      (50.0%) Frame 12\n\tLeftUpperArm average position error 18.6 mm and maximum
-      position error 28.6 mm at time 0:18 (75.0%) Frame 18\n\tLeftLowerArm average
-      position error 13.4 mm and maximum position error 17.3 mm at time 0: 0 (0.0%)
-      Frame 0\n\tLeftHand average position error 14.0 mm and maximum position error
-      20.6 mm at time 0: 3 (12.5%) Frame 3\n\tRightUpperArm average position error
-      19.3 mm and maximum position error 34.5 mm at time 0: 6 (25.0%) Frame 6\n\tRightLowerArm
-      average position error 17.7 mm and maximum position error 46.6 mm at time 0:
-      6 (25.0%) Frame 6\n\tRightHand average position error 9.2 mm and maximum position
-      error 19.0 mm at time 0: 7 (29.2%) Frame 7\n\tHead average position error 47.3
-      mm and maximum position error 67.7 mm at time 0: 5 (20.8%) Frame 5\n"
+      might lower retargeting quality:\n\t'B_Spine2' is inbetween humanoid transforms
+      and has rotation animation that will be discarded.\n"
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tLeftUpperArm
+      average position error 17.1 mm and maximum position error 30.2 mm at time 0:18
+      (75.0%) Frame 18\n\tLeftLowerArm average position error 11.2 mm and maximum
+      position error 19.3 mm at time 0: 1 (4.2%) Frame 1\n\tLeftHand average position
+      error 11.5 mm and maximum position error 21.0 mm at time 0: 2 (8.3%) Frame 2\n\tRightUpperArm
+      average position error 18.7 mm and maximum position error 35.6 mm at time 0:
+      6 (25.0%) Frame 6\n\tRightLowerArm average position error 15.6 mm and maximum
+      position error 38.1 mm at time 0: 6 (25.0%) Frame 6\n\tRightHand average position
+      error 6.6 mm and maximum position error 14.0 mm at time 0: 1 (4.2%) Frame 1\n\tHead
+      average position error 47.1 mm and maximum position error 70.9 mm at time 0:
+      4 (16.7%) Frame 4\n"
     animationDoRetargetingWarnings: 1
-    importAnimatedCustomProperties: 0
-    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
       name: Unarmed-Attack-L2
@@ -176,7 +170,7 @@ ModelImporter:
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
-      loopBlendPositionXZ: 0
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
@@ -194,6 +188,8 @@ ModelImporter:
         messageOptions: 0
       transformMask:
       - path: 
+        weight: 1
+      - path: Exporter
         weight: 1
       - path: Motion
         weight: 1
@@ -301,8 +297,6 @@ ModelImporter:
         weight: 1
       - path: Motion/B_Pelvis/B_Spine/B_Spine1/B_Spine2/B_R_Clavicle/B_R_UpperArm/B_R_Forearm/B_R_Hand/B_R_Finger4/B_R_Finger41/B_R_Finger42
         weight: 1
-      - path: RPG-Character-Mesh
-        weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
@@ -312,30 +306,22 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
-    importVisibility: 0
-    importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importBlendShapes: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
+    optimizeMeshForGPU: 0
     keepQuads: 0
-    weldVertices: 1
-    preserveHierarchy: 0
-    indexFormat: 1
+    weldVertices: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 2
     tangentImportMode: 2
-    normalCalculationMode: 0
   importAnimation: 1
   copyAvatar: 1
   humanDescription:
@@ -1029,12 +1015,12 @@ ModelImporter:
     foreArmTwist: 1
     upperLegTwist: 1
     legTwist: 1
-    armStretch: 1
+    armStretch: 0.05
     legStretch: 0
     feetSpacing: 0
     rootMotionBoneName: PositionLocator
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
-    hasTranslationDoF: 0
+    hasTranslationDoF: 1
     hasExtraRoot: 0
     skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e42d9259129992a4d95e0b320ca2a43d,

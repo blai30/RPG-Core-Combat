@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c509dbaa7b6f416409e3195321a2187e, type: 3}
+  m_Name: POLYGON Nature Layer Palette
+  m_EditorClassIdentifier: 
+  PaletteLayers:
+  - {fileID: 8574412962073106934, guid: 59ae3d7e57d98ec4e903b4419beb1079, type: 2}
+  - {fileID: 8574412962073106934, guid: e6a8b41632ff3c74fa11c0179fa18313, type: 2}
+  - {fileID: 8574412962073106934, guid: 7dd1cd9d7a9429b4daff08ece6e2aa16, type: 2}
+  - {fileID: 8574412962073106934, guid: afc66e5fa66e2f0498e58ab1c9c5d8a2, type: 2}
+  - {fileID: 8574412962073106934, guid: 4bd460d7613af994495d4bb5c7cc6a7b, type: 2}
+  - {fileID: 8574412962073106934, guid: 3cd8cbea0db9fa74ea55bbc4868abf8b, type: 2}
+  - {fileID: 8574412962073106934, guid: 58be6c34a9eb41840a1324bc318450ce, type: 2}
+  - {fileID: 8574412962073106934, guid: f4845a19c80ea5b479289a292dbdc7e0, type: 2}
+  - {fileID: 8574412962073106934, guid: 72d62f5d64f65f24ea222d48421c785e, type: 2}
+  - {fileID: 8574412962073106934, guid: b9a5761502b2914439e9f4cb485c1060, type: 2}
+  - {fileID: 8574412962073106934, guid: c494fd7e8289c6743b732622c68438a5, type: 2}
+  - {fileID: 8574412962073106934, guid: 9939ecd9f2819c44ca874d6378e99740, type: 2}
+  - {fileID: 8574412962073106934, guid: 48d6f2c4a3becb64f88fbdeab240914d, type: 2}
+  - {fileID: 8574412962073106934, guid: ecde421a8c528c047ba9d7aff68bbd85, type: 2}
+  - {fileID: 8574412962073106934, guid: 357befb5f06851848ba2745838bae52d, type: 2}
+  - {fileID: 8574412962073106934, guid: 26a8fed60f7a732488e744892cb6a80b, type: 2}
+  - {fileID: 8574412962073106934, guid: b03d5f16a23fec246a1ec12aeef9e4d9, type: 2}
