@@ -72,13 +72,11 @@ namespace RPG.Control
         public void OnMove(InputValue value)
         {
             m_moveVector = value.Get<Vector2>();
-            Debug.Log(m_moveVector);
         }
 
         public void OnLook(InputValue value)
         {
             m_lookVector = value.Get<Vector2>();
-            Debug.Log(m_lookVector);
         }
 
         public void OnAim(InputValue value)
