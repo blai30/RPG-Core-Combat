@@ -72,12 +72,19 @@ namespace RPG.Control
         public void OnMove(InputValue value)
         {
             m_moveVector = value.Get<Vector2>();
+            Debug.Log(m_moveVector);
         }
 
         public void OnLook(InputValue value)
         {
-            Vector3 look = m_camera.ScreenToWorldPoint(new Vector3(value.Get<Vector2>().x, value.Get<Vector2>().y, transform.position.z));
-            m_lookVector = (look - transform.position).normalized;
+            m_lookVector = value.Get<Vector2>();
+            Debug.Log(m_lookVector);
+        }
+
+        public void OnAim(InputValue value)
+        {
+            Vector3 mousePoint = new Vector3(value.Get<Vector2>().x, value.Get<Vector2>().y, 0f);
+            m_lookVector = (mousePoint - m_camera.WorldToScreenPoint(transform.position)).normalized;
         }
 
         private CursorMapping GetCursorMapping(CursorType cursorType)

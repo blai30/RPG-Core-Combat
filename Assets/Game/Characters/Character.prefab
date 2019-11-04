@@ -139,6 +139,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMoveSpeed: 5.66
   maxNavMeshPathLength: 60
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1856932113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,11 +534,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7490355530478798145}
     m_Modifications:
-    - target: {fileID: 2178055527574842591, guid: e4f3c281e96b6493c9c79a3c432a1cd5,
-        type: 3}
-      propertyPath: m_Name
-      value: Damage Text Spawner
-      objectReference: {fileID: 0}
     - target: {fileID: 3956438060637866687, guid: e4f3c281e96b6493c9c79a3c432a1cd5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -590,6 +588,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178055527574842591, guid: e4f3c281e96b6493c9c79a3c432a1cd5,
+        type: 3}
+      propertyPath: m_Name
+      value: Damage Text Spawner
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4f3c281e96b6493c9c79a3c432a1cd5, type: 3}
