@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 60751e0ebc0c92d4b9adf09e2596d80a, type: 3}
   m_ShaderKeywords: EFFECT_HUE_VARIATION GEOM_TYPE_LEAF _ALPHAPREMULTIPLY_ON
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -142,7 +142,7 @@ Material:
     - _Metallic: 0.398
     - _Mode: 3
     - _NormalScale: 0.18
-    - _NormalStrenght: 0.7
+    - _NormalStrenght: 0.5
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _RefractionAmount: 0
@@ -152,8 +152,8 @@ Material:
     - _ShadowStrength: 0.5
     - _ShallowOpacity: 0.2
     - _Shininess: 0.15
-    - _Size: 0.4
-    - _Smoothness: 0.35
+    - _Size: 0.25
+    - _Smoothness: 5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Speed: 0.025
@@ -162,7 +162,7 @@ Material:
     - _TessValue: 16
     - _Tiling: 0.05
     - _TranslucencyViewDependency: 0
-    - _Transparency: 1
+    - _Transparency: 5
     - _UVSec: 0
     - _WaterDepth: 0
     - _WaterFalloff: -0.5
@@ -175,7 +175,7 @@ Material:
     - _ZWrite: 0
     - __dirty: 0
     m_Colors:
-    - _BottomColor: {r: 0.16450429, g: 0.094117604, b: 0.41568625, a: 1}
+    - _BottomColor: {r: 0.2781999, g: 0.09594162, b: 0.41509432, a: 1}
     - _Color: {r: 0.09545212, g: 0.31258285, b: 0.3679245, a: 0.42745098}
     - _Color0: {r: 1, g: 1, b: 1, a: 1}
     - _DeepColor: {r: 0.02990388, g: 0.16228628, b: 0.30188626, a: 1}
@@ -183,11 +183,11 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _HueVariation: {r: 1, g: 1, b: 1, a: 1}
-    - _MidColor: {r: 0, g: 0.57547164, b: 0.51575863, a: 1}
+    - _MidColor: {r: 0.113725476, g: 0.5294118, b: 0.4537716, a: 1}
     - _RimColor: {r: 0.40032038, g: 0.49056602, b: 0.45731762, a: 1}
     - _ShallowColor: {r: 0.16019884, g: 0.45282984, b: 0.35354424, a: 1}
     - _ShalowColor: {r: 0.06421317, g: 0.36792442, b: 0.33499187, a: 0.6156863}
-    - _TopColor: {r: 0.3984174, g: 0.5660378, b: 0.088109635, a: 1}
+    - _TopColor: {r: 0.44872433, g: 0.4716981, b: 0, a: 1}
     - _TranslucencyColor: {r: 0.72321427, g: 1, b: 0, a: 1}
     - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
     - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}
