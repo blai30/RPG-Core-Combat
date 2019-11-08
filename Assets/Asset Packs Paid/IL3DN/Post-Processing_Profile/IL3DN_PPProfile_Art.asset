@@ -18,6 +18,7 @@ MonoBehaviour:
   - {fileID: 114580363392588112}
   - {fileID: 114164252138188686}
   - {fileID: 114868738979190230}
+  - {fileID: 114496911849119964}
 --- !u!114 &114164252138188686
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -111,6 +112,37 @@ MonoBehaviour:
   quality:
     overrideState: 0
     value: 2
+--- !u!114 &114496911849119964
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f011806d58d75c74191b40bd40594829, type: 3}
+  m_Name: IL3DN_Fog_PP
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 0
+  _Density:
+    overrideState: 1
+    value: 52.4
+  _NearColor:
+    overrideState: 1
+    value: {r: 1, g: 0.203827, b: 0, a: 1}
+  _FarColor:
+    overrideState: 1
+    value: {r: 1, g: 0.44031492, b: 0, a: 1}
+  _GlowColor:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 0, a: 0}
+  _ExcludeSkybox:
+    overrideState: 1
+    value: 1
 --- !u!114 &114580363392588112
 MonoBehaviour:
   m_ObjectHideFlags: 3

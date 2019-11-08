@@ -1535,11 +1535,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 963928429}
     m_Modifications:
-    - target: {fileID: 7301893713767047112, guid: 313338dbc7efe904c80141e15db65b96,
-        type: 3}
-      propertyPath: m_Name
-      value: Enemy (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 2900094539101713322, guid: 313338dbc7efe904c80141e15db65b96,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1594,6 +1589,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7301893713767047112, guid: 313338dbc7efe904c80141e15db65b96,
+        type: 3}
+      propertyPath: m_Name
+      value: Enemy (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5274394841307949441, guid: 313338dbc7efe904c80141e15db65b96,
         type: 3}
@@ -3078,6 +3078,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 907551774}
     m_Modifications:
+    - target: {fileID: 3994922243036381878, guid: 3447961027a93fe4a9e1e1e61716fe1f,
+        type: 3}
+      propertyPath: m_Name
+      value: IL3DN_WaterPlane
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994922243036381878, guid: 3447961027a93fe4a9e1e1e61716fe1f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994922243036381878, guid: 3447961027a93fe4a9e1e1e61716fe1f,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1973201519497786387, guid: 3447961027a93fe4a9e1e1e61716fe1f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3142,21 +3157,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3994922243036381878, guid: 3447961027a93fe4a9e1e1e61716fe1f,
-        type: 3}
-      propertyPath: m_Name
-      value: IL3DN_WaterPlane
-      objectReference: {fileID: 0}
-    - target: {fileID: 3994922243036381878, guid: 3447961027a93fe4a9e1e1e61716fe1f,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3994922243036381878, guid: 3447961027a93fe4a9e1e1e61716fe1f,
-        type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3546483047090373651, guid: 3447961027a93fe4a9e1e1e61716fe1f,
         type: 3}
@@ -4109,21 +4109,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
         type: 2}
-    - target: {fileID: 7670176318621868458, guid: 608a4e54f74ea62458726d22283ffdca,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 24.925741
-      objectReference: {fileID: 0}
-    - target: {fileID: 7670176318621868458, guid: 608a4e54f74ea62458726d22283ffdca,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 35.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7670176318621868458, guid: 608a4e54f74ea62458726d22283ffdca,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -42.699997
-      objectReference: {fileID: 0}
     - target: {fileID: 6244094984248723692, guid: 608a4e54f74ea62458726d22283ffdca,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -4154,6 +4139,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7670176318621868458, guid: 608a4e54f74ea62458726d22283ffdca,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 24.925741
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670176318621868458, guid: 608a4e54f74ea62458726d22283ffdca,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 35.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670176318621868458, guid: 608a4e54f74ea62458726d22283ffdca,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -42.699997
+      objectReference: {fileID: 0}
     - target: {fileID: 1184226460399706167, guid: 608a4e54f74ea62458726d22283ffdca,
         type: 3}
       propertyPath: m_Layer
@@ -4163,6 +4163,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6244094984248723691, guid: 608a4e54f74ea62458726d22283ffdca,
+        type: 3}
+      propertyPath: near clip plane
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6244094984248723691, guid: 608a4e54f74ea62458726d22283ffdca,
+        type: 3}
+      propertyPath: far clip plane
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6244094984248723691, guid: 608a4e54f74ea62458726d22283ffdca,
+        type: 3}
+      propertyPath: field of view
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4085060789218507085, guid: 608a4e54f74ea62458726d22283ffdca,
         type: 3}
@@ -4458,21 +4473,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6244094984248723691, guid: 608a4e54f74ea62458726d22283ffdca,
-        type: 3}
-      propertyPath: near clip plane
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6244094984248723691, guid: 608a4e54f74ea62458726d22283ffdca,
-        type: 3}
-      propertyPath: far clip plane
-      value: 5000
-      objectReference: {fileID: 0}
-    - target: {fileID: 6244094984248723691, guid: 608a4e54f74ea62458726d22283ffdca,
-        type: 3}
-      propertyPath: field of view
-      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 706116380600950420, guid: 608a4e54f74ea62458726d22283ffdca, type: 3}
