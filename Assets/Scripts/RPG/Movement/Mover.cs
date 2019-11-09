@@ -25,7 +25,9 @@ namespace RPG.Movement
         /// <summary>
         /// Animator parameters
         /// </summary>
+        private static readonly int MovementSpeed = Animator.StringToHash("movementSpeed");
         private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
+        private static readonly int HorizontalSpeed = Animator.StringToHash("horizontalSpeed");
 
         private void Awake()
         {
@@ -146,8 +148,9 @@ namespace RPG.Movement
         {
             // Convert global velocity to local space
             Vector3 localVelocity = transform.InverseTransformDirection(m_navMeshAgent.velocity);
-            float speed = localVelocity.z;
-            m_animator.SetFloat(ForwardSpeed, speed);
+            m_animator.SetFloat(MovementSpeed, localVelocity.magnitude);
+            m_animator.SetFloat(ForwardSpeed, localVelocity.z);
+            m_animator.SetFloat(HorizontalSpeed, localVelocity.x);
         }
 
         private void OnDrawGizmos()
