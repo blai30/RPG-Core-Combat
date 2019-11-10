@@ -151,6 +151,8 @@ namespace RPG.Movement
             m_animator.SetFloat(MovementSpeed, localVelocity.magnitude);
             m_animator.SetFloat(ForwardSpeed, localVelocity.z);
             m_animator.SetFloat(HorizontalSpeed, localVelocity.x);
+            Debug.Log("Navmesh: " + m_navMeshAgent.velocity);
+            Debug.Log("Local: " + localVelocity);
         }
 
         private void OnDrawGizmos()
